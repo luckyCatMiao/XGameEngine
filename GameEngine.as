@@ -50,6 +50,7 @@
 		{
 			
 			TimeManager.getInstance();
+			HitManager.getInstance();
 		}
 		
 		public function getTimeManager():TimeManager

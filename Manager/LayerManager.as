@@ -76,6 +76,7 @@
 		 
 				//如果原来属于某个层 从原来的层删除
 				removeFromLayer(o);
+				
 				(layers.get(layerName) as Layer).addObject(o);
 
 		  

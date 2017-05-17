@@ -46,9 +46,11 @@
 		
 		public function remove(o:Object)
 		{
-			var index:int=arr.indexOf(o);
+			var index:int = arr.indexOf(o);
+			if (index != -1)
+			{
 			arr.splice(index, 1);
-			
+			}
 		}
 		
 		private function checkIndex(index:int)
@@ -70,7 +72,7 @@
 		
 		public function toString():String 
 		{
-			return arr.toString();
+			return "["+arr.toString()+"]";
 		}
 		
 	}
