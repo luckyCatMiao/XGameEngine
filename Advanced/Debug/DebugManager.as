@@ -24,11 +24,17 @@
 		
 		static public function getInstance():DebugManager
 		{
+			if (GameEngine.getInstance().debug == false)
+			{
+				throw new Error("Please open the debug mode!set the bool value in GameEngine class");
+			}
+			
 				if (_instance == null)
 				{
 					_instance = new DebugManager();
 				}
 				return _instance;
+			
 		}
 		
 	
@@ -50,41 +56,55 @@
 		private function ShowValue()
 		{
 			
-			var data:BitmapData = new BitmapData(100, 100, true, 0x88000000);
-			var bitmap:Bitmap = new Bitmap(data);
+			var s:Stage = GameEngine.getInstance().getStage();
 			
-			var s:Stage =GameEngine.getInstance().getStage();
+			if (s.getChildByName("bbb") != null)
+			{
+				s.removeChild(s.getChildByName("bbb"));
+			}
+			
+			var data:BitmapData = new BitmapData(100, map.size*20, true, 0x88000000);
+			var bitmap:Bitmap = new Bitmap(data);
+			bitmap.name = "bbb";
+			
+			
 			s.addChild(bitmap);
 			
+			var _y:int = 0;
 			for each(var name:String in map.Keys)
 			{
-				var listener:Function = map.get(name) as Function;
+				var bean:DataBean = map.get(name) as DataBean;
+				var listener:Function = bean.listener;
 				
 				var nameText:XTextField = new XTextField();
 				nameText.text = name;
 				nameText.textColor = Color.WHITE;
+				nameText.size = 15;
+				nameText.y = _y;
 				s.addChild(nameText);
 				
 				
 				
 				var valueText:XTextField = new XTextField();
-				valueText.text = "0";
-				valueText.x = 50;
+				valueText.text = bean.defValue+"";
+				valueText.x = 80;
+				valueText.y = _y;
+				valueText.size = 15;
 				valueText.textColor = Color.WHITE;
 				valueText.type = TextFieldType.INPUT;
 				valueText.getExtraValue().put("fun", listener);
 				valueText.getExtraValue().put("name", name);
 				s.addChild(valueText);
-				s.addEventListener(TextEvent.TEXT_INPUT, input);
+				s.addEventListener(Event.CHANGE, input);
 				
-				
+				_y += 15;
 				
 			}
 			
 			
 		}
 		
-		private function input(e:TextEvent)
+		private function input(e:Event)
 		{
 			//get the textfield
 			var t:XTextField = e.target as XTextField;
@@ -110,9 +130,12 @@
 		 * it's need a same structure like this(except the name)
 		 * public function OnRecall(name:String,value:String)
 		 */
-		public function AddDebugValue(name:String,listener:Function)
+		public function AddDebugValue(name:String, listener:Function, defaultValue:int = 0)
 		{
-			map.put(name, listener);
+			var bean:DataBean = new DataBean();
+			bean.defValue = defaultValue;
+			bean.listener = listener;
+			map.put(name, bean);
 			ShowValue();
 			
 		}
@@ -121,5 +144,12 @@
 		
 	}
 
+	
+}
+
+class DataBean
+{
+	public var listener:Function;
+	public var defValue:Object;
 	
 }

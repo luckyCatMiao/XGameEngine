@@ -1,5 +1,6 @@
 ﻿package XGameEngine
 {
+	import XGameEngine.Manager.TimeManager;
 	import XGameEngine.Advanced.Debug.*;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -26,7 +27,7 @@
 		
 		private var s:Stage;
 		private var list:List = new List();
-		
+		public var debug:Boolean=false;
 		
 		/**
 		 * this should be called when game inited,generally from the entry class
@@ -34,8 +35,21 @@
 		 */
 		public function Init(s:Stage)
 		{
+			
 			this.s = s;
 			s.addEventListener(Event.ENTER_FRAME, loop);
+			
+			
+		}
+		
+		public function InitManager()
+		{
+			TimeManager.getInstance();
+		}
+		
+		public function getTimeManager():TimeManager
+		{
+			return TimeManager.getInstance();
 		}
 		
 		

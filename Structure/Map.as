@@ -35,6 +35,11 @@
 			
 		}
 		
+		public function get size():int
+		{
+			return Keys.length;
+		}
+		
 		
 		/**
 		 * because the as3 don't support customize foreach which supported in java,c# that just implements the iterable interface
