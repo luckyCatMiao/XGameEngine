@@ -1,6 +1,6 @@
 ﻿package XGameEngine.GameObject.Component
 {
-	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.GameObject.*;
 	import XGameEngine.Structure.*;
 	import XGameEngine.Structure.Math.*;
 	/**

@@ -1,5 +1,6 @@
 ﻿package XGameEngine
 {
+	import XGameEngine.Manager.GameObjectManager;
 	import XGameEngine.Manager.TimeManager;
 	import XGameEngine.Advanced.Debug.*;
 	import flash.display.Stage;
@@ -50,6 +51,11 @@
 		public function getTimeManager():TimeManager
 		{
 			return TimeManager.getInstance();
+		}
+		
+		public function getGameObjectManager():GameObjectManager
+		{
+			return GameObjectManager.getInstance();
 		}
 		
 		
