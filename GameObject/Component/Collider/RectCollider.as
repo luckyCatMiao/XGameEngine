@@ -1,10 +1,12 @@
 ﻿package XGameEngine.GameObject.Component.Collider
 {
+	import XGameEngine.UI.Draw.Color;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import XGameEngine.GameEngine;
+	import XGameEngine.Structure.List;
 	
 	/**
 	 * ...
@@ -13,29 +15,78 @@
 	//代表一个方形的碰撞体
 	public class RectCollider extends Collider
 	{
+		static public var POINT_LEFT:String = "left";
+		static public var POINT_RIGHT:String = "right";
+		static public var POINT_UP:String = "up";
+		static public var POINT_DOWN:String = "down";
+		
 		
 	public function RectCollider(width:uint,height:uint,color:uint)
 	{
+		
+	
+		
 		var al:Number = GameEngine.getInstance().debug == true?0.3:0;
 				
 			this.graphics.beginFill(color,al);
 			this.graphics.drawRect(0, 0, width, height);
 			this.graphics.endFill();
+			
+			
+			if (GameEngine.getInstance().debug == true)
+			{
+				//画出碰撞点
+				DrawCheckPoint();
+			}
 	}
 		
 	
-	override public function getCheckPoint():Vector.<Point> 
+	public function DrawCheckPoint() 
 	{
-		var points:Vector.<Point> = new Vector.<Point>;
-		points[0] = getLeftTopPoint();
-		points[1] = getLeftBottomPoint();
-		points[2] = getRightTopPoint();
-		points[3] = getRightBottomPoint();
+			this.graphics.beginFill(Color.GREEN);
+			for each(var p:Point in getCheckPoint().Raw)
+			{
+				this.graphics.drawCircle(p.x, p.y, 5);
+			}
+			this.graphics.endFill();
 		
+	}
+	
+	override public function getCheckPoint():List
+	{
+		var list:List = new List();
+		list.add(getTopPoint());
+		list.add(getDownPoint());
+		list.add(getLeftPoint());
+		list.add(getRightPoint());
 		
-		return points;
+	
+		
+		return list;
 	}
 		
+	//返回中上的点
+	public function getTopPoint():Point
+	{
+			return new Point((x+width)/2,y);
+	}
+	//返回中下的点
+	public function getDownPoint():Point
+	{
+			return new Point((x+width)/2,y+height);
+	}
+	//返回中左的点
+	public function getLeftPoint():Point
+	{
+			return new Point(x,(y+height)/2);
+	}
+	//返回中右的点
+	public function getRightPoint():Point
+	{
+			return new Point((x+width),(y+height)/2);
+	}
+	
+	
 	
 	//返回左上角的点
 	public function getLeftTopPoint():Point

@@ -28,6 +28,14 @@
 		}
 		
 		
+		/**
+		 * 返回所有游戏对象的一个拷贝副本
+		 */
+		public function get objects():List
+		{
+			return gobjects.clone()
+		}
+		
 		public function get size()
 		{
 			return gobjects.size;

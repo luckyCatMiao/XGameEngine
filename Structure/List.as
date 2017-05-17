@@ -13,13 +13,22 @@
 		{
 			if (array != null)
 			{
-				this.arr = array;
+				for each(var o:Object in array)
+				{
+					arr.push(o);
+				}
 			}
 		}
 		
 		public function add(a:Object)
 		{
 			arr.push(a);
+		}
+		
+		public function clone():List
+		{
+			return new List(arr);
+
 		}
 		
 		public function get(index:int):Object

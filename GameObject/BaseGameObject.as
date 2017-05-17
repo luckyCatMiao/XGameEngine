@@ -2,6 +2,7 @@
 {
 	import XGameEngine.Manager.*;
 	import XGameEngine.GameEngine;
+	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Util.*;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -154,6 +155,30 @@
 		}
 		
 	
+		/**
+		 * 返回动画组件
+		 * @return
+		 */
+		public function getAnimeComponent():AnimeComponent 
+		{
+			return anime_com;
+		}
+		/**
+		 * 返回碰撞组件
+		 * @return
+		 */
+		public function getCollideComponent():CollideComponent 
+		{
+			return collide_com;
+		}
+		/**
+		 * 返回物理组件
+		 * @return
+		 */
+		public function getPhysicsComponent():PhysicsComponent 
+		{
+			return physics_com;
+		}
 		
 		public function set tag(value:String):void 
 		{	
@@ -190,6 +215,22 @@
 		{
 			return gameEngine.getLayerManager();
 		}
+		
+		
+		public function onHitEnter(c:Collision) 
+		{
+			
+		}
+		
+		public function onHitStay(c:Collision) 
+		{
+			
+		}
+		public function onHitExit(c:Collision) 
+		{
+			
+		}
+		
 	}
 	
 }
