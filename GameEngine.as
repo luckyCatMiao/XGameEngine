@@ -1,6 +1,7 @@
 ﻿package XGameEngine
 {
 	import XGameEngine.Manager.GameObjectManager;
+	import XGameEngine.Manager.TagManager;
 	import XGameEngine.Manager.TimeManager;
 	import XGameEngine.Advanced.Debug.*;
 	import flash.display.Stage;
@@ -39,18 +40,26 @@
 			
 			this.s = s;
 			s.addEventListener(Event.ENTER_FRAME, loop);
-			
+			InitManager();
 			
 		}
 		
+		
+		//初始化
 		public function InitManager()
 		{
+			
 			TimeManager.getInstance();
 		}
 		
 		public function getTimeManager():TimeManager
 		{
 			return TimeManager.getInstance();
+		}
+		
+		public function getTagManager():TagManager
+		{
+			return TagManager.getInstance();
 		}
 		
 		public function getGameObjectManager():GameObjectManager

@@ -1,5 +1,6 @@
 ﻿package XGameEngine.GameObject
 {
+	import XGameEngine.Manager.*;
 	import XGameEngine.GameEngine;
 	import XGameEngine.Util.*;
 	import flash.display.MovieClip;
@@ -19,11 +20,12 @@
 		protected var physics_com:PhysicsComponent;
 		
 		protected var _xname:String;
+		protected var _tag:String;
 		public function BaseGameObject(_name:String=null)
 		{
 			
 			registerToGame();
-			
+			tag = TagManager.TAG_DEFAULT;
 			
 			InitComponent();
 			InitEvent();
@@ -43,7 +45,11 @@
 			
 			//注册
 			GameEngine.getInstance().getGameObjectManager().register(this);
+			
+		
+			
 		}
+		
 		
 		
 		
@@ -119,12 +125,15 @@
 			return "[BaseGameObject name="+_xname+"]";
 		}
 		
+		
+		//重新设置名字的时候先进行检查 防止重复
 		public function set xname(value:String):void 
 		{
 			if (GameEngine.getInstance().getGameObjectManager().findGameObjectByName(value) != null)
 			{
 				throw new Error("the GameObject named " + value+" exists");
 			}
+			this._xname = value;
 		}
 		
 		public function get xname()
@@ -136,8 +145,28 @@
 		{
 			return GameEngine.getInstance();
 		}
-
 		
+		public function get tag():String 
+		{
+			return _tag;
+		}
+		
+		
+		
+		public function set tag(value:String):void 
+		{	
+			//检查一下tag管理器中是不是注册了这个tag
+			if (getTagManager().findTag(value) == false)
+			{
+				throw new Error("tag " + value+" not registered!");
+			}
+			_tag = value;
+		}
+
+		public function getTagManager():TagManager 
+		{
+			return gameEngine.getTagManager();
+		}
 		
 	}
 	

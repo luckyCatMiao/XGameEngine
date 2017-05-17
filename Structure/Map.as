@@ -1,6 +1,7 @@
 ﻿package XGameEngine.Structure
 {
 	
+	import XGameEngine.Util.*;
 	/**
 	 * ...
 	 * @author o
@@ -66,6 +67,11 @@
 			return arr;
 		}
 		
+		
+		public function toString():String 
+		{
+			return  StringUtil.formatMap(map);
+		}
 	}
 	
 }
