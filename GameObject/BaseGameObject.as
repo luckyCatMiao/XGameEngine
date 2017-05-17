@@ -15,7 +15,7 @@
 		
 		protected var anime_com:AnimeComponent;
 		protected var collide_com:CollideComponent;
-		
+		protected var physics_com:PhysicsComponent;
 		
 
 		public function BaseGameObject()
@@ -33,6 +33,7 @@
 			
 			anime_com = new AnimeComponent(this);
 			collide_com = new CollideComponent(this);
+			physics_com = new PhysicsComponent(this);
 			
 		}
 
@@ -49,6 +50,11 @@
 		
 		protected function _loop(e:Event)
 		{
+			if (physics_com.enable == true)
+			{
+				physics_com.calulate();
+			}
+			
 			loop();
 		}
 		

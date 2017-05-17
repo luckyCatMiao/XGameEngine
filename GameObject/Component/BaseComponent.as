@@ -9,10 +9,14 @@
 	public class BaseComponent 
 	{
 		protected var host:BaseGameObject;
+		public var enable:Boolean = true;
+		
 		public function BaseComponent(o:BaseGameObject)
 		{
 			host = o;
 		}
+		
+		
 	}
 	
 }

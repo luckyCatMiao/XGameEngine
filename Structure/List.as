@@ -32,6 +32,17 @@
 			return _size;
 		}
 		
+		public function get Raw():Array
+		{
+			return arr;
+		}
+		
+		public function clear()
+		{
+			arr = [];
+			_size = 0;
+		}
+		
 		
 		private function checkIndex(index:int)
 		{
