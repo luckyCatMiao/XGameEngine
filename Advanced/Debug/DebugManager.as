@@ -1,25 +1,26 @@
-﻿package XGameEngine.Debug
+﻿package XGameEngine.Advanced.Debug
 {
+	import XGameEngine.UI.Draw.Color;
 	import flash.events.TextEvent;
 	import flash.text.TextFieldType
 	import flash.display.Stage;
 	import flash.text.TextField;
-	import XGameEngine.GameEngine;
+	import XGameEngine.*;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
-	import XGameEngine.UI.XTextField;
+	import XGameEngine.Advanced.Interface.LoopAble;
+	import XGameEngine.Structure.*;
+	import XGameEngine.UI.*;
 	
 	/**
 	 * ...
-	 * @author o
+	 * a class provide a set of features to help you debug easy
 	 */
-	public class DebugManager 
+	public class DebugManager implements LoopAble
 	{
 		
 		static private var _instance:DebugManager;
-		
-		private var map:Object = new Object();
 		
 		static public function getInstance():DebugManager
 		{
@@ -32,12 +33,13 @@
 		
 	
 		
+		private var map:Map = new Map();
+		
 		/**
 		 * called by the GameEngine instance
 		 */
 		public function loop()
 		{
-			
 		}
 		
 		
@@ -45,21 +47,22 @@
 		/**
 		 * draw the ui base on the values
 		 */
-		public function ShowValue()
+		private function ShowValue()
 		{
+			
 			var data:BitmapData = new BitmapData(100, 100, true, 0x88000000);
 			var bitmap:Bitmap = new Bitmap(data);
 			
 			var s:Stage =GameEngine.getInstance().getStage();
 			s.addChild(bitmap);
 			
-			for (var name:String in map)
+			for each(var name:String in map.Keys)
 			{
-				var listener:Function = map[name];
+				var listener:Function = map.get(name) as Function;
 				
 				var nameText:XTextField = new XTextField();
 				nameText.text = name;
-				nameText.textColor = 0xffffffff;
+				nameText.textColor = Color.WHITE;
 				s.addChild(nameText);
 				
 				
@@ -67,10 +70,10 @@
 				var valueText:XTextField = new XTextField();
 				valueText.text = "0";
 				valueText.x = 50;
-				valueText.textColor = 0xffffffff;
+				valueText.textColor = Color.WHITE;
 				valueText.type = TextFieldType.INPUT;
-				valueText.getExtraValue()["fun"] = listener;
-				valueText.getExtraValue()["name"] = name;
+				valueText.getExtraValue().put("fun", listener);
+				valueText.getExtraValue().put("name", name);
 				s.addChild(valueText);
 				s.addEventListener(TextEvent.TEXT_INPUT, input);
 				
@@ -81,12 +84,18 @@
 			
 		}
 		
-		public function input(e:TextEvent)
+		private function input(e:TextEvent)
 		{
+			//get the textfield
 			var t:XTextField = e.target as XTextField;
+			//get the value
 			var value = t.text;
-			var name = t.getExtraValue()["name"];
-			t.getExtraValue()["fun"](name,value);
+			//get the originnal field name
+			var name = t.getExtraValue().get("name");
+			//get the function
+			var fun:Function = t.getExtraValue().get("fun") as Function;
+			//call the function 
+			fun(name, value);
 			
 		}
 		
@@ -103,8 +112,7 @@
 		 */
 		public function AddDebugValue(name:String,listener:Function)
 		{
-			map[name] = listener;
-			
+			map.put(name, listener);
 			ShowValue();
 			
 		}
@@ -112,5 +120,6 @@
 		
 		
 	}
+
 	
 }

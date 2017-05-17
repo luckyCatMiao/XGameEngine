@@ -1,6 +1,7 @@
 ﻿package XGameEngine.UI
 {
 	import flash.text.TextField;
+	import XGameEngine.Structure.Map;
 	
 	/**
 	 * ...
@@ -8,9 +9,9 @@
 	 */
 	public class XTextField extends TextField
 	{
-		private var _extraValue:Object = new Object();
+		private var _extraValue:Map = new Map();
 		
-		public function getExtraValue():Object 
+		public function getExtraValue():Map 
 		{
 			return _extraValue;
 		}
