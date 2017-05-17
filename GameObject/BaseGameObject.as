@@ -21,11 +21,13 @@
 		
 		protected var _xname:String;
 		protected var _tag:String;
+		protected var _layerName:String;
 		public function BaseGameObject(_name:String=null)
 		{
 			
 			registerToGame();
 			tag = TagManager.TAG_DEFAULT;
+			layerName = LayerManager.LAYER_DEFAULT;
 			
 			InitComponent();
 			InitEvent();
@@ -151,7 +153,7 @@
 			return _tag;
 		}
 		
-		
+	
 		
 		public function set tag(value:String):void 
 		{	
@@ -162,12 +164,32 @@
 			}
 			_tag = value;
 		}
+		
+		public function get layerName():String 
+		{	
+			return _layerName;
+		}
+		
+		public function set layerName(value:String):void 
+		{
+			//检查一下tag管理器中是不是注册了这个tag
+			//同时删除原来的层 再添加进新层
+			if (getLayerManager().checkLayer(value) == false)
+			{
+				throw new Error("tag " + value+" not registered!");
+			}
+			getLayerManager().addToLayer(this, value);
+			_layerName = value;
+		}
 
 		public function getTagManager():TagManager 
 		{
 			return gameEngine.getTagManager();
 		}
-		
+		public function getLayerManager():LayerManager 
+		{
+			return gameEngine.getLayerManager();
+		}
 	}
 	
 }

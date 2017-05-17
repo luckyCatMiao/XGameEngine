@@ -1,7 +1,7 @@
 ﻿package XGameEngine
 {
 	import XGameEngine.Manager.GameObjectManager;
-	import XGameEngine.Manager.TagManager;
+	import XGameEngine.Manager.*;
 	import XGameEngine.Manager.TimeManager;
 	import XGameEngine.Advanced.Debug.*;
 	import flash.display.Stage;
@@ -65,6 +65,10 @@
 		public function getGameObjectManager():GameObjectManager
 		{
 			return GameObjectManager.getInstance();
+		}
+		public function getLayerManager():LayerManager
+		{
+			return LayerManager.getInstance();
 		}
 		
 		

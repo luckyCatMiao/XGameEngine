@@ -44,6 +44,12 @@
 			arr = [];
 		}
 		
+		public function remove(o:Object)
+		{
+			var index:int=arr.indexOf(o);
+			arr.splice(index, 1);
+			
+		}
 		
 		private function checkIndex(index:int)
 		{
