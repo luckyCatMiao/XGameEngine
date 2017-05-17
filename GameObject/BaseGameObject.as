@@ -1,9 +1,10 @@
 ﻿package XGameEngine.GameObject
 {
+	import XGameEngine.Util.*;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import XGameEngine.GameObject.Component.AnimeComponent;
+	import XGameEngine.GameObject.Component.*;
 	
 	/**
 	 * ...
@@ -12,8 +13,8 @@
 	public class BaseGameObject extends Sprite
 	{
 		
-		private var anime_com:AnimeComponent;
-		
+		protected var anime_com:AnimeComponent;
+		protected var collide_com:CollideComponent;
 		
 		
 
@@ -25,10 +26,13 @@
 			InitEvent();
 		}
 		
+		
+		
 		private function InitComponent()
 		{
 			
 			anime_com = new AnimeComponent(this);
+			collide_com = new CollideComponent(this);
 			
 		}
 
@@ -75,6 +79,8 @@
 		{
 			return anime_com;
 		}
+		
+		
 		
 
 	}

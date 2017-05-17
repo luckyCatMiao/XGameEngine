@@ -8,7 +8,7 @@
 	 */
 	public class BaseComponent 
 	{
-		private var host:BaseGameObject;
+		protected var host:BaseGameObject;
 		public function BaseComponent(o:BaseGameObject)
 		{
 			host = o;

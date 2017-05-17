@@ -1,7 +1,8 @@
 ﻿package XGameEngine.GameObject.Component
 {
-	import XGameEngine.GameObject.BaseGameObject;
-	
+	import XGameEngine.Util.*;
+	import XGameEngine.GameObject.*;
+	import XGameEngine.GameObject.Component.*;
 	/**
 	 * ...
 	 * @author o
@@ -12,6 +13,14 @@
 		{
 			super(o);
 		}
+		
+		public function LoadAnimeByName(aname:String)
+		{
+			var anime:Animation = GameUtil.LoadAnimationByName(aname);
+			host.addChild(anime);
+			return anime;
+		}
+		
 	}
 	
 }
