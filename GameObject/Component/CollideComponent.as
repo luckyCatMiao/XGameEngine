@@ -37,7 +37,7 @@
 			var collider:RectCollider = new RectCollider(width,height,color);
 
 			
-			host.addChild(collider);
+			host.getGameObjectComponent().addChildToHighestDepth(collider);
 			c = collider;
 			
 			collider.x = x;

@@ -18,7 +18,7 @@
 		{
 			var anime:Animation = GameUtil.LoadAnimationByName(aname);
 			anime.stop();
-			host.addChild(anime);
+			host.getGameObjectComponent().addChildToBeforeHighestDepth(anime);
 			return anime;
 		}
 		

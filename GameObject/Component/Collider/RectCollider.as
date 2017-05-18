@@ -1,5 +1,6 @@
 ﻿package XGameEngine.GameObject.Component.Collider
 {
+	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.UI.Draw.Color;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -20,16 +21,19 @@
 		static public var POINT_UP:String = "up";
 		static public var POINT_DOWN:String = "down";
 		
-		
+
 		private var boxWidth:Number;
 		private var boxHeight:Number;
+		
+		private var aabb:Rect;
+		
 		
 	public function RectCollider(width:uint,height:uint,color:uint)
 	{
 		
 	
 		
-		var al:Number = GameEngine.getInstance().debug == true?0.3:0;
+		var al:Number = GameEngine.getInstance().debug == true?0.4:0;
 				
 			this.graphics.beginFill(color,al);
 			this.graphics.drawRect(0, 0, width, height);
@@ -37,12 +41,18 @@
 			
 			boxWidth = width;
 			boxHeight = height;
+
+			
+			//aabb = new Rect(0, 0, width, height);
 			
 			if (GameEngine.getInstance().debug == true)
 			{
 				//画出碰撞点
 				DrawCheckPoint();
 			}
+			
+			
+			
 	}
 		
 	
@@ -52,11 +62,11 @@
 			for each(var p:Point in getCheckPoint().Raw)
 			{
 				//点往中间靠一点 防止在调试模式中突出平面。。
-				var drawX:Number = p.x > getCenterPoint().x?p.x - 5:p.x + 5;
-				var drawY:Number = p.y > getCenterPoint().y?p.y - 5:p.y + 5;
+				var drawX:Number = p.x > getCenterPoint().x?p.x - 3.5:p.x + 3.5;
+				var drawY:Number = p.y > getCenterPoint().y?p.y - 3.5:p.y + 3.5;
 				
 				
-				this.graphics.drawCircle(drawX, drawY, 5);
+				this.graphics.drawCircle(drawX, drawY, 3.5);
 			}
 			this.graphics.endFill();
 		
@@ -73,7 +83,7 @@
 		return list;
 	}
 		
-	//返回中上的点
+//返回中上的点
 	public function getTopPoint():Point
 	{
 			return new Point((x+boxWidth)/2,y);

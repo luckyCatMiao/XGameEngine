@@ -77,6 +77,8 @@
 		{
 			xSpeed += v.x;
 			ySpeed += v.y;
+			
+			calulate();
 		}
 		
 		

@@ -21,6 +21,7 @@
 		protected var physics_com:PhysicsComponent;
 		protected var transform_com:TransformComponent;
 		protected var state_com:StateComponent;
+		protected var obj_com:GameObjectComponent;
 		
 		protected var _xname:String;
 		protected var _tag:String;
@@ -66,11 +67,13 @@
 		private function InitComponent()
 		{
 			
+			obj_com = new GameObjectComponent(this);
 			anime_com = new AnimeComponent(this);
 			collide_com = new CollideComponent(this);
 			physics_com = new PhysicsComponent(this);
 			transform_com = new TransformComponent(this);
 			state_com = new StateComponent(this);
+			
 		}
 
 		
@@ -99,6 +102,7 @@
 			}
 			
 			state_com.loop();
+			transform_com.loop();
 			loop();
 		}
 		
@@ -202,6 +206,15 @@
 			return state_com;
 		}
 		
+		/**
+		 * 返回对象管理器组件
+		 * @return
+		 */
+		public function getGameObjectComponent():GameObjectComponent 
+		{
+			return obj_com;
+		}
+		
 		public function set tag(value:String):void 
 		{	
 			//检查一下tag管理器中是不是注册了这个tag
@@ -287,6 +300,33 @@
 		public function onStateExit(state:String)
 		{
 			
+		}
+		
+		/**
+		 * 如果当前处在第二个状态就把当前状态变换到当前状态
+		 * 如果有多个状态,把状态填在数组中
+		 * @param	state
+		 */
+		public function tryChangeState(newstate:String,conditionState:String,otherState:Array=null)
+		{
+			//trace(state+" "+conditionState);
+			
+			if (state == conditionState)
+			{	
+				getStateComponent().changeState(newstate);
+				_state = newstate;
+			}
+			if (otherState != null)
+			{
+				for each(var s:String in otherState)
+				{
+					if (s == conditionState)
+					{
+						getStateComponent().changeState(newstate);
+						_state = newstate;
+					}
+				}
+			}
 		}
 		
 		
