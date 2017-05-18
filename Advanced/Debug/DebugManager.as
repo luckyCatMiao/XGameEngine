@@ -24,10 +24,7 @@
 		
 		static public function getInstance():DebugManager
 		{
-			if (GameEngine.getInstance().debug == false)
-			{
-				trace("the debug mode don't open");
-			}
+			
 			
 				if (_instance == null)
 				{
@@ -55,6 +52,10 @@
 		 */
 		private function ShowValue()
 		{
+			if (GameEngine.getInstance().debug == false)
+			{
+				return ;
+			}
 			
 			var s:Stage = GameEngine.getInstance().getStage();
 			
