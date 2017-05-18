@@ -320,7 +320,7 @@
 			{
 				for each(var s:String in otherState)
 				{
-					if (s == conditionState)
+					if (s == state)
 					{
 						getStateComponent().changeState(newstate);
 						_state = newstate;
