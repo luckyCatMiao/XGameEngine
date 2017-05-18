@@ -1,5 +1,9 @@
 ﻿package XGameEngine.GameObject
 {
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	import XGameEngine.GameObject.CommonComponent.*
+	import XGameEngine.GameObject.Component.Collider.RectCollider;
 	import XGameEngine.Manager.*;
 	import XGameEngine.GameEngine;
 	import XGameEngine.Manager.Hit.Collision;
@@ -22,6 +26,7 @@
 		protected var transform_com:TransformComponent;
 		protected var state_com:StateComponent;
 		protected var obj_com:GameObjectComponent;
+		protected var fun_com:FunComponent;
 		
 		protected var _xname:String;
 		protected var _tag:String;
@@ -73,6 +78,7 @@
 			physics_com = new PhysicsComponent(this);
 			transform_com = new TransformComponent(this);
 			state_com = new StateComponent(this);
+			fun_com = new FunComponent();
 			
 		}
 
@@ -215,6 +221,16 @@
 			return obj_com;
 		}
 		
+		/**
+		 * 返回方法管理组件(支持例如延迟的方法调用)
+		 * @return
+		 */
+		public function getFunComponent():FunComponent 
+		{
+			return fun_com;
+		}
+		
+		
 		public function set tag(value:String):void 
 		{	
 			//检查一下tag管理器中是不是注册了这个tag
@@ -330,6 +346,48 @@
 		}
 		
 		
+		
+		
+		/**
+		 * 左下角的碰撞器点转换到全局坐标(这里不用aabb取点是因为aabb设定为实时变化)
+		 */
+		public function get leftBottomGlobalPoint()
+		{
+			var r:RectCollider = this.getCollideComponent().rectCollider 
+			var point:Point = this.localToGlobal(r.getLeftBottomPoint());
+			
+			return point;
+		}
+		/**
+		 * 左上角的碰撞器点转换到全局坐标(这里不用aabb取点是因为aabb设定为实时变化)
+		 */
+		public function get leftTopGlobalPoint()
+		{
+			var r:RectCollider = this.getCollideComponent().rectCollider 
+			var point:Point = this.localToGlobal(r.getLeftTopPoint());
+			
+			return point;
+		}
+		/**
+		 * 右下角的碰撞器点转换到全局坐标(这里不用aabb取点是因为aabb设定为实时变化)
+		 */
+		public function get rightBottomGlobalPoint()
+		{
+			var r:RectCollider = this.getCollideComponent().rectCollider 
+			var point:Point = this.localToGlobal(r.getRightBottomPoint());
+			
+			return point;
+		}
+		/**
+		 * 右上角的碰撞器点转换到全局坐标(这里不用aabb取点是因为aabb设定为实时变化)
+		 */
+		public function get rightTopGlobalPoint()
+		{
+			var r:RectCollider = this.getCollideComponent().rectCollider 
+			var point:Point = this.localToGlobal(r.getRightTopPoint());
+			
+			return point;
+		}
 		
 	}
 	

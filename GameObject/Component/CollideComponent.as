@@ -74,6 +74,24 @@
 			return c;
 		}
 		
+		/**
+		 * 试图返回方形碰撞器 因为方形有许多额外特性 所以这里单独列出来(按经验来说99%的人物都使用方形碰撞器)
+		 */
+		public function get rectCollider():RectCollider 
+		{
+			var q:RectCollider = c as RectCollider;
+			if (q != null)
+			{
+				return q;
+			}
+			else
+			{
+				throw new Error("the collider is not a rectCollider or even the collider don't exist")
+			}
+			
+		}
+		
+		
 		public function applyCollision(hit:Collision)
 		{
 			
