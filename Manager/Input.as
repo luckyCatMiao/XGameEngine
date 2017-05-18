@@ -209,6 +209,12 @@ package XGameEngine.Manager
 		
 
 		
+		
+		/**
+		 * 检测组合键是否触发
+		 * @param	comboName
+		 * @return
+		 */
 		static public function isComboKey(comboName:String):Boolean
 		{
 			
@@ -224,7 +230,7 @@ package XGameEngine.Manager
 		
 		
 		//对按下的某个键执行组合键检测
-		static public function checkComboKeys(keyCode:int):void
+		static private function checkComboKeys(keyCode:int):void
 		{
 			for each(var c:comboKey in comboKeys)
 			{

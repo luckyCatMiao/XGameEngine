@@ -51,7 +51,12 @@
 			this.graphics.beginFill(Color.GREEN);
 			for each(var p:Point in getCheckPoint().Raw)
 			{
-				this.graphics.drawCircle(p.x, p.y, 5);
+				//点往中间靠一点 防止在调试模式中突出平面。。
+				var drawX:Number = p.x > getCenterPoint().x?p.x - 5:p.x + 5;
+				var drawY:Number = p.y > getCenterPoint().y?p.y - 5:p.y + 5;
+				
+				
+				this.graphics.drawCircle(drawX, drawY, 5);
 			}
 			this.graphics.endFill();
 		
@@ -64,8 +69,6 @@
 		list.add(getDownPoint());
 		list.add(getLeftPoint());
 		list.add(getRightPoint());
-		
-	
 		
 		return list;
 	}
@@ -89,6 +92,12 @@
 	public function getRightPoint():Point
 	{
 			return new Point((x+boxWidth),(y+boxHeight)/2);
+	}
+	
+	//返回中间点
+	public function getCenterPoint():Point
+	{
+			return new Point((x+boxWidth)/2,(y+boxHeight)/2);
 	}
 	
 	

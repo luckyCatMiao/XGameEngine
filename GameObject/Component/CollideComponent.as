@@ -29,6 +29,7 @@
 		public function generateRectCollider(width:uint,height:uint,color:uint,x:Number,y:Number)
 		{
 
+			
 			if (c != null)
 			{
 				throw new Error("one gameobject only can have one collider!please reset collider before generet another");

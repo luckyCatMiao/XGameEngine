@@ -499,7 +499,7 @@
 			for each(var p:Point in points.Raw)
 			{
 				var newPoint = o1.localToGlobal(p);
-				if (o2.hitTestPoint(newPoint.x,newPoint.y,true))
+				if (o2.getCollideComponent().collider.hitTestPoint(newPoint.x,newPoint.y,true))
 				{
 					result = true;
 					updateHitState(o1, o2, true,p);

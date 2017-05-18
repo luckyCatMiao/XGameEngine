@@ -19,6 +19,7 @@
 		protected var anime_com:AnimeComponent;
 		protected var collide_com:CollideComponent;
 		protected var physics_com:PhysicsComponent;
+		protected var transform_com:TransformComponent;
 		
 		protected var _xname:String;
 		protected var _tag:String;
@@ -65,7 +66,7 @@
 			anime_com = new AnimeComponent(this);
 			collide_com = new CollideComponent(this);
 			physics_com = new PhysicsComponent(this);
-			
+			transform_com = new TransformComponent(this);
 		}
 
 		
@@ -178,6 +179,14 @@
 		public function getPhysicsComponent():PhysicsComponent 
 		{
 			return physics_com;
+		}
+		/**
+		 * 返回变换组件(便捷的旋转,缩放..)
+		 * @return
+		 */
+		public function getTransformComponent():TransformComponent 
+		{
+			return transform_com;
 		}
 		
 		public function set tag(value:String):void 
