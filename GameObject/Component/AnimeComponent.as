@@ -17,6 +17,7 @@
 		public function LoadAnimeByName(aname:String)
 		{
 			var anime:Animation = GameUtil.LoadAnimationByName(aname);
+			anime.stop();
 			host.addChild(anime);
 			return anime;
 		}

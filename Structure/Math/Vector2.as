@@ -23,10 +23,9 @@
 		
 		public function multiply(i:Number):Vector2
 		{
-			x *= i;
-			y *= i;
 			
-			return this.clone();
+			
+			return new Vector2(x *= i, y *= i);
 		}
 		
 		

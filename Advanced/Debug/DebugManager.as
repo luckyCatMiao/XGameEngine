@@ -26,7 +26,7 @@
 		{
 			if (GameEngine.getInstance().debug == false)
 			{
-				throw new Error("Please open the debug mode!set the bool value in GameEngine class");
+				trace("the debug mode don't open");
 			}
 			
 				if (_instance == null)

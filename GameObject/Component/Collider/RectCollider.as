@@ -21,6 +21,9 @@
 		static public var POINT_DOWN:String = "down";
 		
 		
+		private var boxWidth:Number;
+		private var boxHeight:Number;
+		
 	public function RectCollider(width:uint,height:uint,color:uint)
 	{
 		
@@ -32,6 +35,8 @@
 			this.graphics.drawRect(0, 0, width, height);
 			this.graphics.endFill();
 			
+			boxWidth = width;
+			boxHeight = height;
 			
 			if (GameEngine.getInstance().debug == true)
 			{
@@ -68,22 +73,22 @@
 	//返回中上的点
 	public function getTopPoint():Point
 	{
-			return new Point((x+width)/2,y);
+			return new Point((x+boxWidth)/2,y);
 	}
 	//返回中下的点
 	public function getDownPoint():Point
 	{
-			return new Point((x+width)/2,y+height);
+			return new Point((x+boxWidth)/2,y+boxHeight);
 	}
 	//返回中左的点
 	public function getLeftPoint():Point
 	{
-			return new Point(x,(y+height)/2);
+			return new Point(x,(y+boxHeight)/2);
 	}
 	//返回中右的点
 	public function getRightPoint():Point
 	{
-			return new Point((x+width),(y+height)/2);
+			return new Point((x+boxWidth),(y+boxHeight)/2);
 	}
 	
 	
@@ -97,17 +102,17 @@
 	public function getLeftBottomPoint():Point
 	{
 	
-			return new Point(x,y+height);
+			return new Point(x,y+boxHeight);
 	}
 	//返回右上角的点
 	public function getRightTopPoint():Point
 	{
-			return new Point(x+width,y);
+			return new Point(x+boxWidth,y);
 	}
 	//返回右下角的点
 	public function getRightBottomPoint():Point
 	{
-			return new Point(x + width, y + height);
+			return new Point(x + boxWidth, y + boxHeight);
 	}
 		
 	}

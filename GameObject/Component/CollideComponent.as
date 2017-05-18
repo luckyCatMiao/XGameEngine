@@ -25,6 +25,7 @@
 		
 		
 		private var c:Collider;
+		
 		public function generateRectCollider(width:uint,height:uint,color:uint,x:Number,y:Number)
 		{
 

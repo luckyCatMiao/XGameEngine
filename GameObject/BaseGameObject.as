@@ -215,7 +215,18 @@
 		{
 			return gameEngine.getLayerManager();
 		}
-		
+		public function getHitManager():HitManager 
+		{
+			return gameEngine.getHitManager();
+		}
+		public function getGameObjectManager():GameObjectManager 
+		{
+			return gameEngine.getGameObjectManager();
+		}
+		public function getTimeManager():TimeManager 
+		{
+			return gameEngine.getTimeManager();
+		}
 		
 		public function onHitEnter(c:Collision) 
 		{

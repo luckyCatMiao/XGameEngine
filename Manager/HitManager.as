@@ -1,6 +1,7 @@
 ﻿package XGameEngine.Manager
 {
 	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.GameObject.Component.Collider.Collider;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.LayerManager;
 	import flash.display.DisplayObject;
@@ -53,6 +54,11 @@
 		 * 保存碰撞数据
 		 */
 		private var hitList:List = new List();
+		
+		/**
+		 * while级别的测试
+		 */
+		private var whileTest:List = new List();
 		
 		public function HitManager()
 		{
@@ -176,7 +182,7 @@
 				
 				applyHitState();
 				
-
+				calculateWhileTest();
 			}
 			
 			
@@ -194,6 +200,39 @@
 			
 		}
 		
+		
+		/**
+		 * 检测while级的测试,可以使用自定义的回调函数
+		 */
+		private function calculateWhileTest():void
+		{
+			var i:int = 0;
+			//因为这里有卡死的危险..所以规定上限每帧每两个物体只能计算100次(超过一百次后该碰撞检测被废弃,因为可能代码有逻辑问题)
+			for each(var w:WhileTest in whileTest.Raw)
+			{
+				//只要两个物体还在接触中就一直计算碰撞 因此回调方法中应该包含将两个物体分开的方法 、
+				//否则就会达到计算上限100次
+				//注意该计算只会回调接触中的回调函数
+				while (TryCheckTwobjectHit(w.o1, w.o2)==true&&w.valid==true)
+				{
+					//每次碰撞都回调一次碰撞函数
+					applyHitState(true);
+					
+					if (w.fun != null)
+					{
+						w.fun();
+					}
+					i++;
+					if (i > 100)
+					{
+						w.valid = false;
+						trace(w.o1 + "-" + w.o1 + " has checked over 100 times!Please check!")
+						continue;
+					}
+				}
+			}
+			
+		}
 		
 		
 		/**
@@ -222,7 +261,7 @@
 		 * @param	o
 		 * @param	rect
 		 */
-		private function TryCheckTwobjectHit(o1:BaseGameObject,o2:BaseGameObject,rect:Rectangle=null)
+		private function TryCheckTwobjectHit(o1:BaseGameObject,o2:BaseGameObject,rect:Rectangle=null):Boolean
 		{
 			
 					//判断过滤设定
@@ -232,22 +271,28 @@
 						//如果双方的碰撞器都存在
 						if (o1.getCollideComponent().hasCollider() && o2.getCollideComponent().hasCollider())
 						{
-							CheckTwoObjectHit(o1, o2);
+							return CheckTwoObjectHit(o1, o2,rect);
 						}
 						
 					}
 					
+					return false;
+					
 		}
 		
 		/**
-		 * 根据记录的碰撞状态 调用方法 
+		 * 根据记录的碰撞状态 调用方法 (如果是whileTest,则会强制改变为碰撞中状态)
 		 * @param	o1
 		 * @param	o2
 		 */
-		private function applyHitState()
+		private function applyHitState(whileTest:Boolean=false)
 		{
 			for each(var hit:HitRecord in hitList.Raw)
 			{
+				if (whileTest)
+				{
+					hit.state = COLLISION_ING;
+				}
 				//分别调用双方的碰撞方法
 				hit.o1.getCollideComponent().applyCollision(CreateCollision(hit));
 				hit.o2.getCollideComponent().applyCollision(CreateCollision(hit));
@@ -400,6 +445,45 @@
 			}
 		}
 		
+		
+		
+		/**
+		 * 添加一个while级别的测试 (只能检测到碰撞中 不能检测开始和结束)
+		 * @param	o1
+		 * @param	o2
+		 * @param	recall
+		 */
+		public function addWhileTest(o1:BaseGameObject, o2:BaseGameObject,recall:Function=null)
+		{
+
+			if (o1 == o2)
+			{
+				throw new Error("the o1 can't == o2");
+			}
+			checkNull(o1,"o1");
+			checkNull(o2,"o2");
+			
+			var t:WhileTest = new WhileTest();
+			t.o1 = o1;
+			t.o2 = o2;
+			t.fun = recall;
+			
+			
+			
+			
+			whileTest.add(t);
+			
+		}
+		
+		/**
+		 * 检测两个物体的碰撞
+		 * @param	o1
+		 * @param	o2
+		 * @param	rect
+		 * @param	directInvoke 直接直接触发碰撞回调,正常情况下碰撞回调只在一个计算周期回调一次,如果需要更精确的碰撞可以设置为true
+		 * 这样只要每次调用该方法都会回调碰撞函数
+		 * @return
+		 */
 		private function CheckTwoObjectHit(o1:BaseGameObject, o2:BaseGameObject,rect:Rectangle=null):Boolean
 		{
 			//这里到时候优化下 如果碰撞器数量多卡的话
@@ -460,6 +544,14 @@ class HitRecord
 	{
 		return "[HitRecord o1=" + o1 + " o2=" + o2 + " state=" + state + "]";
 	}
+	
+}
+class WhileTest
+{
+	public var o1:BaseGameObject;
+	public var o2:BaseGameObject;
+	public var fun:Function;
+	public var valid:Boolean = true;
 	
 }
  class Filter

@@ -71,6 +71,10 @@
 		{
 			return LayerManager.getInstance();
 		}
+		public function getHitManager():HitManager
+		{
+			return HitManager.getInstance();
+		}
 		
 		
 		private function loop(e:Event)
