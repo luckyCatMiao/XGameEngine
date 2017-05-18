@@ -20,10 +20,13 @@
 		protected var collide_com:CollideComponent;
 		protected var physics_com:PhysicsComponent;
 		protected var transform_com:TransformComponent;
+		protected var state_com:StateComponent;
 		
 		protected var _xname:String;
 		protected var _tag:String;
 		protected var _layerName:String;
+		
+		protected var _state:String;
 		public function BaseGameObject(_name:String=null)
 		{
 			
@@ -67,6 +70,7 @@
 			collide_com = new CollideComponent(this);
 			physics_com = new PhysicsComponent(this);
 			transform_com = new TransformComponent(this);
+			state_com = new StateComponent(this);
 		}
 
 		
@@ -94,6 +98,7 @@
 				physics_com.calulate();
 			}
 			
+			state_com.loop();
 			loop();
 		}
 		
@@ -188,6 +193,14 @@
 		{
 			return transform_com;
 		}
+		/**
+		 * 返回状态机组件
+		 * @return
+		 */
+		public function getStateComponent():StateComponent 
+		{
+			return state_com;
+		}
 		
 		public function set tag(value:String):void 
 		{	
@@ -214,6 +227,17 @@
 			}
 			getLayerManager().addToLayer(this, value);
 			_layerName = value;
+		}
+		
+		public function get state():String 
+		{
+			return _state;
+		}
+		
+		public function set state(value:String):void 
+		{
+			getStateComponent().changeState(value);
+			_state = value;
 		}
 
 		public function getTagManager():TagManager 
@@ -250,6 +274,22 @@
 		{
 			
 		}
+		
+		//状态机
+		public function onStateEnter(newstate:String,lastState:String)
+		{
+			
+		}
+		public function onStateDuring(state:String)
+		{
+			
+		}
+		public function onStateExit(state:String)
+		{
+			
+		}
+		
+		
 		
 	}
 	
