@@ -1,5 +1,7 @@
 ﻿package XGameEngine.Advanced.Debug
 {
+	import flash.display.Shape;
+	import flash.geom.Rectangle;
 	import XGameEngine.UI.Draw.Color;
 	import flash.events.TextEvent;
 	import flash.text.TextFieldType
@@ -22,6 +24,8 @@
 		
 		static private var _instance:DebugManager;
 		
+		
+		
 		static public function getInstance():DebugManager
 		{
 			
@@ -37,6 +41,7 @@
 	
 		
 		private var map:Map = new Map();
+		private var debugShape:Shape;
 		
 		/**
 		 * called by the GameEngine instance
@@ -141,6 +146,29 @@
 			
 		}
 		
+		public function drawRect(r:Rectangle)
+		{
+			if (GameEngine.getInstance().debug == false)
+			{
+				return;
+			}
+			
+			var s:Stage = GameEngine.getInstance().getStage();
+			if (debugShape == null)
+			{
+				debugShape = new Shape();
+				s.addChild(debugShape);
+			}
+			
+			
+			debugShape.graphics.beginFill(Color.BLUE, 0.5);
+			debugShape.graphics.drawRect(r.x, r.y, r.width, r.height);
+			trace(r);
+			debugShape.graphics.endFill();
+
+			
+			
+		}
 		
 		
 	}

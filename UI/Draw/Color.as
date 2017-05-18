@@ -16,6 +16,8 @@
 		static public var BLACK:uint = 0xff000000;
 		
 		static public var YELLOW:uint = 0xffffff00;
+		
+		static public var BLUE:uint = 0xff0000ff;
 	}
 	
 }

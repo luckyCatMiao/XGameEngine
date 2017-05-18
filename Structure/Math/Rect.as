@@ -16,12 +16,31 @@
 		public var height:Number;
 		
 		
-		public function Rect(x:Number, y:Number, width:Number, height:Number)
+		/**
+		 * 
+		 * @param	x
+		 * @param	y
+		 * @param	width
+		 * @param	height
+		 * @param	inputPoint 如果为true 则输入的后两个按照x y坐标而不是宽高来解释
+		 */
+		public function Rect(x:Number, y:Number, width:Number, height:Number,inputPoint:Boolean=false)
 		{
 				this.x = x;
 				this.y = y;
+				
+				if (!inputPoint)
+				{
 				this.width = width;
 				this.height = height;
+				}
+				else
+				{
+				this.width = width - x;
+				this.height = height - y;
+				}
+				
+
 		}
 		
 		

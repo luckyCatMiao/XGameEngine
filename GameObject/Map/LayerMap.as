@@ -1,10 +1,14 @@
 ﻿package XGameEngine.GameObject.Map
 {
+	import XGameEngine.Advanced.Debug.DebugManager;
 	import flash.display.DisplayObject;
+	import flash.geom.Point;
 	import Script.GameObject.GameMap;
 	import Script.GameObject.Player;
+	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.Structure.List;
 	import XGameEngine.Structure.Map;
+	import XGameEngine.Structure.Math.Rect;
 	
 	/**
 	 * ...
@@ -17,6 +21,12 @@
 		
 		
 		private var mainMap:MapLayer;
+		private var mainChara:BaseGameObject;
+		/**
+		 * 主角色的可移动范围,范围内移动主层 否则移动所有其他层
+		 */
+		private var _moveRect:Rect;
+		
 		private var otherMaps:List = new List();
 		
 		
@@ -64,12 +74,12 @@
 		}
 		
 		/**
-		 * 添加物体到主层
+		 * 添加物体到主层(默认设置第一个对象为主层里的主角色)
 		 * @param	player
 		 * @param	string
 		 * @param	boolean 如果主层不存在 是否自动创建主层
 		 */
-		public function addToMainLayer(o:DisplayObject, string:String="", autoCreate:Boolean=false):void 
+		public function addToMainLayer(o:BaseGameObject, string:String="", autoCreate:Boolean=false):void 
 		{
 			if (autoCreate == false && mainMap == null)
 			{
@@ -84,6 +94,10 @@
 					addMainLayer(m.name, m.map);
 				}
 				mainMap.map.addChild(o);
+				if (mainMap.map.numChildren == 1)
+				{
+					setMainLayerMainCharacter(o);
+				}
 				
 			}
 			
@@ -115,6 +129,27 @@
 					
 				addNormalLayer(m.name, m.map);
 				findLayer(name).map.addChild(o);
+			}
+		}
+		
+		
+		/**
+		 * 设置主要层里的主要角色 移动就是根据该角色来计算!
+		 */
+		public function setMainLayerMainCharacter(o:BaseGameObject):void 
+		{
+			if (mainMap==null)
+			{
+				throw new Error("the main layer doen'nt exist!");
+			}
+			
+			if (mainMap.map.getGameObjectComponent().hasChild(o) == false)
+			{
+				throw new Error("the " + o + " object doesn't in the main layer!");
+			}
+			else
+			{
+				mainChara = o;
 			}
 		}
 		
@@ -156,16 +191,104 @@
 		 * @param	x
 		 * @param	y
 		 */
-		override public function move(x:Number, y:Number) 
+		override public function move(x:Number, y:Number):Boolean
 		{
-			//主层不移动
-			
-			//普通层反向移动
-			for each (var l:MapLayer in otherMaps.Raw ) 
+			if (moveRect != null)
 			{
-				l.map.move( -x, -y);
+				
+				var point:Point = mainChara.localToGlobal(new Point(0,0));
+		
+				//如果主角色想往右边移动
+				if (x>0)
+				{	
+					//如果在主角色在移动右边界左边
+					if (point.x <moveRect.getRightBottomPoint().x)
+					{
+						//移动主层
+						mainMap.map.x += x;
+							
+					}
+					else
+					{
+						//如果副层还可以移动则移动副层
+						if (moveOtherLayer(-x, -y)==true)
+						{
+							
+						}
+						else
+						{
+							//否则继续移动主层 直到碰到舞台边缘
+							if (point.x < stage.stageWidth-15)
+							{
+								mainMap.map.x += x;
+							}
+
+						}
+						
+					}
+					
+				}
+				
+				//如果主角色想往左边移动
+				if (x<0)
+				{	
+					//如果在主角色在移动左边界右边
+					if (point.x >moveRect.getLeftBottomPoint().x)
+					{
+						//移动主层
+						mainMap.map.x += x;
+							
+					}
+					else
+					{
+						//如果副层还可以移动则移动副层
+						if (moveOtherLayer(-x, -y)==true)
+						{
+							
+						}
+						else
+						{
+							//否则继续移动主层 直到碰到舞台边缘
+							if (point.x > 15)
+							{
+								mainMap.map.x += x;
+							}
+
+						}
+						
+					}
+					
+				}
 				
 			}
+			else
+			{
+				//主层不移动
+				//普通层反向移动
+			moveOtherLayer( -x, -y);
+			
+			
+			}
+			
+			return true;
+			
+		}
+		
+		private function moveOtherLayer(x:Number, y:Number):Boolean 
+		{
+			//任意一层无法继续移动则返回移动失败
+			var b:Boolean=true;
+			for each (var l:MapLayer in otherMaps.Raw ) 
+			{
+				if (l.map.move(x, y) == false)
+				{
+					b = false;
+				}
+				
+			}
+			
+			
+			return b;
 		}
 		
 		public function moveX(x:Number) 
@@ -176,6 +299,17 @@
 		public function moveY( y:Number) 
 		{
 			move(0, y);
+		}
+		
+		public function get moveRect():Rect 
+		{
+			return _moveRect;
+		}
+		
+		public function set moveRect(value:Rect):void 
+		{
+			DebugManager.getInstance().drawRect(value.toRectangle());
+			_moveRect = value;
 		}
 		
 		

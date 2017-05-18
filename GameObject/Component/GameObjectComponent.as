@@ -56,6 +56,26 @@
 			}
 			
 		}
+		
+		
+		
+		/**
+		 * 查找指定对象是否在子级中(不进行递归)
+		 * @param	o
+		 * @return
+		 */
+			public function hasChild(o:DisplayObject):Boolean 
+			{
+				for (var i:Number = 0; i < host.numChildren; i++ )
+				{
+					if (host.getChildAt(i) == o)
+					{
+						return true;
+					}
+				}
+				
+				return false;
+			}
 	}
 	
 }
