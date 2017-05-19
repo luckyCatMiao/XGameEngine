@@ -29,15 +29,19 @@
 		
 		private var s:Stage;
 		private var list:List = new List();
-		public var debug:Boolean=false;
+		private var _debug:Boolean = false;
 		
+		/**
+		 * 游戏运行中能否改变debug状态 发行版游戏中一般设置为false
+		 */
+		public var canChangeDebug:Boolean=false;
 		/**
 		 * this should be called when game inited,generally from the entry class
 		 * @param	s
 		 */
 		public function Init(s:Stage)
 		{
-			
+			Input.Init(s);
 			this.s = s;
 			s.addEventListener(Event.ENTER_FRAME, loop);
 			InitManager();
@@ -94,6 +98,20 @@
 		public function getStage():Stage 
 		{
 			return s;
+		}
+		
+		public function get debug():Boolean 
+		{
+			return _debug;
+		}
+		
+		public function set debug(value:Boolean):void 
+		{
+			if (canChangeDebug)
+			{
+				_debug = value;
+			}
+			
 		}
 		
 	}

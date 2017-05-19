@@ -28,16 +28,18 @@
 		private var aabb:Rect;
 		
 		
+		
+		
 	public function RectCollider(width:uint,height:uint,color:uint)
 	{
 		
 	
 		
-		var al:Number = GameEngine.getInstance().debug == true?0.4:0;
+			var al:Number = GameEngine.getInstance().debug == true?0.4:0;
 				
-			this.graphics.beginFill(color,al);
-			this.graphics.drawRect(0, 0, width, height);
-			this.graphics.endFill();
+			this.shape.graphics.beginFill(color,al);
+			this.shape.graphics.drawRect(0, 0, width, height);
+			this.shape.graphics.endFill();
 			
 			boxWidth = width;
 			boxHeight = height;
@@ -51,6 +53,7 @@
 				DrawCheckPoint();
 			}
 			
+			addChild(this.shape);
 			
 			
 	}
@@ -58,7 +61,7 @@
 	
 	public function DrawCheckPoint() 
 	{
-			this.graphics.beginFill(Color.GREEN);
+			this.shape.graphics.beginFill(Color.GREEN);
 			for each(var p:Point in getCheckPoint().Raw)
 			{
 				//点往中间靠一点 防止在调试模式中突出平面。。
@@ -66,9 +69,9 @@
 				var drawY:Number = p.y > getCenterPoint().y?p.y - 3.5:p.y + 3.5;
 				
 				
-				this.graphics.drawCircle(drawX, drawY, 3.5);
+				this.shape.graphics.drawCircle(drawX, drawY, 3.5);
 			}
-			this.graphics.endFill();
+			this.shape.graphics.endFill();
 		
 	}
 	
@@ -80,7 +83,23 @@
 		list.add(getLeftPoint());
 		list.add(getRightPoint());
 		
+		
 		return list;
+	}
+	
+	
+	override public function debugShape() 
+	{
+		if (GameEngine.getInstance().debug && debug)
+		{
+			//这里必须要有一个shape 就算不是debug模式 也要设置为透明 因为碰撞器必须实际存在
+			
+			shape.alpha = 1;
+		}
+		else if(GameEngine.getInstance().debug==false || debug==false)
+		{
+			shape.alpha = 0;
+		}
 	}
 		
 //返回中上的点

@@ -84,6 +84,27 @@
 			return "["+arr.toString()+"]";
 		}
 		
+		
+		
+		/**
+		 * 每个元素视作一个关联数组 查找是否有某个对象的key的值为value
+		 * @param	value 
+		 * @param	key
+		 */
+		public function find(value:Object, key:String):Object 
+		{
+		
+			for each(var o:Object in arr)
+			{	
+				if (o[key] == value)
+				{
+					return o;
+				}
+			}
+			
+			return null;
+		}
+		
 	}
 	
 }

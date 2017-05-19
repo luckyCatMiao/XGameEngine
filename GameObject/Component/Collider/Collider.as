@@ -13,6 +13,9 @@
 	public class Collider extends Sprite
 	{
 	
+		
+		public var debug:Boolean = false;
+		public var shape:Shape = new Shape();
 		public function Collider()
 		{
 			
@@ -27,6 +30,13 @@
 		}
 	
 		
+		/**
+		 * debug绘制出碰撞器的范围以及碰撞点
+		 */
+		public function debugShape()
+		{
+			throw new Error("调用基类该方法无意义!");
+		}
 		
 	}
 	

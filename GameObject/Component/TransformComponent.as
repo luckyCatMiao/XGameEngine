@@ -7,6 +7,7 @@
 	import flash.geom.Rectangle;
 	import XGameEngine.GameEngine;
 	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.UI.XTextField;
 	import XGameEngine.Util.MathTool;
 	import XGameEngine.GameObject.BaseGameObject;
 	
@@ -25,6 +26,11 @@
 		private var aabbDebugShape:Shape;
 		
 		private var _oldaabb:Rect;
+		
+		private var _debugPosition:Boolean=false;
+		public var debugAABB:Boolean = false;
+		
+		private var posTextfield:XTextField = new XTextField();
 		public function TransformComponent(o:BaseGameObject)
 		{
 			super(o);
@@ -78,12 +84,67 @@
 			return _oldaabb;
 		}
 		
+		public function get debugPosition():Boolean 
+		{
+			return _debugPosition;
+		}
+		
+		public function set debugPosition(value:Boolean):void 
+		{
+			if (value == true)
+			{
+				host.stage.addChild(posTextfield);
+			}
+			else if (value == false)
+			{
+				host.stage.removeChild(posTextfield);
+			}
+			
+			_debugPosition = value;
+		}
+		
+		
 		public function loop()
 		{
 			if (GameEngine.getInstance().debug == true)
 			{
-				DrawAABB();
+				if (debugAABB == true)
+				{
+					DrawAABB();
+				}
+				if (_debugPosition == true)
+				{
+					DebugPosition();
+				}	
 			}
+			else if (GameEngine.getInstance().debug == false)
+			{
+				if (aabbDebugShape != null)
+				{
+				aabbDebugShape.graphics.clear();
+				}
+				
+				
+				if (posTextfield.parent != null)
+				{
+					posTextfield.parent.removeChild(posTextfield);
+				}
+				
+			}
+			
+		}
+		
+		private function DebugPosition():void 
+		{
+			if (posTextfield.parent == null)
+			{
+				host.stage.addChild(posTextfield);
+			}
+			
+			posTextfield.text = "X:" + host.centerGlobalPoint.x + "Y:" + host.centerGlobalPoint.y;
+			posTextfield.size = 15;
+			posTextfield.x = host.centerGlobalPoint.x-posTextfield.textWidth/2;
+			posTextfield.y = host.leftTopGlobalPoint.y - 30;
 		}
 		
 		public function DrawAABB()

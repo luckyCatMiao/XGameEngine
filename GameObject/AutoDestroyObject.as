@@ -6,23 +6,29 @@
 	
 	/**
 	 * ...
-	 * 轻量级的对象 不会加入到对象管理器中 适用于播放一次就消失的特效
+	 * 轻量级的对象 适用于播放一次就消失的特效
 	 */
-	public class AutoDestroyObject extends MovieClip
+	public class AutoDestroyObject extends BaseGameObject
 	{
-		public function AutoDestroyObject()
+		
+		private var animation:Animation;
+		
+		public function AutoDestroyObject(animation:Animation)
 		{
-				this.addEventListener(Event.ENTER_FRAME, loop,false,0,true);
+				this.animation = animation;
+				addChild(animation);
 		}
 		
-		public function loop(e:Event)
+		
+		override protected function loop() 
 		{
-			if (this.currentFrame == this.totalFrames)
+			if (animation.currentFrame == animation.totalFrames)
 			{
-				this.removeEventListener(Event.ENTER_FRAME, loop);
+				this.removeEventListener(Event.ENTER_FRAME, _loop);
 				this.parent.removeChild(this);
 			}
 		}
+		
 		
 		
 		

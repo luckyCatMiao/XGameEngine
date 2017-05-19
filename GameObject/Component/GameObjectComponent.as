@@ -76,6 +76,19 @@
 				
 				return false;
 			}
+			
+			public function removeAll():void 
+			{
+				while (host.numChildren > 0)
+				{
+					host.removeChildAt(0);
+				}
+			}
+			
+			public function removeSelf():void 
+			{
+				host.parent.removeChild(host);
+			}
 	}
 	
 }

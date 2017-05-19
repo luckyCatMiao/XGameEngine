@@ -18,6 +18,8 @@
 		
 		
 		private var debug_stateTF:XTextField;
+		
+		public var debugState:Boolean = false;
 		public function StateComponent(o:BaseGameObject)
 		{
 			super(o);
@@ -47,7 +49,9 @@
 			}
 			
 			
-			DebugState();
+			
+				DebugState();
+			
 		}
 		
 		
@@ -56,7 +60,7 @@
 		 */
 		public function DebugState()
 		{
-			if (GameEngine.getInstance().debug)
+			if (GameEngine.getInstance().debug&&debugState==true)
 			{
 				if (host.state != null)
 				{
@@ -72,12 +76,24 @@
 						
 					}
 					
+					if (debug_stateTF.parent == null)
+					{
+						host.stage.addChild(debug_stateTF);
+					}
+					
 					 var point:Point = host.getTransformComponent().oldaabb.getTopPoint();
 					 var point2:Point=host.localToGlobal(point);
 					debug_stateTF.x = point2.x-debug_stateTF.textWidth/2;
 					debug_stateTF.y = point2.y-20;
 					
 					debug_stateTF.setText(host.state);
+				}
+			}
+			else if (GameEngine.getInstance().debug==false||debugState==false)
+			{
+				if (debug_stateTF!=null&&debug_stateTF.parent != null)
+				{
+						debug_stateTF.parent.removeChild(debug_stateTF);
 				}
 			}
 		}

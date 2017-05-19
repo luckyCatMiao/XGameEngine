@@ -109,6 +109,8 @@
 			
 			state_com.loop();
 			transform_com.loop();
+			collide_com.loop();
+			
 			loop();
 		}
 		
@@ -385,6 +387,17 @@
 		{
 			var r:RectCollider = this.getCollideComponent().rectCollider 
 			var point:Point = this.localToGlobal(r.getRightTopPoint());
+			
+			return point;
+		}
+		
+		/**
+		 * 中心位置碰撞器点转换到全局坐标(这里不用aabb取点是因为aabb设定为实时变化)
+		 */
+		public function get centerGlobalPoint()
+		{
+			var r:RectCollider = this.getCollideComponent().rectCollider 
+			var point:Point = this.localToGlobal(r.getCenterPoint());
 			
 			return point;
 		}

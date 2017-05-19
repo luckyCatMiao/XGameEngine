@@ -29,7 +29,10 @@
 		
 		private var otherMaps:List = new List();
 		
-		
+		/**
+		 * debug模式中是否绘制出移动范围
+		 */
+		public var debugRect:Boolean = false;
 		
 		/**
 		 * 添加普通层
@@ -191,7 +194,7 @@
 		 * @param	x
 		 * @param	y
 		 */
-		override public function move(x:Number, y:Number):Boolean
+		override public function move(x:Number, y:Number)
 		{
 			if (moveRect != null)
 			{
@@ -270,23 +273,47 @@
 			
 			}
 			
-			return true;
-			
+		
+		}
+		
+		
+		/**
+		 * 这个实在不知道怎么覆盖。。好像要写的很复杂 等以后用到再写吧
+		 * @param	x
+		 * @param	y
+		 * @return
+		 */
+		override public function canMove(x:Number, y:Number):Boolean 
+		{
+			return super.canMove(x, y);
 		}
 		
 		private function moveOtherLayer(x:Number, y:Number):Boolean 
 		{
-			//任意一层无法继续移动则返回移动失败
-			var b:Boolean=true;
+			//有一层无法继续移动则返回失败
+			
+			
+			var b:Boolean = true;
+			
 			for each (var l:MapLayer in otherMaps.Raw ) 
 			{
-				if (l.map.move(x, y) == false)
+				if (l.map.canMove(x, y) == false)
 				{
-					b = false;
+					return false;
 				}
 				
 			}
 			
+			//如果所有层都可以移动 移动所有层
+			if (b)
+			{
+				for each (var q:MapLayer in otherMaps.Raw ) 
+				{
+				q.map.move(x, y) 
+				
+				
+				}
+			}
 			
 			return b;
 		}
@@ -308,7 +335,10 @@
 		
 		public function set moveRect(value:Rect):void 
 		{
-			DebugManager.getInstance().drawRect(value.toRectangle());
+			if (gameEngine.debug == true && debugRect == true)
+			{
+				DebugManager.getInstance().drawRect(value.toRectangle(),"moveRect");
+			}
 			_moveRect = value;
 		}
 		

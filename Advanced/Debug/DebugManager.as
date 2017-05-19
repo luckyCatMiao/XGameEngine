@@ -1,28 +1,29 @@
 ﻿package XGameEngine.Advanced.Debug
 {
-	import flash.display.Shape;
-	import flash.geom.Rectangle;
-	import XGameEngine.UI.Draw.Color;
-	import flash.events.TextEvent;
-	import flash.text.TextFieldType
-	import flash.display.Stage;
-	import flash.text.TextField;
+	import XGameEngine.Manager.BaseManager;
+	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.Util.CollectionUtil;
+	
+	import flash.display.*;
+	import flash.events.*;
+	import flash.geom.*;
+	import flash.text.*;
 	import XGameEngine.*;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.events.Event;
-	import XGameEngine.Advanced.Interface.LoopAble;
+	import XGameEngine.Advanced.Interface.*;
+	import XGameEngine.Manager.*;
 	import XGameEngine.Structure.*;
 	import XGameEngine.UI.*;
+	import XGameEngine.UI.Draw.*;
 	
 	/**
 	 * ...
 	 * a class provide a set of features to help you debug easy
 	 */
-	public class DebugManager implements LoopAble
+	public class DebugManager extends BaseManager implements LoopAble
 	{
 		
 		static private var _instance:DebugManager;
+		
 		
 		
 		
@@ -38,16 +39,63 @@
 			
 		}
 		
-	
+		
+		
+		/**
+		 * 因为矢量图画了之后就不能再获取到 所这边还是每个debug都用一个shape单独来画 然后用名字关联
+		 * @return
+		 */
+		
+		private var debugShapes:List = new List();
+		/**
+		 * 放所有矢量图的面板,和调整数据的面板分开
+		 */
+		private var debugShapePlane:BaseGameObject = new BaseGameObject();
+		
 		
 		private var map:Map = new Map();
-		private var debugShape:Shape;
+		
+		private var debugValuePlane:BaseGameObject = new BaseGameObject();
+		
+		public function DebugManager()
+		{
+			//注册一个默认更改debug状态热键 debug五个键一起按下可以改变debug状态
+			var keys:Array = [KeyCode.VK_D,KeyCode.VK_E,KeyCode.VK_B,KeyCode.VK_U,KeyCode.VK_G];
+			Input.registerComboKey(CollectionUtil.arrayToVectorInt(keys), "debug", 50);
+			//添加到游戏引擎的主循环中
+			GameEngine.getInstance().addLoopAble(this);
+			
+			
+			stage.addChild(debugShapePlane);
+			stage.addChild(debugValuePlane);
+		}
 		
 		/**
 		 * called by the GameEngine instance
 		 */
 		public function loop()
 		{
+			
+			
+			if (Input.isComboKey("debug"))
+			{
+				
+				GameEngine.getInstance().debug = GameEngine.getInstance().debug == true?false:true;
+				if (GameEngine.getInstance().debug == false)
+				{
+					//移除显示debug数据的板
+					debugValuePlane.getGameObjectComponent().removeSelf();
+					//移除显示矢量图数据的版
+					debugShapePlane.getGameObjectComponent().removeSelf();
+					
+				}
+				else
+				{
+					stage.addChild(debugValuePlane);
+					stage.addChild(debugShapePlane);
+				}
+				
+			}
 		}
 		
 		
@@ -64,17 +112,18 @@
 			
 			var s:Stage = GameEngine.getInstance().getStage();
 			
-			if (s.getChildByName("bbb") != null)
-			{
-				s.removeChild(s.getChildByName("bbb"));
-			}
+			
+			debugValuePlane.getGameObjectComponent().removeAll();
+			
+			
+			
+			
 			
 			var data:BitmapData = new BitmapData(100, map.size*20, true, 0x88000000);
 			var bitmap:Bitmap = new Bitmap(data);
-			bitmap.name = "bbb";
 			
 			
-			s.addChild(bitmap);
+			debugValuePlane.addChild(bitmap);
 			
 			var _y:int = 0;
 			for each(var name:String in map.Keys)
@@ -87,7 +136,7 @@
 				nameText.textColor = Color.WHITE;
 				nameText.size = 15;
 				nameText.y = _y;
-				s.addChild(nameText);
+				debugValuePlane.addChild(nameText);
 				
 				
 				
@@ -100,8 +149,8 @@
 				valueText.type = TextFieldType.INPUT;
 				valueText.getExtraValue().put("fun", listener);
 				valueText.getExtraValue().put("name", name);
-				s.addChild(valueText);
-				s.addEventListener(Event.CHANGE, input);
+				debugValuePlane.addChild(valueText);
+				debugValuePlane.addEventListener(Event.CHANGE, input);
 				
 				_y += 15;
 				
@@ -146,7 +195,7 @@
 			
 		}
 		
-		public function drawRect(r:Rectangle)
+		public function drawRect(r:Rectangle, name:String)
 		{
 			if (GameEngine.getInstance().debug == false)
 			{
@@ -154,20 +203,43 @@
 			}
 			
 			var s:Stage = GameEngine.getInstance().getStage();
-			if (debugShape == null)
+			
+			
+			//查找该名称的shape是否已经存在
+			//不存在的话 创建shape
+			var shape:DebugShape;
+			
+			if ((shape=CheckDebugShape(name)) == null)
 			{
-				debugShape = new Shape();
-				s.addChild(debugShape);
+				shape = new DebugShape(name);
+				debugShapes.add(shape);
+				debugShapePlane.addChild(shape.shape);
+				
+			}
+			else
+			{		
+				shape.shape.graphics.clear();
+				//已经存在 擦除
 			}
 			
+		
+			var debugShape:Shape = shape.shape;
+			//绘制方形
 			
-			debugShape.graphics.beginFill(Color.BLUE, 0.5);
+			debugShape.graphics.beginFill(Color.BLUE, 0.25);
 			debugShape.graphics.drawRect(r.x, r.y, r.width, r.height);
-			trace(r);
 			debugShape.graphics.endFill();
 
 			
 			
+		}
+		
+		private function CheckDebugShape(name:String):DebugShape 
+		{
+			
+			
+			
+			return debugShapes.find(name,"name") as DebugShape;
 		}
 		
 		
@@ -176,9 +248,28 @@
 	
 }
 
+import flash.display.Shape;
 class DataBean
 {
 	public var listener:Function;
 	public var defValue:Object;
+	
+}
+ class DebugShape
+{
+	public var name:String;
+	public var shape:Shape;
+	
+	
+	public function DebugShape(n:String)
+	{
+		this.name = n;
+		shape = new Shape();
+	}
+	
+	public function toString():String 
+	{
+		return "[DebugShape name=" + name + " shape=" + shape + "]";
+	}
 	
 }

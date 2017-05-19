@@ -17,6 +17,8 @@
 	{
 		
 		
+		private var _debugCollider:Boolean = false;
+		
 		public function CollideComponent(o:BaseGameObject)
 		{
 			super(o);
@@ -91,6 +93,20 @@
 			
 		}
 		
+		public function get debugCollider():Boolean 
+		{
+			return _debugCollider;
+		}
+		
+		public function set debugCollider(value:Boolean):void 
+		{
+			if (this.collider != null)
+			{
+				collider.debug = value;
+			}
+			_debugCollider = value;
+		}
+		
 		
 		public function applyCollision(hit:Collision)
 		{
@@ -142,6 +158,14 @@
 			else
 			{
 				throw new Error("no point find!");
+			}
+		}
+		
+		public function loop():void 
+		{
+			if (collider != null)
+			{
+				collider.debugShape();
 			}
 		}
 		
