@@ -62,6 +62,20 @@
 			}
 		}
 		
+		/**
+		 * 快速调用某个方法任意次
+		 * @param	fun
+		 * @param	times
+		 * @param	params
+		 */
+		public function RepeatInvokeFun(fun:Function,times:Number,params:Array=null):void 
+		{
+			for (var i:Number = 0; i < times; i++)
+			{
+				fun(params);
+			}
+		}
+		
 		
 	}
 	

@@ -429,6 +429,21 @@
 			return point;
 		}
 		
+		
+		public function get xparent():BaseGameObject
+		{
+			if (this.parent == null)
+			{
+				throw new Error("don't have parent!");
+			}
+			if (this.parent as BaseGameObject == null)
+			{
+				throw new Error("parent are not a basegameobject!");
+			}
+			
+			return this.parent as BaseGameObject;
+		}
+		
 	}
 	
 }

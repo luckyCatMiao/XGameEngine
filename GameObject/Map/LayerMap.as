@@ -112,7 +112,7 @@
 		 * @param	string
 		 * @param	boolean 如果普通层不存在 是否自动创建普通层
 		 */
-		public function addToNormalLayer(o:DisplayObject, name:String="", autoCreate:Boolean=false):void 
+		public function addToNormalLayer(o:DisplayObject, name:String="", autoCreate:Boolean=false,moveScale:Number=1):void 
 		{
 
 			if (autoCreate == false)
@@ -129,7 +129,7 @@
 			else
 			{
 				var m:MapLayer = createNormalLayer(name);
-					
+				m.map.moveScale = moveScale;
 				addNormalLayer(m.name, m.map);
 				findLayer(name).map.addChild(o);
 			}

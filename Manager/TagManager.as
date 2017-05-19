@@ -12,6 +12,7 @@
 	public class TagManager extends BaseManager
 	{
 		static public var TAG_DEFAULT = "defaultTag";
+		static public var TAG_PLAYER = "player";
 		
 		
 		private var tags:Map = new Map();

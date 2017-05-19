@@ -32,27 +32,17 @@
 		
 	public function RectCollider(width:uint,height:uint,color:uint)
 	{
-		
-	
-		
-			var al:Number = GameEngine.getInstance().debug == true?0.4:0;
-				
-			this.shape.graphics.beginFill(color,al);
+
+			this.shape.graphics.beginFill(color,0.4);
 			this.shape.graphics.drawRect(0, 0, width, height);
 			this.shape.graphics.endFill();
 			
 			boxWidth = width;
 			boxHeight = height;
 
-			
-			//aabb = new Rect(0, 0, width, height);
-			
-			if (GameEngine.getInstance().debug == true)
-			{
-				//画出碰撞点
-				DrawCheckPoint();
-			}
-			
+			//画出碰撞点
+			DrawCheckPoint();
+
 			addChild(this.shape);
 			
 			
