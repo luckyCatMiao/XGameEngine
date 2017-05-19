@@ -1,6 +1,8 @@
 ﻿package XGameEngine.GameObject.Component
 {
 	import flash.display.DisplayObject;
+	import flash.geom.Point;
+	import XGameEngine.GameObject.AutoDestroyObject;
 	import XGameEngine.GameObject.BaseGameObject;
 	
 	/**
@@ -88,6 +90,14 @@
 			public function removeSelf():void 
 			{
 				host.parent.removeChild(host);
+			}
+			
+			public function addByGlobalPoint(o:BaseGameObject, point:Point):void 
+			{
+				var point2:Point = host.globalToLocal(point);
+				o.x = point2.x;
+				o.y = point2.y;
+				addChildToHighestDepth(o);
 			}
 	}
 	

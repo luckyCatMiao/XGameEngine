@@ -24,6 +24,9 @@
 		{
 			if (animation.currentFrame == animation.totalFrames)
 			{
+				animation.stop();
+				this.removeChild(animation);
+				this.animation = null;
 				destroy();
 			}
 		}

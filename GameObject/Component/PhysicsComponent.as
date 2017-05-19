@@ -26,6 +26,7 @@
 		private var thresholdX:Number = 0;
 		private var thresholdY:Number = 0;
 		
+		private var listener:Function;
 		
 		/**
 		 * 上一帧移动的位置,用于复原
@@ -191,6 +192,9 @@
 			var posY:Number =ySpeed+speed2.y;
 			
 			
+			//如果没有监听器 直接变化位置
+			if (listener == null)
+			{
 			if (Math.abs(posX) >= thresholdX)
 			{
 				host.x += posX ;
@@ -200,6 +204,12 @@
 			{
 				host.y -= posY;
 				lastMoveY = posY;
+			}
+			}
+			else
+			{
+				//如果有监听器 则把计算出的移动数据返回给监听器
+				listener(posX, posY);
 			}
 			
 			
@@ -225,6 +235,11 @@
 		public function stop()
 		{
 			enable = false;
+		}
+		
+		public function addCalcuListener(onPhysicsMove:Function):void 
+		{
+			this.listener = onPhysicsMove;
 		}
 		
 	}
