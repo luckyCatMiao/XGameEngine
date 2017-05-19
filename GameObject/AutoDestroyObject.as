@@ -6,7 +6,7 @@
 	
 	/**
 	 * ...
-	 * 轻量级的对象 适用于播放一次就消失的特效
+	 * 轻量级的对象 适用于播放一次就消失的特效(该对象默认禁用了所有组件的功能)
 	 */
 	public class AutoDestroyObject extends BaseGameObject
 	{
@@ -24,10 +24,13 @@
 		{
 			if (animation.currentFrame == animation.totalFrames)
 			{
-				this.removeEventListener(Event.ENTER_FRAME, _loop);
-				this.parent.removeChild(this);
+				destroy();
 			}
 		}
+		
+		
+		
+		
 		
 		
 		

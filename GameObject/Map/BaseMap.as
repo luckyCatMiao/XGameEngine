@@ -14,7 +14,10 @@
 	
 		
 		
-		
+		/**
+		 * 移动缩放系数 即与正常移动速度之比
+		 */
+		public var moveScale:Number = 1;
 		
 		
 		/**
@@ -38,10 +41,10 @@
 			
 			//这次移动是否成功(xy都需要移动成功才行,只有同时成功时才可以真正移动)
 			
-			if (canMove(x,y))
+			if (canMove(x*moveScale,y*moveScale))
 			{
-				this.x += x;
-				this.y += y;
+				this.x += x*moveScale;
+				this.y += y*moveScale;
 			}
 			
 				

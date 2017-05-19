@@ -166,7 +166,7 @@
 			
 		}
 		
-		private function findLayer(name:String):MapLayer 
+		public function findLayer(name:String):MapLayer 
 		{
 			for each(var l:MapLayer in otherMaps.Raw)
 			{

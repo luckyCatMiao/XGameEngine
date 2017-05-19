@@ -38,11 +38,13 @@
 		
 		public function get size()
 		{
+		
 			return gobjects.size;
 		}
 		
 		public function register(a:BaseGameObject)
 		{
+			
 			gobjects.add(a);
 		}
 		
@@ -51,9 +53,9 @@
 			trace(gobjects.toString());
 		}
 		
-		public function remove(a:BaseGameObject):Boolean
+		public function remove(a:BaseGameObject)
 		{
-				return false;
+			gobjects.remove(a);
 		}
 		
 			

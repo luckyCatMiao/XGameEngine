@@ -40,6 +40,8 @@
 			tag = TagManager.TAG_DEFAULT;
 			layerName = LayerManager.LAYER_DEFAULT;
 			
+			
+			
 			InitComponent();
 			InitEvent();
 		}
@@ -69,7 +71,7 @@
 		/**
 		 * 初始化组件
 		 */
-		private function InitComponent()
+		protected function InitComponent()
 		{
 			
 			obj_com = new GameObjectComponent(this);
@@ -86,7 +88,7 @@
 		/**
 		 * 初始化事件监听器
 		 */
-		private function InitEvent()
+		protected function InitEvent()
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, addTo, false, 0, true);
 			this.addEventListener(Event.ENTER_FRAME, _loop, false, 0, true);
@@ -348,6 +350,31 @@
 		}
 		
 		
+		
+		/**
+		 * 销毁物体 必须把所有与之有关的引用都断开 否则该物体不会回收 会造成游戏越来越卡
+		 */
+		public function destroy()
+		{
+					
+			//其实我感觉组件应该是自动回收的..不过不太放心
+			//还是手动清空一下 其实就是我不太清楚 如果组件被该对象以外的其他对象引用了 那这个对象还会不会被回收?
+			//还是说回收该对象 但是保留组件?(想了想应该是这样 不过组件也没有保留的必要 也清除)
+			obj_com = null;
+			anime_com =  null;
+			collide_com =  null;
+			physics_com =  null;
+			transform_com =  null;
+			state_com = null;
+			fun_com =  null;
+			
+				this.removeEventListener(Event.ENTER_FRAME, _loop);
+				this.removeEventListener(Event.ADDED_TO_STAGE, addTo);
+
+				this.parent.removeChild(this);
+				GameObjectManager.getInstance().remove(this);
+					LayerManager.getInstance().removeFromLayer(this);
+		}
 		
 		
 		/**
