@@ -14,6 +14,15 @@
 				throw new Error(errorMsg);
 			}
 		}
+		
+		
+		public function throwWhileNotTrue(condition:Boolean, errorMsg:String):void 
+		{
+			if (condition==false)
+			{
+				throw new Error(errorMsg);
+			}
+		}
 	}
 	
 }

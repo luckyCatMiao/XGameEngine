@@ -75,13 +75,14 @@
 		/**
 		 * 直接设置一个子级为碰撞器
 		 * @param	a
+		 * @param   rect 该子级是否为方形碰撞器(如果不规则则输入false)
 		 */
-		public function setCollider(a:Sprite)
+		public function setCollider(a:Sprite,rect:Boolean=true)
 		{
 			//如果a不是子物体则报错
 			getCommonlyComponent().throwWhileTrue(host.getGameObjectComponent().hasChild(a) == false, "the params is not a child Object of the gameobject");
 			
-			a.alpha = 0;
+			
 			
 			//转换a里面唯一子物体从a坐标系到host坐标系
 			//其中a的唯一子物体必须是shape类型 即代表碰撞区的只能是一些色块
@@ -90,7 +91,12 @@
 				throw new Error("the hitbox can only be Shape type!");
 			}
 	
-			//变换坐标系
+			
+			if (rect)
+			{
+			
+				a.alpha = 0;
+				//变换坐标系
 			var s:Shape = a.getChildAt(0) as Shape;
 			var r:Rectangle = s.getRect(s);
 			
@@ -101,6 +107,17 @@
 			
 			//trace(p1);
 			generateRectCollider(a.width, a.height, Color.RED,p1.x, p1.y);
+			}
+			else
+			{
+				//生成不规则碰撞器
+			var mesh:MeshCollider = new MeshCollider(a);
+			c = mesh;
+			host.getGameObjectComponent().addChildToHighestDepth(mesh);
+			
+			}
+			
+			
 		}
 		
 	
@@ -167,6 +184,7 @@
 		 */
 		public function getRectColliderHitPoint(hit:Point):String
 		{
+
 			var co:RectCollider = collider as RectCollider;
 			if (co == null)
 			{

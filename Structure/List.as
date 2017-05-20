@@ -1,5 +1,6 @@
 ﻿package XGameEngine.Structure
 {
+	import flash.geom.Point;
 	
 	/**
 	 * ...
@@ -103,6 +104,19 @@
 			}
 			
 			return null;
+		}
+		
+		public function contains(o:Object):Boolean 
+		{
+			for each(var q:Object in arr)
+			{
+				if (q == o)
+				{
+					return true;
+				}
+			}
+			
+			return false;
 		}
 		
 	}

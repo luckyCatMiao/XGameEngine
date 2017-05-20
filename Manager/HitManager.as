@@ -226,7 +226,7 @@
 					if (i > 100)
 					{
 						w.valid = false;
-						trace(w.o1 + "-" + w.o1 + " has checked over 100 times!Please check!")
+						trace(w.o1 + "-" + w.o2 + " has checked over 100 times!Please check!")
 						continue;
 					}
 				}
@@ -240,9 +240,26 @@
 		 */
 		private function CheckHitOnce():void
 		{
-			//遍历对象管理器中 依次进行碰撞检测
+			//遍历对象管理器中 依次进行碰撞检测 
 			
 			var object:List = GameObjectManager.getInstance().objects;
+			
+			//过滤出所有有碰撞器的
+			var fun:Function = function(element:*, index:int, arr:Array):Boolean {
+			
+				 var o:BaseGameObject = element as BaseGameObject;
+				if (o.getCollideComponent().hasCollider())
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			};
+			
+			object = object.filter(fun);
+			
 			for (var out:int = 0;out < object.size;out++)
 			{
 				for (var ins:int = (out+1); ins < object.size; ins++)
@@ -263,6 +280,10 @@
 		 */
 		private function TryCheckTwobjectHit(o1:BaseGameObject,o2:BaseGameObject,rect:Rectangle=null):Boolean
 		{
+			if (o1 == o2)
+			{
+				return false;
+			}
 			
 					//判断过滤设定
 					if (!FindFilter(o1.layerName, o2.layerName))
@@ -271,7 +292,17 @@
 						//如果双方的碰撞器都存在
 						if (o1.getCollideComponent().hasCollider() && o2.getCollideComponent().hasCollider())
 						{
-							return CheckTwoObjectHit(o1, o2,rect);
+							//如果一个测试失败 对调位置再测试一次
+							//因为碰撞算法的特殊性 所以有可能o1,o2 和o2,o1的检测结果不同
+							if (CheckTwoObjectHit(o1, o2, rect) == true)
+							{	
+								return true
+							}
+							if (CheckTwoObjectHit(o2, o1, rect) == true)
+							{
+								return true
+							}
+							
 						}
 						
 					}
@@ -313,8 +344,10 @@
 		{ 
 			var c:Collision = new Collision();
 			c.hitObject = hit.o2;
+			c.self = hit.o1;
 			c.state = hit.state;
 			c.hitPoint = hit.hitPoint;
+			c.allhitPoint = hit.allPoints;
 			return c;
 		}
 		/**
@@ -322,7 +355,7 @@
 		 * @param	o1
 		 * @param	o2
 		 */
-		private function updateHitState(o1:BaseGameObject, o2:BaseGameObject,hasCollider:Boolean,hitPoint:Point=null)
+		private function updateHitState(o1:BaseGameObject, o2:BaseGameObject,hasCollider:Boolean,hitPoint:Point=null,allPoint:List=null)
 		{
 			var h:HitRecord;
 			//如果产生了碰撞
@@ -335,6 +368,7 @@
 					var hit:HitRecord = new HitRecord();
 					hit.o1 = o1;
 					hit.o2 = o2;
+					hit.allPoints = allPoint;
 					hit.state = COLLISION_ENTER;
 					hit.hitPoint = hitPoint;
 					hit.lock = true;
@@ -343,11 +377,13 @@
 				//如果该碰撞关系已经存在 设置为碰撞中
 				else
 				{
-					if (h.state == COLLISION_ENTER)
+					if (h.state == COLLISION_ENTER||h.state==COLLISION_ING)
 					{
 					if (h.lock == false)
 					{
 						h.state = COLLISION_ING;
+						h.hitPoint = hitPoint;
+						h.allPoints = allPoint;
 						h.lock = true;
 					}
 					}
@@ -495,24 +531,48 @@
 			//获取o1的所有检测点依次检测o2的包围形状
 			var points:List = o1.getCollideComponent().collider.getCheckPoint();
 			
+			var hitPoints:List = new List();
 			//全都转化到全局坐标系
+			
 			for each(var p:Point in points.Raw)
 			{
+				//发现一个问题 就是如果xscale反向 就是很常见的人物左右走
+				//这个时候点是根据玩家的朝向来的 比如右是指玩家面朝的右 而不是在全局坐标系中看上去的右
+				//然后发现以前游戏的解决办法是只考虑了位置的坐标变换 没有考虑旋转 缩放
+				//现在先采用这种方法 以后再考虑更好的解决办法
+				
+				//想了想3D游戏之后想通了 前后左右都是根据玩家自身坐标系来算的,虽然2D也这么做有点奇怪,不过就是这个道理
+				//所以玩家的右边应该是玩家的正方向 但是玩家反向走之后 这个右边就应该是屏幕看上去的左边
+				//虽然这样在2D看上去真的刚开始很难接受。。要在2D里面思考玩家的朝向
+				//想了想发现还是这样最好..顶多是在回调的时候也把缩放放进去呗...
+				
+				//newPoint = new Point(p.x + o1.x, p.y + o1.y );
+				
+				//trace(newPoint);
 				var newPoint = o1.localToGlobal(p);
+				//trace(newPoint+"  "+o1+"  "+o2);
 				if (o2.getCollideComponent().collider.hitTestPoint(newPoint.x,newPoint.y,true))
 				{
 					result = true;
-					updateHitState(o1, o2, true,p);
-					return true;
+					hitPoints.add(p);
+					
+					
 					
 				}
 				
 			}
 			
+			if (result == true)
+			{
+				updateHitState(o1, o2, true,p,hitPoints);
+				return true;
+			}
+			
+			
 			if (result == false)
 			{
 				
-				updateHitState(o1, o2, false);
+				updateHitState(o1, o2, false,null,null);
 				
 			}
 			
@@ -526,6 +586,7 @@
 }
 import flash.geom.Point;
 import XGameEngine.GameObject.BaseGameObject;
+import XGameEngine.Structure.List;
 
 /**
  * 保存暂时的碰撞记录
@@ -536,6 +597,7 @@ class HitRecord
 	public var o2:BaseGameObject;
 	public var state:String;
 	public var hitPoint:Point;
+	public var allPoints:List;
 	
 	//是否锁定 每次修改后进行一次锁定 这样一帧中只能更新一次状态
 	public var lock:Boolean = false;
