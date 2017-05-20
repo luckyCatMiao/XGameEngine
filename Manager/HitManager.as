@@ -292,17 +292,37 @@
 						//如果双方的碰撞器都存在
 						if (o1.getCollideComponent().hasCollider() && o2.getCollideComponent().hasCollider())
 						{
-							//如果一个测试失败 对调位置再测试一次
-							//因为碰撞算法的特殊性 所以有可能o1,o2 和o2,o1的检测结果不同
-							if (CheckTwoObjectHit(o1, o2, rect) == true)
-							{	
-								return true
-							}
-							if (CheckTwoObjectHit(o2, o1, rect) == true)
-							{
-								return true
-							}
 							
+							//因为碰撞算法的特殊性 所以有可能o1,o2 和o2,o1的检测结果不同
+							//所以这里一定要让能返回点的放在第一个!如果两者中有一个对象不能返回点(即只作为形状使用),则一定要放在第二个位置
+							if (o1.getCollideComponent().collider.getCheckPoint().size > 0 && o2.getCollideComponent().collider.getCheckPoint().size > 0)
+							{
+								//两者都有点 位置随意
+								return CheckTwoObjectHit(o1, o2, rect);
+								
+							}
+							else
+							{
+								//两者都没点 则直接返回false 即两个多边形碰撞器是检测不出碰撞的(因为都不返回点)
+								if (o1.getCollideComponent().collider.getCheckPoint().size == 0 && o2.getCollideComponent().collider.getCheckPoint().size == 0)
+								{
+									return false;
+								}
+								else
+								{
+									//一方有点 则有点的设置为o1
+									if (o2.getCollideComponent().collider.getCheckPoint().size > 0)
+									{
+										return CheckTwoObjectHit(o2, o1, rect);
+									}
+									else
+									{
+										return CheckTwoObjectHit(o1, o2, rect);
+									}
+									
+								}
+								
+							}
 						}
 						
 					}
