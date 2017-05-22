@@ -79,7 +79,10 @@
 		{
 			return HitManager.getInstance();
 		}
-		
+		public function getSoundManager():SoundManager
+		{
+			return SoundManager.getInstance();
+		}
 		
 		private function loop(e:Event)
 		{

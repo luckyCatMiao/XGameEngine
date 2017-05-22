@@ -14,6 +14,10 @@
 			super(o);
 		}
 		
+		/**
+		 * 根据名字反射加载动画片段
+		 * @param	aname
+		 */
 		public function LoadAnimeByName(aname:String)
 		{
 			var anime:Animation = GameUtil.LoadAnimationByName(aname);

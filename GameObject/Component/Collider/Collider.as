@@ -14,13 +14,16 @@
 	public class Collider extends Sprite
 	{
 	
-		
+		/**
+		 * 滑板 所有碰撞必须在这个里面画出来
+		 */
 		public var debug:Boolean = false;
 		public var shape:Shape = new Shape();
 		
 		private var common_com:CommonlyComponent;
 		public function Collider()
 		{
+			addChild(this.shape);
 			common_com = new CommonlyComponent();
 		}
 		

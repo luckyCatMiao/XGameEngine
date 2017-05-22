@@ -3,8 +3,8 @@
 	import flash.display.Stage;
 	import XGameEngine.GameObject.*;
 	import XGameEngine.Structure.*;
+	import XGameEngine.Structure.List.DifferentList;
 	import XGameEngine.Structure.Math.*;
-	
 	/**
 	 * ...
 	 * @author o
@@ -12,7 +12,7 @@
 	//保存所有游戏对象
 	public class GameObjectManager extends BaseManager
 	{
-		private var gobjects:List = new List();
+		
 		
 		
 		static private var _instance:GameObjectManager;
@@ -25,6 +25,19 @@
 					_instance = new GameObjectManager();
 				}
 				return _instance;
+		}
+		
+		
+		private var gobjects:DifferentList = new DifferentList();
+		
+		public function GameObjectManager()
+		{
+			//设置比较方法为名字
+			var fun:Function = function(o1:Object, o2:Object):Boolean
+			{
+				return o1.xname == o2.xname;
+			}
+			gobjects.setEqual(fun);
 		}
 		
 		
@@ -42,16 +55,22 @@
 			return gobjects.size;
 		}
 		
+		/**
+		 * 注册一个游戏对象
+		 * @param	a
+		 */
 		public function register(a:BaseGameObject)
 		{
 			
 			gobjects.add(a);
 		}
 		
+
 	    public function debug()
 		{
 			trace(gobjects.toString());
 		}
+		
 		
 		public function remove(a:BaseGameObject)
 		{
@@ -66,13 +85,8 @@
 		 */
 		public function findGameObjectByName(name:String):BaseGameObject
 		{
-			var fun:Function= function(element:*, index:int, arr:Array):Boolean {
-			return (element as BaseGameObject).xname == name;
-			 };
+			return gobjects.find(name, "xname")as BaseGameObject;
 
-			 var result:List = gobjects.filter(fun);
-			 
-			return result.size==1?result.get(0) as BaseGameObject:null;
 		}
 		
 		/**

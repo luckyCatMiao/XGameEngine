@@ -19,6 +19,18 @@
 	{
 		
 		
+		//碰撞器类型
+		//多边形碰撞器
+		 static  public const  COLLIDER_TYPE_MESH:String = "mesh";
+		//方形碰撞器
+		  static  public const  COLLIDER_TYPE_RECT:String = "rect";
+		//点碰撞器
+		 static  public const  COLLIDER_TYPE_CIRCLE:String = "circle";
+		
+		
+		
+		
+		
 		/**
 		 * 是否debug碰撞器
 		 */
@@ -27,6 +39,7 @@
 		public function CollideComponent(o:BaseGameObject)
 		{
 			super(o);
+			host.addLoopFun(this.loop);
 		}
 		
 		
@@ -73,12 +86,38 @@
 
 		
 		/**
+		 * 生成一个空的网格碰撞器
+		 */
+		public function generateMeshCollider()
+		{
+			//如果当前碰撞器不为空
+			if (c != null)
+			{
+				throw new Error("one gameobject only can have one collider!please reset collider before generet another");
+			}
+			
+			var rect:Rectangle = host.getRect(host);
+			
+			c = new MeshCollider();
+			host.getGameObjectComponent().addChildToHighestDepth(c);
+			c.x = rect.x;
+			c.y = rect.y;
+		
+		}	
+			
+
+		
+		/**
 		 * 直接设置一个子级为碰撞器
 		 * @param	a
-		 * @param   rect 该子级是否为方形碰撞器(如果不规则则输入false)
+		 * @param   type 碰撞器类型
 		 */
-		public function setCollider(a:Sprite,rect:Boolean=true)
+		public function setCollider(a:Sprite,type:String=COLLIDER_TYPE_RECT)
 		{
+			//如果已经有碰撞器就报错
+			getCommonlyComponent().throwWhileTrue(c != null, "the collider has existed,please call the reset before set the new collider.");
+			
+			
 			//如果a不是子物体则报错
 			getCommonlyComponent().throwWhileTrue(host.getGameObjectComponent().hasChild(a) == false, "the params is not a child Object of the gameobject");
 			
@@ -92,9 +131,10 @@
 			}
 	
 			
-			if (rect)
+			//生成方碰撞
+			if (type==COLLIDER_TYPE_RECT)
 			{
-			
+				//方形碰撞是根据给定的形状重新绘制的,所以把原sprite透明度设置为0
 				a.alpha = 0;
 				//变换坐标系
 			var s:Shape = a.getChildAt(0) as Shape;
@@ -108,7 +148,7 @@
 			//trace(p1);
 			generateRectCollider(a.width, a.height, Color.RED,p1.x, p1.y);
 			}
-			else
+			else if(type==COLLIDER_TYPE_MESH)
 			{
 				//生成不规则碰撞器
 			var mesh:MeshCollider = new MeshCollider(a);
@@ -154,6 +194,18 @@
 			
 		}
 		
+		
+		/**
+		 * 试图返回网格碰撞器
+		 */
+		public function get meshCollider():MeshCollider 
+		{
+			getCommonlyComponent().throwWhileNotTrue(c is MeshCollider, "the collider is not a meshCollider");
+			
+			return c as MeshCollider;
+					
+		}
+		
 	
 		
 		/**
@@ -179,7 +231,7 @@
 		
 		
 		/**
-		 * 根据碰撞点返回名字 这样可以知道碰撞的是哪个点
+		 * 根据碰撞点返回名字 这样可以知道碰撞的是哪个点,只适用于碰撞器是方形碰撞器
 		 * @param	hit
 		 */
 		public function getRectColliderHitPoint(hit:Point):String
@@ -214,7 +266,11 @@
 			}
 		}
 		
-		public function loop():void 
+		
+		/**
+		 * 由host调用
+		 */
+		private function loop():void 
 		{
 			if (collider != null)
 			{

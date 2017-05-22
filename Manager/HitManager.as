@@ -176,7 +176,7 @@
 				unlockHitStateChange();
 				
 				//清除结束状态的碰撞记录
-				deleteExitHitRecord();
+				deleteInvalidHitRecord();
 			
 				CheckHitOnce();
 				
@@ -245,7 +245,7 @@
 			var object:List = GameObjectManager.getInstance().objects;
 			
 			//过滤出所有有碰撞器的
-			var fun:Function = function(element:*, index:int, arr:Array):Boolean {
+			var fun:Function = function(element:*):Boolean {
 			
 				 var o:BaseGameObject = element as BaseGameObject;
 				if (o.getCollideComponent().hasCollider())
@@ -344,7 +344,15 @@
 				{
 					hit.state = COLLISION_ING;
 				}
+				
+				
 				//分别调用双方的碰撞方法
+				//如果索引的两个对象有有一个已经为null了 则直接返回
+				if (hit.o1.valid==false||hit.o2.valid==false)
+				{
+					hit.valid = false;
+					return;
+				}
 				hit.o1.getCollideComponent().applyCollision(CreateCollision(hit));
 				hit.o2.getCollideComponent().applyCollision(CreateCollision(hit));
 				
@@ -434,13 +442,13 @@
 			
 			
 		}
-		private function deleteExitHitRecord()
+		private function deleteInvalidHitRecord()
 		{
-			//删除已经为碰撞结束状态的记录
-			var fun:Function = function(element:*, index:int, arr:Array):Boolean {
+			//删除已经为碰撞结束状态的记录或者设置为无效的记录(比如碰撞开始后就销毁自己 就会卡在这个状态)
+			var fun:Function = function(element:*):Boolean {
 			
 				 var hit:HitRecord = element as HitRecord;
-				 if (hit.state == COLLISION_EXIT && hit.lock == false)
+				 if (hit.state == COLLISION_EXIT && hit.lock == false||hit.valid==false)
 				 {
 					 return false;
 				 }
@@ -458,7 +466,7 @@
 			
 		private function findRecord(o1:BaseGameObject, o2:BaseGameObject):HitRecord
 		{
-			var fun:Function = function(element:*, index:int, arr:Array):Boolean {
+			var fun:Function = function(element:*):Boolean {
 			
 				 var hit:HitRecord = element as HitRecord;
 				 if (hit.o1==o1&&hit.o2==o2)
@@ -618,6 +626,8 @@ class HitRecord
 	public var state:String;
 	public var hitPoint:Point;
 	public var allPoints:List;
+	public var valid:Boolean=true;
+	
 	
 	//是否锁定 每次修改后进行一次锁定 这样一帧中只能更新一次状态
 	public var lock:Boolean = false;

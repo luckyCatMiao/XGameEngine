@@ -1,5 +1,6 @@
 ﻿package XGameEngine.GameObject.Component
 {
+	import XGameEngine.Util.GameUtil;
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	import XGameEngine.GameObject.AutoDestroyObject;
@@ -98,6 +99,41 @@
 				o.x = point2.x;
 				o.y = point2.y;
 				addChildToHighestDepth(o);
+			}
+			
+			
+			/**
+			 * 根据名字加载
+			 * @param	string
+			 */
+			public function loadDisplayObjectByName(name:String,highest:Boolean=true):DisplayObject 
+			{
+				var o:DisplayObject = GameUtil.LoadDisPlayObjectByName(name);
+				if (highest)
+				{
+					host.addChild(o);	
+				}
+				else
+				{
+					host.getGameObjectComponent().addChildToBeforeHighestDepth(o);
+				}
+				
+				
+				return o;
+			}
+			
+			/**
+			 * 加载到父级同位置处
+			 * @param	o
+			 */
+			public function addToParentSamePosition(o:BaseGameObject):BaseGameObject 
+			{
+				host.parent.addChild(o);
+				
+				o.x = host.x;
+				o.y = host.y;
+				
+				return o;
 			}
 	}
 	

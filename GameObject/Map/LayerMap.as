@@ -7,6 +7,7 @@
 	import Script.GameObject.Player;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.Structure.List;
+	import XGameEngine.Structure.List.DifferentList;
 	import XGameEngine.Structure.Map;
 	import XGameEngine.Structure.Math.Rect;
 	
@@ -27,12 +28,27 @@
 		 */
 		private var _moveRect:Rect;
 		
-		private var otherMaps:List = new List();
+		private var otherMaps:DifferentList = new DifferentList();
 		
 		/**
 		 * debug模式中是否绘制出移动范围
 		 */
 		public var debugRect:Boolean = false;
+		
+		
+		public function LayerMap()
+		{
+			this.xname ="layerMap "+this.name;
+			
+			otherMaps.throwErrorWhenSame = true;
+			//设置比较方法为MapLayer的名字
+			var fun:Function = function(o1:Object, o2:Object):Boolean
+			{
+				
+				return (o1 as MapLayer).name == (o2 as MapLayer).name;
+			}
+			otherMaps.setEqual(fun);
+		}
 		
 		/**
 		 * 添加普通层
@@ -40,16 +56,10 @@
 		public function addNormalLayer(name:String,map:BaseMap)
 		{
 			
-			for each(var l:MapLayer in otherMaps.Raw)
-			{
-				if (l.name == name)
-				{
-					throw new Error("the map which named "+name+" has existed");
-				}
-			}
-			
 			var layer:MapLayer = new MapLayer();
 			layer.map = map;
+			//把Map的名字也改过来好了
+			layer.map.xname ="layer " +name;
 			layer.name = name;
 			
 			addChild(layer.map);
@@ -69,7 +79,10 @@
 			}
 			var layer:MapLayer = new MapLayer();
 			layer.map = map;
+			layer.map.xname = "layer " + name;
 			layer.name = name;
+			
+			//主层默认边界可以在内部
 			map.canOver = true;
 			
 			addChild(layer.map);
@@ -93,6 +106,7 @@
 				if (mainMap == null)
 				{
 					var m:MapLayer = createNormalLayer(string);
+				
 					
 					addMainLayer(m.name, m.map);
 				}
@@ -168,20 +182,13 @@
 		
 		public function findLayer(name:String):MapLayer 
 		{
-			for each(var l:MapLayer in otherMaps.Raw)
-			{
-				if (l.name == name)
-				{
-					return l;
-				}
-			}
 			
-			return null;
+			return otherMaps.find(name,"name") as MapLayer;
 		}
 		
 		private function createNormalLayer(name:String):MapLayer
 		{
-				var m:MapLayer = new MapLayer();
+					var m:MapLayer = new MapLayer();
 					m.name = name;
 					m.map = new BaseMap();
 					
@@ -278,14 +285,14 @@
 		
 		
 		/**
-		 * 这个实在不知道怎么覆盖。。好像要写的很复杂 等以后用到再写吧
+		 * 这个实在不知道怎么覆盖。。好像要写的很复杂 等以后用到再写吧 而且也用不到
 		 * @param	x
 		 * @param	y
 		 * @return
 		 */
 		override public function canMove(x:Number, y:Number):Boolean 
 		{
-			return super.canMove(x, y);
+			return true;
 		}
 		
 		private function moveOtherLayer(x:Number, y:Number):Boolean 

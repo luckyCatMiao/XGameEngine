@@ -7,6 +7,7 @@
 	import XGameEngine.Manager.*;
 	import XGameEngine.GameEngine;
 	import XGameEngine.Manager.Hit.Collision;
+	import XGameEngine.Structure.List;
 	import XGameEngine.Util.*;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -19,6 +20,11 @@
 	 */
 	public class BaseGameObject extends Sprite
 	{
+		
+		/**
+		 * 该物体是否还有效 有时候可能存在被销毁后其他地方还引用该物体的情况 所以设置一个标识
+		 */
+		public var valid:Boolean=true;
 		
 		protected var anime_com:AnimeComponent;
 		protected var collide_com:CollideComponent;
@@ -33,10 +39,16 @@
 		protected var _layerName:String;
 		
 		protected var _state:String;
+		
+		private var needLoopComponents:List = new List();
 		public function BaseGameObject(_name:String=null)
 		{
 			
 			registerToGame();
+			if (_name != null)
+			{
+				this.xname = _name;
+			}
 			tag = TagManager.TAG_DEFAULT;
 			layerName = LayerManager.LAYER_DEFAULT;
 			
@@ -111,9 +123,27 @@
 			
 			state_com.loop();
 			transform_com.loop();
-			collide_com.loop();
+		
 			
+
+			//循环调用需要循环的子组件的循环方法
+			var fun:Function = function(obj:Object):void {
+			(obj as Function)();
+			};
+			needLoopComponents.forEach(fun);
+			
+			
+			//调用外部循环 子类覆盖
 			loop();
+		}
+		
+		
+		/**
+		 * 引擎内部调用 组件使用该方法注册自己的循环方法
+		 */
+		public function addLoopFun(c:Function)
+		{
+			needLoopComponents.add(c);
 		}
 		
 		protected function Init()
@@ -367,6 +397,9 @@
 			transform_com =  null;
 			state_com = null;
 			fun_com =  null;
+			
+			
+			valid = false;
 			
 				this.removeEventListener(Event.ENTER_FRAME, _loop);
 				this.removeEventListener(Event.ADDED_TO_STAGE, addTo);

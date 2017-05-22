@@ -50,12 +50,12 @@
 		/**
 		 * 放所有矢量图的面板,和调整数据的面板分开
 		 */
-		private var debugShapePlane:BaseGameObject = new BaseGameObject();
+		private var debugShapePlane:BaseGameObject = new BaseGameObject("debug Shape");
 		
 		
 		private var map:Map = new Map();
 		
-		private var debugValuePlane:BaseGameObject = new BaseGameObject();
+		private var debugValuePlane:BaseGameObject = new BaseGameObject("debug Plane");
 		
 		public function DebugManager()
 		{

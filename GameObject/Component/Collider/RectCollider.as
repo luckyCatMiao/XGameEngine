@@ -33,6 +33,7 @@
 	public function RectCollider(width:uint,height:uint,color:uint)
 	{
 
+			
 			this.shape.graphics.beginFill(color,0.4);
 			this.shape.graphics.drawRect(0, 0, width, height);
 			this.shape.graphics.endFill();
@@ -43,7 +44,7 @@
 			//画出碰撞点
 			DrawCheckPoint();
 
-			addChild(this.shape);
+			
 			
 			
 	}
@@ -55,8 +56,16 @@
 			for each(var p:Point in getCheckPoint().Raw)
 			{
 				//点往中间靠一点 防止在调试模式中突出平面。。
-				var drawX:Number = p.x > getCenterPoint().x?p.x - 3.5:p.x + 3.5;
-				var drawY:Number = p.y > getCenterPoint().y?p.y - 3.5:p.y + 3.5;
+				var drawX:Number = p.x ;
+				if (p.x != getCenterPoint().x)
+				{
+					p.x=p.x> getCenterPoint().x?p.x - 3.5:p.x + 3.5;
+				}
+				var drawY:Number = p.y;
+				if (p.x != getCenterPoint().x)
+				{
+					p.y = p.y > getCenterPoint().y?p.y - 3.5:p.y + 3.5;;
+				}
 				
 				
 				this.shape.graphics.drawCircle(drawX, drawY, 3.5);

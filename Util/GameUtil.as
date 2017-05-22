@@ -1,6 +1,8 @@
 ﻿package XGameEngine.Util
 {
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.media.Sound;
 	import flash.utils.getDefinitionByName;
 	import XGameEngine.GameObject.Animation;
 	import XGameEngine.GameObject.BaseGameObject;
@@ -62,6 +64,32 @@
 			}
 			
 			return anime;
+		}
+		
+		static public function LoadDisPlayObjectByName(name:String) 
+		{
+			var cls:Class =getClassByName(name);
+			var o:DisplayObject = (new cls()) as DisplayObject;
+			if (o == null)
+			{
+				throw new Error("case error!please set target class as DisplayObject")
+			}
+			
+			
+			return o;		
+		}
+		
+		static public function LoadSoundByName(className:String):Sound 
+		{
+			var cls:Class =getClassByName(className);
+			var o:Sound = (new cls()) as Sound;
+			if (o == null)
+			{
+				throw new Error("case error!please set target class as Sound")
+			}
+			
+			
+			return o;	
 		}
 		
 		

@@ -218,7 +218,8 @@ package XGameEngine.Manager
 		static public function isComboKey(comboName:String):Boolean
 		{
 			
-			if ((comboKey)(comboKeys[comboName]).isTrigger)
+			
+			if ((comboKeys[comboName])!=null&&(comboKey)(comboKeys[comboName]).isTrigger)
 			{
 			return true;
 			}

@@ -4,11 +4,11 @@
 	
 	/**
 	 * ...
-	 * @author o
+	 * 基础的线性表 可以添加重复值
 	 */
 	public class List 
 	{
-		private var arr:Array=[];
+		protected var arr:Array=[];
 		
 		public function List(array:Array=null)
 		{
@@ -74,7 +74,12 @@
 		public function filter(fun:Function):List
 		{
 			
-			var arr:Array = arr.filter(fun);
+		var fun2:Function=function(element:*, index:int, arr:Array):Boolean {
+            return fun(element);
+        }
+
+			
+			var arr:Array = arr.filter(fun2);
 			
 			
 			return new List(arr);
@@ -117,6 +122,15 @@
 			}
 			
 			return false;
+		}
+		
+		public function forEach(fun:Function):void 
+		{
+		var fun2:Function=function(element:*, index:int, arr:Array):void {
+           fun(element);
+        }
+
+			arr.forEach(fun2);
 		}
 		
 	}

@@ -1,5 +1,6 @@
 ﻿package XGameEngine.GameObject.Component.Collider
 {
+	import XGameEngine.UI.Draw.Color;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import XGameEngine.GameEngine;
@@ -26,9 +27,15 @@
 				getCommonlyComponent().throwWhileNotTrue(a.numChildren == 1 && (a.getChildAt(0) is Shape), "mesh collider init error");
 				
 				c = a;
-				addChild(c);
+				addChild(a);
 			
 				
+			}
+			
+			else 
+			{
+				c = new Sprite();
+				addChild(c);
 			}
 			
 			
@@ -52,16 +59,32 @@
 	
 		override public function debugShape() 
 		{
+			
 			if (GameEngine.getInstance().debug && debug)
 			{
 				//这里必须要有一个shape 就算不是debug模式 也要设置为透明 因为碰撞器必须实际存在
-				
+			
 				c.alpha = 0.5;
 			}
 			else if(GameEngine.getInstance().debug==false || debug==false)
 			{
 				c.alpha = 0;
 			}
+		}
+		
+		/**
+		 * 添加一块 方形的碰撞区域
+		 * @param	x
+		 * @param	y
+		 * @param	width
+		 * @param	object
+		 */
+		public function AddRectArea(x:Number, y:Number, width:Number, height:Number):void 
+		{
+			
+			this.c.graphics.beginFill(Color.RED,1);
+			this.c.graphics.drawRect(x, y, width, height);
+			this.c.graphics.endFill();
 		}
 		
 		
