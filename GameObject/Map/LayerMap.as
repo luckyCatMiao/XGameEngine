@@ -10,6 +10,7 @@
 	import XGameEngine.Structure.List.DifferentList;
 	import XGameEngine.Structure.Map;
 	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.Structure.Math.Vector2;
 	
 	/**
 	 * ...
@@ -36,7 +37,9 @@
 		public var debugRect:Boolean = false;
 		
 		
-		public function LayerMap()
+		
+		private var _springScale:Number;
+		public function LayerMap(_springScale:Number=-1)
 		{
 			this.xname ="layerMap "+this.name;
 			
@@ -48,7 +51,67 @@
 				return (o1 as MapLayer).name == (o2 as MapLayer).name;
 			}
 			otherMaps.setEqual(fun);
+			
+			this.springScale = _springScale == -1?1:_springScale;
+	
 		}
+		
+		
+		
+		override protected function loop() 
+		{
+			moveCam();
+		}
+		
+		private function moveCam():void 
+		{
+			var point:Point = mainChara.centerGlobalPoint;
+			var moveX:Number=0;
+			var moveY:Number=0;
+			
+			//根据相对位置 更新所有夹层的位置 造成镜头缓动效果
+			
+			//在moveRect范围之外弹簧才开始起作用
+			if (point.x > _moveRect.getRightBottomPoint().x)
+			{
+				moveX = -(point.x - _moveRect.getRightBottomPoint().x) / 5 * springScale * _springScale;
+
+			}
+			else if (point.x < _moveRect.getLeftBottomPoint().x)
+			{
+				moveX = -(point.x - _moveRect.getLeftBottomPoint().x) / 5 * springScale * _springScale;
+			}
+			
+			
+			if (point.y <_moveRect.getRightTopPoint().y)
+			{
+				
+				moveY = -(point.y - _moveRect.getRightTopPoint().y) / 5 * springScale * _springScale;
+
+			}
+			else if (point.y >_moveRect.getRightBottomPoint().y)
+			{
+				moveY = -(point.y - _moveRect.getRightBottomPoint().y) / 5 * springScale * _springScale;
+			}
+	
+			
+			if (canMoveOtherLayer(moveX, 0))
+				{
+					
+				this.mainMap.map.move(moveX, 0);
+				moveOtherLayer(moveX, 0);
+				}
+			
+				if (canMoveOtherLayer(0, moveY))
+				{
+					
+				this.mainMap.map.move(0, moveY);
+				moveOtherLayer(0, moveY);
+				}
+				
+			
+		}
+		
 		
 		/**
 		 * 添加普通层
@@ -61,6 +124,7 @@
 			//把Map的名字也改过来好了
 			layer.map.xname ="layer " +name;
 			layer.name = name;
+		
 			
 			addChild(layer.map);
 			
@@ -126,7 +190,7 @@
 		 * @param	string
 		 * @param	boolean 如果普通层不存在 是否自动创建普通层
 		 */
-		public function addToNormalLayer(o:DisplayObject, name:String="", autoCreate:Boolean=false,moveScale:Number=1):void 
+		public function addToNormalLayer(o:DisplayObject, name:String="", autoCreate:Boolean=false,moveScale:Number=1,springScale:Number=1)
 		{
 
 			if (autoCreate == false)
@@ -146,6 +210,7 @@
 				m.map.moveScale = moveScale;
 				addNormalLayer(m.name, m.map);
 				findLayer(name).map.addChild(o);
+
 			}
 		}
 		
@@ -201,7 +266,7 @@
 		 * @param	x
 		 * @param	y
 		 */
-		override public function move(x:Number, y:Number)
+		override public function move(x:Number, y:Number):Vector2
 		{
 			if (moveRect != null)
 			{
@@ -210,65 +275,50 @@
 		
 				//如果主角色想往右边移动
 				if (x>0)
-				{	
-					//如果在主角色在移动右边界左边
-					if (point.x <moveRect.getRightBottomPoint().x)
-					{
+				{			
 						//移动主层
-						mainMap.map.x += x;
-							
-					}
-					else
-					{
-						//如果副层还可以移动则移动副层
-						if (moveOtherLayer(-x, -y)==true)
-						{
-							
-						}
-						else
-						{
-							//否则继续移动主层 直到碰到舞台边缘
-							if (point.x < stage.stageWidth-15)
+							if (point.x < stage.stageWidth-15||canOver)
 							{
-								mainMap.map.x += x;
+								
+								mainMap.map.move(x, 0);
 							}
-
-						}
-						
-					}
 					
 				}
 				
 				//如果主角色想往左边移动
-				if (x<0)
+				else if (x<0)
 				{	
-					//如果在主角色在移动左边界右边
-					if (point.x >moveRect.getLeftBottomPoint().x)
-					{
-						//移动主层
-						mainMap.map.x += x;
-							
-					}
-					else
-					{
-						//如果副层还可以移动则移动副层
-						if (moveOtherLayer(-x, -y)==true)
-						{
-							
-						}
-						else
-						{
-							//否则继续移动主层 直到碰到舞台边缘
-							if (point.x > 15)
-							{
-								mainMap.map.x += x;
-							}
 
-						}
-						
-					}
+							if (point.x > 15||canOver)
+							{
+								mainMap.map.move(x, 0);
+							}
 					
 				}
+				
+				
+				//如果主角色想往下边移动
+				if (y>0)
+				{	
+							if (point.y < stage.stageHeight-15||canOver)
+							{
+								mainMap.map.move(0, y);
+							}
+					
+				}
+				//如果主角色想往上边移动
+				else if (y<0)
+				{	
+					
+							//否则继续移动主层 直到碰到舞台边缘
+							if (point.y > 15||canOver)
+							{
+								mainMap.map.move(0, y);
+							}
+					
+				}
+				
+				//y轴移动还没写 跟上面差不多
 				
 			}
 			else
@@ -280,6 +330,9 @@
 			
 			}
 			
+			
+			//因为夹层地图是相对移动 所以不返回有意义的值
+			return new Vector2(0, 0);
 		
 		}
 		
@@ -295,13 +348,11 @@
 			return true;
 		}
 		
-		private function moveOtherLayer(x:Number, y:Number):Boolean 
+		private function canMoveOtherLayer(x:Number, y:Number):Boolean 
 		{
 			//有一层无法继续移动则返回失败
 			
-			
-			var b:Boolean = true;
-			
+	
 			for each (var l:MapLayer in otherMaps.Raw ) 
 			{
 				if (l.map.canMove(x, y) == false)
@@ -310,20 +361,28 @@
 				}
 				
 			}
+			return true;
+
+		}
+		
+		
+		private function moveOtherLayer(x:Number, y:Number) 
+		{	
 			
-			//如果所有层都可以移动 移动所有层
-			if (b)
+			//移动所有层
+			if (canMoveOtherLayer(x,y))
 			{
+			
 				for each (var q:MapLayer in otherMaps.Raw ) 
 				{
-				q.map.move(x, y) 
-				
-				
+					
+					q.map.move(x, y) 
 				}
-			}
 			
-			return b;
+			}
 		}
+		
+		
 		
 		public function moveX(x:Number) 
 		{
@@ -347,6 +406,25 @@
 				DebugManager.getInstance().drawRect(value.toRectangle(),"moveRect");
 			}
 			_moveRect = value;
+		}
+		
+		public function get springScale():Number 
+		{
+			return _springScale;
+		}
+		
+		public function set springScale(value:Number):void 
+		{
+			//系数为0-1
+			if (value >= 0 && value <= 1)
+			{
+				_springScale = value;
+			}
+			
+			else
+			{
+				throw new Error("the value need between 0-1");
+			}
 		}
 		
 		
