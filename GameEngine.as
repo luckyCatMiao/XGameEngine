@@ -1,13 +1,17 @@
 ﻿package XGameEngine
 {
-	import XGameEngine.Manager.GameObjectManager;
-	import XGameEngine.Manager.*;
-	import XGameEngine.Manager.TimeManager;
 	import XGameEngine.Advanced.Debug.*;
+	import XGameEngine.Advanced.Interface.LoopAble;
+	import XGameEngine.Manager.*;
+	import XGameEngine.Structure.*;
+	
+	import flash.display.Loader;
 	import flash.display.Stage;
 	import flash.events.Event;
-	import XGameEngine.Advanced.Interface.LoopAble;
-	import XGameEngine.Structure.*;
+	import flash.events.ProgressEvent;
+	import flash.net.URLRequest;
+	import flash.system.ApplicationDomain;
+
 	/**
 	 * ...
 	 * a class that control the overall gameengine
@@ -17,6 +21,11 @@
 		static private var _instance:GameEngine;
 		
 		
+		public function get dataDomain():ApplicationDomain
+		{
+			return _dataDomain;
+		}
+
 		static public function getInstance():GameEngine
 		{
 				if (_instance == null)
@@ -35,18 +44,60 @@
 		 * 游戏运行中能否改变debug状态 发行版游戏中一般设置为false
 		 */
 		public var canChangeDebug:Boolean=false;
+		private var _dataDomain:ApplicationDomain;
+		private var loadCompleteFun:Function;
+		private var loadProgressFun:Function;
 		/**
 		 * this should be called when game inited,generally from the entry class
 		 * @param	s
 		 */
-		public function Init(s:Stage)
+		public function Init(s:Stage,dataPath:String,loadCompleteFun:Function=null,loadProgressFun:Function=null)
 		{
+			//初始化输入管理器
 			Input.Init(s);
 			this.s = s;
 			s.addEventListener(Event.ENTER_FRAME, loop);
+			
+			//初始化其余管理器
 			InitManager();
 			
+			//加载资源
+			var loader:Loader=new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadComplete);
+			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,loadProgress);
+			var request:URLRequest=new URLRequest(dataPath);
+			loader.load(request);
+			
+			
+			this.loadCompleteFun=loadCompleteFun;
+			this.loadProgressFun=loadProgressFun;
+			
 		}
+		
+		protected function loadProgress(event:ProgressEvent):void
+		{
+			if(loadProgressFun!=null)
+			{
+				loadProgressFun(event);
+			}
+			
+		}
+		
+		protected function loadComplete(event:Event):void
+		{
+			var loadedSWF=event.target;
+			var domain:ApplicationDomain =loadedSWF.applicationDomain as ApplicationDomain;
+			
+			this._dataDomain=domain;
+			
+			if(loadCompleteFun!=null)
+			{
+				loadCompleteFun(event);
+			}
+		}		
+		
+		
+	
 		
 		
 		//初始化
@@ -82,6 +133,10 @@
 		public function getSoundManager():SoundManager
 		{
 			return SoundManager.getInstance();
+		}
+		public function getResourceManager():ResourceManager
+		{
+			return ResourceManager.getInstance();
 		}
 		
 		private function loop(e:Event)

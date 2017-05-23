@@ -4,14 +4,21 @@
 	import flash.display.MovieClip;
 	import flash.media.Sound;
 	import flash.utils.getDefinitionByName;
+	
 	import XGameEngine.GameObject.Animation;
 	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.Structure.Math.Rect;
+
 	/**
 	 * ...
 	 * @author o
 	 */
 	public class GameUtil 
 	{
+		
+		
+		
+		
 		/**
 		 * Load the movieClip by name,if the target class don't exist,
 		 * it will throw a error

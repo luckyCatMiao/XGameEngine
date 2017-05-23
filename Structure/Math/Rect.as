@@ -1,5 +1,6 @@
 ﻿package XGameEngine.Structure.Math
 {
+	import flash.display.Stage;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
@@ -14,6 +15,16 @@
 		public var y:Number;
 		public var width:Number;
 		public var height:Number;
+		
+		
+		static public function getStageRect(s:Stage):Rect
+		{
+			var r:Rect=new Rect(0,0,s.stageWidth,s.stageHeight);
+				
+				return r;
+		}
+		
+		
 		
 		
 		/**
@@ -41,6 +52,13 @@
 				}
 				
 
+		}
+		
+		
+		public function scale(a:Number):Rect
+		{
+			
+			return new Rect(x,y,width*a,height*a);
 		}
 		
 		
