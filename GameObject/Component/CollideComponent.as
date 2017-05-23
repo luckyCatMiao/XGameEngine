@@ -1,16 +1,17 @@
 ﻿package XGameEngine.GameObject.Component
 {
-	import flash.display.Shape;
+	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.GameObject.Component.Collider.*;
+	import XGameEngine.Manager.Hit.Collision;
+	import XGameEngine.Manager.HitManager;
 	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.UI.Draw.Color;
 	import XGameEngine.Util.MathTool;
+	
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import XGameEngine.Manager.Hit.Collision;
-	import XGameEngine.UI.Draw.Color;
-	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.Component.Collider.*;
-	import XGameEngine.Manager.HitManager;
 	/**
 	 * ...
 	 * 碰撞器组件
@@ -73,14 +74,22 @@
 			collider.y = y;
 		}
 		
-		
+	
 		/**
-		 * 根据自动计算的aabb包围盒生成一个方形碰撞器
+		 *根据自动计算的aabb包围盒生成一个方形碰撞器  
+		 * @param scale 缩放 默认大小是刚好包裹
+		 * @return 
+		 * 
 		 */
-		public function generateRectColliderDefault()
+		public function generateRectColliderDefault(scale:Number=1)
 		{
 			var rect:Rectangle = host.getRect(host);
-			generateRectCollider(host.width, host.height, Color.RED, rect.x, rect.y);
+			var x:Number=rect.x+(1-scale)*rect.width/2;
+			var y:Number=rect.y+(1-scale)*rect.height/2;
+			var width:Number=rect.width*scale;
+			var height:Number=rect.height*scale;
+			
+			generateRectCollider(width, height, Color.RED,x , y);
 			
 		}
 

@@ -1,8 +1,9 @@
 ﻿package XGameEngine.Manager.Hit
 {
-	import flash.geom.Point;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.Structure.List;
+	
+	import flash.geom.Point;
 	
 	/**
 	 * ...
@@ -27,6 +28,10 @@
 	 * 所有的碰撞点
 	 */
 	public var allhitPoint:List;
+	/**
+	 *碰撞点是属于自身还是另外一个对象 
+	 */	
+	public var hitPointsSelf:Boolean;
 	
 	public function containPoint(p:Point):Boolean 
 	{

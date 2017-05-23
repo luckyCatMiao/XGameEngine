@@ -6,6 +6,8 @@
 	import XGameEngine.Manager.LayerManager;
 	import XGameEngine.Structure.List;
 	
+	import fl.transitions.Fade;
+	
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -47,7 +49,8 @@
 		private var i:int = 0;
 		
 		/**
-		 * 过滤器
+		 * 过滤器(注意因为效率问题...添加过滤器实际上是两个层开始进行检测 刚开始是真的想默认全检测
+		 *  然后过滤的 但是发现有点卡 不知道为什么unity就不会卡..)
 		 */
 		private var filtters:List = new List();
 		
@@ -98,7 +101,7 @@
 		 */
 		public function FindFilter(layerName1:String, layerName2:String):Filter
 		{
-			 var fun:Function = function(element:*, index:int, arr:Array):Boolean {
+			 var fun:Function = function(element:*):Boolean {
 			
 				 var f:Filter = element as Filter;
 				 if (f.layerName1 == layerName1 && f.layerName2 == layerName2)
@@ -117,11 +120,11 @@
 			
 			var result:List=filtters.filter(fun);
 
-			if (filtters.size == 1)
+			if (result.size == 1)
 			{
 				return filtters.get(0) as Filter;
 			}
-			else if (filtters.size > 1)
+			else if (result.size > 1)
 			{
 				throw new Error("the filter " + layerName1 + "-" + layerName2 + " has "+filtters.size+" same!");
 			}
@@ -169,25 +172,36 @@
 		private function loop(e:Event)
 		{
 			
+			//不要改函数的顺序..因为我也不知道怎么样是对的 不过下面这个可以运行 改了就不一定了..
+			//虽然框架是我写的 但一些细节 真的是不太清楚..
 			
-			i++;
-			if (i % workrate == 0)
-			{
+				i++;
+			
 				//解锁碰撞状态
 				unlockHitStateChange();	
-				
+			
+			
+			
 				//清除结束状态的碰撞记录
 				deleteInvalidHitRecord();
-			
-				CheckHitOnce();
 				
+				if (i % workrate == 0)
+				{
+					CheckHitOnce();
+				}	
+				
+				//这个检测始终在每帧运行一次
 				calculateWhileTest();
+
 				
+				if (i % workrate == 0)
+				{
 				applyHitState();
+				}	
 				
 				
+			
 				
-			}
 			
 			
 			
@@ -304,7 +318,7 @@
 			}
 			
 					//判断过滤设定
-					if (!FindFilter(o1.layerName, o2.layerName))
+					if (FindFilter(o1.layerName, o2.layerName)!=null)
 					{
 						//如果没有过滤
 						//如果双方的碰撞器都存在
@@ -375,8 +389,8 @@
 				hit.valid = false;
 				return;
 			}
-			hit.o1.getCollideComponent().applyCollision(CreateCollision(hit));
-			hit.o2.getCollideComponent().applyCollision(CreateCollision(hit));
+			hit.o1.getCollideComponent().applyCollision(CreateCollision(hit,true));
+			hit.o2.getCollideComponent().applyCollision(CreateCollision(hit,false));
 			
 		}		
 		
@@ -387,11 +401,23 @@
 		 * @param	hasCollider
 		 */
 		
-		private function CreateCollision(hit:HitRecord):Collision
+		private function CreateCollision(hit:HitRecord,isSelf:Boolean):Collision
 		{ 
 			var c:Collision = new Collision();
-			c.hitObject = hit.o2;
-			c.self = hit.o1;
+			
+			if(isSelf)
+			{
+				c.hitObject = hit.o2;
+				c.self = hit.o1;
+				//因为碰撞算法的特殊性碰撞点是属于先测试的那方的局部坐标点
+				c.hitPointsSelf=true;
+			}
+			else
+			{
+				c.hitObject = hit.o1;
+				c.self = hit.o2;
+				c.hitPointsSelf=false;
+			}
 			c.state = hit.state;
 			c.hitPoint = hit.hitPoint;
 			c.allhitPoint = hit.allPoints;

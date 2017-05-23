@@ -1,15 +1,17 @@
 ﻿package XGameEngine.GameObject.Component
 {
-	import flash.display.Shape;
-	import flash.display.Sprite;
-	import XGameEngine.GameObject.Component.Collider.RectCollider;
-	import XGameEngine.UI.Draw.Color;
-	import flash.geom.Rectangle;
 	import XGameEngine.GameEngine;
+	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.GameObject.Component.Collider.RectCollider;
 	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.UI.Draw.Color;
 	import XGameEngine.UI.XTextField;
 	import XGameEngine.Util.MathTool;
-	import XGameEngine.GameObject.BaseGameObject;
+	
+	import flash.display.Shape;
+	import flash.display.Sprite;
+	import flash.display.Stage;
+	import flash.geom.Rectangle;
 	
 	/**
 	 * ...
@@ -34,12 +36,14 @@
 		public function TransformComponent(o:BaseGameObject)
 		{
 			super(o);
+			
+			//保存了一些原始数据
 			oldWidth = host.width;
 			oldHeight = host.height;
 			oldScaleX = host.scaleX;
 			oldScaleY = host.scaleY;
 			
-			_oldaabb = aabb;
+		
 			
 		}
 		
@@ -72,7 +76,7 @@
 		{
 			
 			var r:Rectangle=host.getRect(host);
-			return new Rect(r.x, r.y, host.width, host.height);
+			return new Rect(r.x, r.y, r.width, r.height);
 		}
 		
 		
@@ -81,6 +85,12 @@
 		 */
 		public function get oldaabb():Rect
 		{
+			//oldAABB即第一次确定的值 因为有些对象运动时会改变aabb的大小
+			if(_oldaabb==null)
+			{
+				_oldaabb = aabb;
+			}
+			
 			return _oldaabb;
 		}
 		
@@ -168,6 +178,19 @@
 			aabbDebugShape.graphics.lineTo(aabb.getLeftTopPoint().x+3, aabb.getLeftTopPoint().y+3);
 		
 		}
+		
+		
+		override public function destroyComponent():void
+		{
+			if(aabbDebugShape!=null)
+			{
+				aabbDebugShape.alpha=0;
+			}
+			
+		}
+		
+		
+	
 		
 	}
 	

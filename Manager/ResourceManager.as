@@ -30,7 +30,14 @@ package XGameEngine.Manager
 		{
 			var cls:Class=getClassByName(name);
 			
-			return new cls() as Sound;
+			var value:Sound=new cls() as Sound;
+			if(value==null)
+			{
+				throw new Error("load Sound "+name+" failed");
+			}
+			
+			
+			return value;
 		}
 		
 		private function getClassByName(name:String):Class
@@ -45,14 +52,26 @@ package XGameEngine.Manager
 		{
 			var cls:Class=getClassByName(name);
 			
-			return new cls() as Animation;
+			var value:Animation=new cls() as Animation;
+			if(value==null)
+			{
+				throw new Error("load Animation "+name+" failed");
+			}
+			
+			return value;
 		}
 		
 		public  function LoadDisPlayObjectByName(name:String):DisplayObject
 		{
 			var cls:Class=getClassByName(name);
 			
-			return new cls() as DisplayObject;
+			var value:DisplayObject=new cls() as DisplayObject;
+			if(value==null)
+			{
+				throw new Error("load DisplayObject "+name+" failed");
+			}
+			
+			return value;
 		}
 	}
 }

@@ -81,9 +81,9 @@
 						host.stage.addChild(debug_stateTF);
 					}
 					
-					 var point:Point = host.getTransformComponent().oldaabb.getTopPoint();
+					 var point:Point = host.getTransformComponent().oldaabb.getLeftTopPoint();
 					 var point2:Point=host.localToGlobal(point);
-					debug_stateTF.x = point2.x-debug_stateTF.textWidth/2;
+					debug_stateTF.x = point2.x;
 					debug_stateTF.y = point2.y-20;
 					
 					debug_stateTF.setText(host.state);
@@ -97,6 +97,19 @@
 				}
 			}
 		}
+		
+		
+		
+		override public function destroyComponent():void
+		{
+			if(debug_stateTF!=null)
+			{
+				debug_stateTF.alpha=0;
+			}
+			
+		}
+		
+		
 		
 	}
 	

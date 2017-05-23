@@ -91,9 +91,9 @@
 			anime_com = new AnimeComponent(this);
 			collide_com = new CollideComponent(this);
 			physics_com = new PhysicsComponent(this);
-			transform_com = new TransformComponent(this);
 			state_com = new StateComponent(this);
 			fun_com = new FunComponent();
+			transform_com = new TransformComponent(this);
 			
 		}
 
@@ -395,11 +395,17 @@
 			//其实我感觉组件应该是自动回收的..不过不太放心
 			//还是手动清空一下 其实就是我不太清楚 如果组件被该对象以外的其他对象引用了 那这个对象还会不会被回收?
 			//还是说回收该对象 但是保留组件?(想了想应该是这样 不过组件也没有保留的必要 也清除)
+			obj_com.destroyComponent();
 			obj_com = null;
+			anime_com.destroyComponent();
 			anime_com =  null;
+			collide_com.destroyComponent();
 			collide_com =  null;
+			physics_com.destroyComponent();
 			physics_com =  null;
+			transform_com.destroyComponent();
 			transform_com =  null;
+			state_com.destroyComponent();
 			state_com = null;
 			fun_com =  null;
 			

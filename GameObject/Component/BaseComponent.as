@@ -27,6 +27,16 @@
 		}
 		
 		
+		
+		/**
+		 *销毁组件 在对象销毁的时候自动调用 
+		 * 
+		 */
+		public function destroyComponent():void
+		{
+			
+		}
+		
 	
 		
 		
