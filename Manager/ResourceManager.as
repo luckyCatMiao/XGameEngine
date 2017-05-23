@@ -1,7 +1,9 @@
 package XGameEngine.Manager
 {
 	import XGameEngine.GameEngine;
+	import XGameEngine.GameObject.Animation;
 	
+	import flash.display.DisplayObject;
 	import flash.media.Sound;
 
 	/**
@@ -37,6 +39,20 @@ package XGameEngine.Manager
 			
 			
 			return cls;
+		}
+		
+		public  function LoadAnimationByName(name:String):XGameEngine.GameObject.Animation
+		{
+			var cls:Class=getClassByName(name);
+			
+			return new cls() as Animation;
+		}
+		
+		public  function LoadDisPlayObjectByName(name:String):DisplayObject
+		{
+			var cls:Class=getClassByName(name);
+			
+			return new cls() as DisplayObject;
 		}
 	}
 }

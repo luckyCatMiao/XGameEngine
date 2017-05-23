@@ -4,12 +4,13 @@
 	import XGameEngine.GameObject.Component.Collider.Collider;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.LayerManager;
+	import XGameEngine.Structure.List;
+	
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import XGameEngine.Structure.List;
 
 	/**
 	 * ...
@@ -173,16 +174,19 @@
 			if (i % workrate == 0)
 			{
 				//解锁碰撞状态
-				unlockHitStateChange();
+				unlockHitStateChange();	
 				
 				//清除结束状态的碰撞记录
 				deleteInvalidHitRecord();
 			
 				CheckHitOnce();
 				
+				calculateWhileTest();
+				
 				applyHitState();
 				
-				calculateWhileTest();
+				
+				
 			}
 			
 			
@@ -210,18 +214,27 @@
 			//因为这里有卡死的危险..所以规定上限每帧每两个物体只能计算100次(超过一百次后该碰撞检测被废弃,因为可能代码有逻辑问题)
 			for each(var w:WhileTest in whileTest.Raw)
 			{
+				
+				if((record=findRecord(w.o1,w.o2))!=null){record.lock=false};
+				i=0;
 				//只要两个物体还在接触中就一直计算碰撞 因此回调方法中应该包含将两个物体分开的方法 、
 				//否则就会达到计算上限100次
 				//注意该计算只会回调接触中的回调函数
-				while (TryCheckTwobjectHit(w.o1, w.o2)==true&&w.valid==true)
+				while (w.valid==true&&TryCheckTwobjectHit(w.o1, w.o2)==true)
 				{
-					//每次碰撞都回调一次碰撞函数
-					applyHitState(true);
+					//解锁该记录的状态
+					var record:HitRecord;
+					if((record=findRecord(w.o1,w.o2))!=null){record.lock=false};
 					
-					if (w.fun != null)
-					{
-						w.fun();
-					}
+						//每次碰撞都回调一次碰撞函数 查找到对应记录 应用
+						applyOneHitRecord(record);
+						
+						if (w.fun != null)
+						{
+							w.fun();
+						}
+					
+					
 					i++;
 					if (i > 100)
 					{
@@ -273,12 +286,17 @@
 		
 		
 		
+		
+		
 		/**
-		 * 如果输入了碰撞域 则不以collider计算 以rect提供的四个点进行计算
-		 * @param	o
-		 * @param	rect
+		 * 试图检测两个物体的碰撞 如果两个物体不满足进行碰撞检测的要求 则直接返回false
+		 * @param o1
+		 * @param o2
+		 * @param record 是否要在碰撞管理器中生成碰撞记录
+		 * @return 
+		 * 
 		 */
-		private function TryCheckTwobjectHit(o1:BaseGameObject,o2:BaseGameObject,rect:Rectangle=null):Boolean
+		private function TryCheckTwobjectHit(o1:BaseGameObject,o2:BaseGameObject,record:Boolean=true):Boolean
 		{
 			if (o1 == o2)
 			{
@@ -298,7 +316,7 @@
 							if (o1.getCollideComponent().collider.getCheckPoint().size > 0 && o2.getCollideComponent().collider.getCheckPoint().size > 0)
 							{
 								//两者都有点 位置随意
-								return CheckTwoObjectHit(o1, o2, rect);
+								return CheckTwoObjectHit(o1, o2, record);
 								
 							}
 							else
@@ -313,11 +331,11 @@
 									//一方有点 则有点的设置为o1
 									if (o2.getCollideComponent().collider.getCheckPoint().size > 0)
 									{
-										return CheckTwoObjectHit(o2, o1, rect);
+										return CheckTwoObjectHit(o2, o1,record);
 									}
 									else
 									{
-										return CheckTwoObjectHit(o1, o2, rect);
+										return CheckTwoObjectHit(o1, o2, record);
 									}
 									
 								}
@@ -332,34 +350,35 @@
 		}
 		
 		/**
-		 * 根据记录的碰撞状态 调用方法 (如果是whileTest,则会强制改变为碰撞中状态)
+		 * 根据记录的碰撞状态 调用方法 
 		 * @param	o1
 		 * @param	o2
 		 */
-		private function applyHitState(whileTest:Boolean=false)
+		private function applyHitState()
 		{
 			for each(var hit:HitRecord in hitList.Raw)
 			{
-				if (whileTest)
-				{
-					hit.state = COLLISION_ING;
-				}
 				
-				
-				//分别调用双方的碰撞方法
-				//如果索引的两个对象有有一个已经为null了 则直接返回
-				if (hit.o1.valid==false||hit.o2.valid==false)
-				{
-					hit.valid = false;
-					return;
-				}
-				hit.o1.getCollideComponent().applyCollision(CreateCollision(hit));
-				hit.o2.getCollideComponent().applyCollision(CreateCollision(hit));
+				applyOneHitRecord(hit);
 				
 			}
 					
 		}
 		
+		private function applyOneHitRecord(hit:HitRecord):void
+		{
+			
+			//分别调用双方的碰撞方法
+			//如果索引的两个对象有有一个已经为null了 则直接返回
+			if (hit.o1.valid==false||hit.o2.valid==false)
+			{
+				hit.valid = false;
+				return;
+			}
+			hit.o1.getCollideComponent().applyCollision(CreateCollision(hit));
+			hit.o2.getCollideComponent().applyCollision(CreateCollision(hit));
+			
+		}		
 		
 		/**
 		 * 创建一个碰撞数据包
@@ -543,12 +562,10 @@
 		 * 检测两个物体的碰撞
 		 * @param	o1
 		 * @param	o2
-		 * @param	rect
-		 * @param	directInvoke 直接直接触发碰撞回调,正常情况下碰撞回调只在一个计算周期回调一次,如果需要更精确的碰撞可以设置为true
-		 * 这样只要每次调用该方法都会回调碰撞函数
+		 * @param	record 是否需要记录碰撞数据
 		 * @return
 		 */
-		private function CheckTwoObjectHit(o1:BaseGameObject, o2:BaseGameObject,rect:Rectangle=null):Boolean
+		private function CheckTwoObjectHit(o1:BaseGameObject, o2:BaseGameObject,record:Boolean):Boolean
 		{
 			//这里到时候优化下 如果碰撞器数量多卡的话
 			//加入多种碰撞算法
@@ -592,15 +609,21 @@
 			
 			if (result == true)
 			{
-				updateHitState(o1, o2, true,p,hitPoints);
+				if(record)
+				{
+					updateHitState(o1, o2, true,p,hitPoints);
+				}
+				
 				return true;
 			}
 			
 			
 			if (result == false)
 			{
-				
+				if(record)
+				{
 				updateHitState(o1, o2, false,null,null);
+				}
 				
 			}
 			

@@ -1,18 +1,19 @@
 ﻿package XGameEngine.GameObject
 {
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import XGameEngine.GameObject.CommonComponent.*
+	import XGameEngine.GameEngine;
+	import XGameEngine.GameObject.CommonComponent.*;
+	import XGameEngine.GameObject.Component.*;
 	import XGameEngine.GameObject.Component.Collider.RectCollider;
 	import XGameEngine.Manager.*;
-	import XGameEngine.GameEngine;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Structure.List;
 	import XGameEngine.Util.*;
+	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import XGameEngine.GameObject.Component.*;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	/**
 	 * ...
@@ -322,6 +323,10 @@
 		public function getTimeManager():TimeManager 
 		{
 			return gameEngine.getTimeManager();
+		}
+		public function getResourceManager():ResourceManager 
+		{
+			return gameEngine.getResourceManager();
 		}
 		
 		public function onHitEnter(c:Collision) 

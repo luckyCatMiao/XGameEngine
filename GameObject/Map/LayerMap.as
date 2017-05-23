@@ -70,16 +70,23 @@
 			var moveY:Number=0;
 			
 			//根据相对位置 更新所有夹层的位置 造成镜头缓动效果
-			
+			//springScale=1为特殊值 没有缓动 
 			//在moveRect范围之外弹簧才开始起作用
 			if (point.x > _moveRect.getRightBottomPoint().x)
 			{
-				moveX = -(point.x - _moveRect.getRightBottomPoint().x) / 5 * springScale * _springScale;
-
+				moveX = -(point.x - _moveRect.getRightBottomPoint().x) / 5 * springScale * _springScale;	
+				if(springScale==1)
+				{
+					moveX=-(point.x - _moveRect.getRightBottomPoint().x);
+				}
 			}
 			else if (point.x < _moveRect.getLeftBottomPoint().x)
 			{
 				moveX = -(point.x - _moveRect.getLeftBottomPoint().x) / 5 * springScale * _springScale;
+				if(springScale==1)
+				{
+					moveX=-(point.x - _moveRect.getLeftBottomPoint().x)
+				}
 			}
 			
 			
@@ -87,11 +94,19 @@
 			{
 				
 				moveY = -(point.y - _moveRect.getRightTopPoint().y) / 5 * springScale * _springScale;
+				if(springScale==1)
+				{
+					moveY=-(point.y - _moveRect.getRightTopPoint().y);
+				}
 
 			}
 			else if (point.y >_moveRect.getRightBottomPoint().y)
 			{
 				moveY = -(point.y - _moveRect.getRightBottomPoint().y) / 5 * springScale * _springScale;
+				if(springScale==1)
+				{
+					moveY=-(point.y - _moveRect.getRightBottomPoint().y);
+				}
 			}
 	
 			
