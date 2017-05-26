@@ -12,6 +12,7 @@
 		static public var ANIME_LABEL_STAND:String = "stand";
 		static public var ANIME_LABEL_JUMP:String = "jump";
 		static public var ANIME_LABEL_JUMP_END:String = "jumpEnd";
+		public static var ANIME_LABEL_DEAD:String="dead";
 	}
 	
 }

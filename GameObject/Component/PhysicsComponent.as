@@ -34,6 +34,9 @@
 		private var lastMoveX:Number = 0;
 		private var lastMoveY:Number = 0;
 		
+		public var sumSpeedX:Number;
+		public var sumSpeedY:Number;
+		
 		public function PhysicsComponent(o:BaseGameObject)
 		{
 			super(o);
@@ -190,6 +193,10 @@
 		
 			var posX:Number = xSpeed + speed2.x;
 			var posY:Number =ySpeed+speed2.y;
+			
+			//设置物理速度总和 供外界读取
+			this.sumSpeedX=posX;
+			this.sumSpeedY=posY;
 			
 			
 			//如果没有监听器 直接变化位置

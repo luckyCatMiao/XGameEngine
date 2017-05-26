@@ -384,6 +384,9 @@
 			
 			//分别调用双方的碰撞方法
 			//如果索引的两个对象有有一个已经为null了 则直接返回
+			//这里不能使用null 因为只是o1自己destroy自己 其他地方的引用还在
+			//所以这边把hit的valid也设置为false
+			//下一帧再次计算的时候就会把该记录删除 同时在hitmanager里对o1o2的引用也消失了
 			if (hit.o1.valid==false||hit.o2.valid==false)
 			{
 				hit.valid = false;

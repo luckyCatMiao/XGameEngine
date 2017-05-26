@@ -12,6 +12,7 @@
 		static public var STATE_STAND:String = "stand";
 		static public var STATE_JUMP:String = "jump";
 		static public var STATE_JUMP_END:String = "jump_end";
+		public static var STATE_DEAD:String="dead";
 	}
 	
 }

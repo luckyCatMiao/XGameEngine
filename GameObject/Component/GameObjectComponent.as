@@ -135,6 +135,13 @@
 				
 				return o;
 			}
+			
+			public  function quickLoadEffectParent(name:String):void
+			{
+				var effect:AutoDestroyObject = new AutoDestroyObject(host.getResourceManager().LoadAnimationByName(name));
+				addToParentSamePosition(effect);
+				
+			}
 	}
 	
 }

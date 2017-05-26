@@ -4,6 +4,7 @@ package XGameEngine.Manager
 	import XGameEngine.GameObject.Animation;
 	
 	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.media.Sound;
 
 	/**
@@ -52,13 +53,17 @@ package XGameEngine.Manager
 		{
 			var cls:Class=getClassByName(name);
 			
-			var value:Animation=new cls() as Animation;
+			var value:MovieClip=new cls() as MovieClip;
+			
 			if(value==null)
 			{
 				throw new Error("load Animation "+name+" failed");
 			}
 			
-			return value;
+			var anim:Animation=new Animation(value);
+			
+			
+			return anim;
 		}
 		
 		public  function LoadDisPlayObjectByName(name:String):DisplayObject

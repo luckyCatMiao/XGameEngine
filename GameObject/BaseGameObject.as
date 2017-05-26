@@ -9,6 +9,8 @@
 	import XGameEngine.Structure.List;
 	import XGameEngine.Util.*;
 	
+	import fl.transitions.Fade;
+	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -39,7 +41,7 @@
 		protected var _tag:String;
 		protected var _layerName:String;
 		
-		protected var _state:String;
+	
 		
 		private var needLoopComponents:List = new List();
 		public function BaseGameObject(_name:String=null)
@@ -117,6 +119,11 @@
 		 */
 		protected function _loop(e:Event)
 		{
+			if(valid==false)
+			{
+				return;
+			}
+			
 			if (physics_com.enable == true)
 			{
 				physics_com.calulate();
@@ -295,13 +302,13 @@
 		
 		public function get state():String 
 		{
-			return _state;
+			return getStateComponent().state;
 		}
 		
 		public function set state(value:String):void 
 		{
-			getStateComponent().changeState(value);
-			_state = value;
+			
+			getStateComponent().state = value;
 		}
 
 		public function getTagManager():TagManager 
@@ -366,22 +373,7 @@
 		{
 			//trace(state+" "+conditionState);
 			
-			if (state == conditionState)
-			{	
-				getStateComponent().changeState(newstate);
-				_state = newstate;
-			}
-			if (otherState != null)
-			{
-				for each(var s:String in otherState)
-				{
-					if (s == state)
-					{
-						getStateComponent().changeState(newstate);
-						_state = newstate;
-					}
-				}
-			}
+			getStateComponent().tryChangeState(newstate,conditionState,otherState);
 		}
 		
 		
@@ -391,33 +383,34 @@
 		 */
 		public function destroy()
 		{
-					
+				
+			this.removeEventListener(Event.ENTER_FRAME, _loop);
+			this.removeEventListener(Event.ADDED_TO_STAGE, addTo);
+
 			//其实我感觉组件应该是自动回收的..不过不太放心
 			//还是手动清空一下 其实就是我不太清楚 如果组件被该对象以外的其他对象引用了 那这个对象还会不会被回收?
 			//还是说回收该对象 但是保留组件?(想了想应该是这样 不过组件也没有保留的必要 也清除)
 			obj_com.destroyComponent();
-			obj_com = null;
+			//obj_com = null;
 			anime_com.destroyComponent();
-			anime_com =  null;
+			//anime_com =  null;
 			collide_com.destroyComponent();
-			collide_com =  null;
+			//collide_com =  null;
 			physics_com.destroyComponent();
-			physics_com =  null;
+			//physics_com =  null;
 			transform_com.destroyComponent();
-			transform_com =  null;
+			//transform_com =  null;
 			state_com.destroyComponent();
-			state_com = null;
-			fun_com =  null;
+			//state_com = null;
+			//fun_com =  null;
 			
 			
 			valid = false;
 			
-				this.removeEventListener(Event.ENTER_FRAME, _loop);
-				this.removeEventListener(Event.ADDED_TO_STAGE, addTo);
-
+				
 				this.parent.removeChild(this);
 				GameObjectManager.getInstance().remove(this);
-					LayerManager.getInstance().removeFromLayer(this);
+				LayerManager.getInstance().removeFromLayer(this);
 		}
 		
 		

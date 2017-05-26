@@ -20,6 +20,8 @@
 		private var debug_stateTF:XTextField;
 		
 		public var debugState:Boolean = false;
+		private var _state:String;
+		
 		public function StateComponent(o:BaseGameObject)
 		{
 			super(o);
@@ -28,29 +30,50 @@
 		}
 		
 		
+		public function get state():String
+		{
+			return _state;
+		}
+
+		public function set state(value:String):void
+		{
+			changeState(value);
+			_state = value;
+		}
+
 		public function changeState(newState:String)
 		{
-			//如果上一个状态存在的话
-			if (lastState != null)
+			//如果两个状态相同的话 直接返回 也不报错 
+			if(_state==newState)
 			{
-				host.onStateExit(lastState);
+				return;
 			}
-			host.onStateEnter(newState, lastState)
 			
+			//如果上一个状态存在的话
+			if (_state != null)
+			{
+				host.onStateExit(_state);
+			}
+		
+			host.onStateEnter(newState, _state)
+			
+
 			lastState = newState;
 			
 		}
 		
 		public function loop()
 		{
-			if (host.state != null)
+			DebugState();
+			
+			
+			if (_state != null)
 			{
-			host.onStateDuring(host.state);	
+			host.onStateDuring(_state);	
 			}
 			
 			
 			
-				DebugState();
 			
 		}
 		
@@ -60,9 +83,11 @@
 		 */
 		public function DebugState()
 		{
+			
 			if (GameEngine.getInstance().debug&&debugState==true)
 			{
-				if (host.state != null)
+				
+				if (_state != null)
 				{
 					if (debug_stateTF == null)
 					{
@@ -86,7 +111,7 @@
 					debug_stateTF.x = point2.x;
 					debug_stateTF.y = point2.y-20;
 					
-					debug_stateTF.setText(host.state);
+					debug_stateTF.setText(_state);
 				}
 			}
 			else if (GameEngine.getInstance().debug==false||debugState==false)
@@ -102,6 +127,8 @@
 		
 		override public function destroyComponent():void
 		{
+			
+			
 			if(debug_stateTF!=null)
 			{
 				debug_stateTF.alpha=0;
@@ -111,6 +138,29 @@
 		
 		
 		
+		public function tryChangeState(newstate:String, conditionState:String, otherState:Array):void
+		{
+			
+		
+			
+			if (state == conditionState)
+			{	
+				changeState(newstate);
+				_state = newstate;
+			}
+			if (otherState != null)
+			{
+				for each(var s:String in otherState)
+				{
+					if (s == state)
+					{
+						changeState(newstate);
+						_state = newstate;
+					}
+				}
+			}
+			
+		}
 	}
 	
 }
