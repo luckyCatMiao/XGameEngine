@@ -335,6 +335,12 @@
 		{
 			return gameEngine.getResourceManager();
 		}
+		public function getSoundManager():SoundManager
+		{
+			return gameEngine.getSoundManager();
+			
+		}
+		
 		
 		public function onHitEnter(c:Collision) 
 		{

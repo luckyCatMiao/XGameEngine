@@ -1,16 +1,18 @@
 ﻿package XGameEngine.GameObject.Map
 {
-	import XGameEngine.Advanced.Debug.DebugManager;
-	import flash.display.DisplayObject;
-	import flash.geom.Point;
 	import Script.GameObject.GameMap;
 	import Script.GameObject.Player;
+	
+	import XGameEngine.Advanced.Debug.DebugManager;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.Structure.List;
 	import XGameEngine.Structure.List.DifferentList;
 	import XGameEngine.Structure.Map;
 	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.Structure.Math.Vector2;
+	
+	import flash.display.DisplayObject;
+	import flash.geom.Point;
 	
 	/**
 	 * ...
@@ -205,7 +207,7 @@
 		 * @param	string
 		 * @param	boolean 如果普通层不存在 是否自动创建普通层
 		 */
-		public function addToNormalLayer(o:DisplayObject, name:String="", autoCreate:Boolean=false,moveScale:Number=1,springScale:Number=1)
+		public function addToNormalLayer(o:DisplayObject, name:String="", autoCreate:Boolean=false,moveScale:Number=1,springScale:Number=1,canOver:Boolean=false)
 		{
 
 			if (autoCreate == false)
@@ -223,6 +225,7 @@
 			{
 				var m:MapLayer = createNormalLayer(name);
 				m.map.moveScale = moveScale;
+				m.map.canOver=canOver;
 				addNormalLayer(m.name, m.map);
 				findLayer(name).map.addChild(o);
 

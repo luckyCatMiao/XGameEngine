@@ -6,6 +6,7 @@ package XGameEngine.Manager
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.media.Sound;
+	import flash.utils.getDefinitionByName;
 
 	/**
 	 * 管理外部资源的类
@@ -43,10 +44,22 @@ package XGameEngine.Manager
 		
 		private function getClassByName(name:String):Class
 		{
+			//优先从本swf里取 这样方便测试 可以先把要多次测试的剪辑先放在主swf里面调整 调整差不多后再检测到资源swf里
+			var cls1:Class
+			try
+			{
+				cls1=flash.utils.getDefinitionByName(name) as Class;
+			} 
+			catch(error:Error) 
+			{
+				
+			}
+			
+			
 			var cls:Class=GameEngine.getInstance().dataDomain.getDefinition(name) as Class;
 			
 			
-			return cls;
+			return cls1==null?cls:cls1;
 		}
 		
 		public  function LoadAnimationByName(name:String):XGameEngine.GameObject.Animation

@@ -81,13 +81,13 @@
 		 * @return 
 		 * 
 		 */
-		public function generateRectColliderDefault(scale:Number=1)
+		public function generateRectColliderDefault(scaleX:Number=1,scaleY:Number=1)
 		{
 			var rect:Rectangle = host.getRect(host);
-			var x:Number=rect.x+(1-scale)*rect.width/2;
-			var y:Number=rect.y+(1-scale)*rect.height/2;
-			var width:Number=rect.width*scale;
-			var height:Number=rect.height*scale;
+			var x:Number=rect.x+(1-scaleX)*rect.width/2;
+			var y:Number=rect.y+(1-scaleY)*rect.height/2;
+			var width:Number=rect.width*scaleX;
+			var height:Number=rect.height*scaleY;
 			
 			generateRectCollider(width, height, Color.RED,x , y);
 			
