@@ -54,6 +54,13 @@
 			return layers.get(layerName) as Layer;
 		}
 		
+		
+		/**
+		 * 添加层
+		 * @param name
+		 * @return 
+		 * 
+		 */		
 		public function registerLayer(name:String)
 		{
 			if (layers.get(name)==null)

@@ -17,6 +17,12 @@
 		public var height:Number;
 		
 		
+		/**
+		 *返回舞台大小的rect 
+		 * @param s
+		 * @return 
+		 * 
+		 */		
 		static public function getStageRect(s:Stage):Rect
 		{
 			var r:Rect=new Rect(0,0,s.stageWidth,s.stageHeight);

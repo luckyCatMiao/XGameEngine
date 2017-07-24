@@ -47,21 +47,40 @@
 		private var _dataDomain:ApplicationDomain;
 		private var loadCompleteFun:Function;
 		private var loadProgressFun:Function;
+		
+		
+		
 		/**
 		 * this should be called when game inited,generally from the entry class
-		 * @param	s
-		 */
+		 * 初始化游戏引擎 
+		 * @param s 舞台
+		 * @param dataPath 资源文件路径
+		 * @param loadCompleteFun 加载资源完成的监听
+		 * @param loadProgressFun 加载资源中的监听
+		 * @return 
+		 * 
+		 */		
 		public function Init(s:Stage,dataPath:String,loadCompleteFun:Function=null,loadProgressFun:Function=null)
 		{
-			//初始化输入管理器
-			Input.Init(s);
+			
 			this.s = s;
 			s.addEventListener(Event.ENTER_FRAME, loop);
 			
-			//初始化其余管理器
+			//初始化子模块
 			InitManager();
 			
 			//加载资源
+			startLoadResource(dataPath,loadCompleteFun,loadProgressFun);
+			
+		}
+		
+		
+		/**
+		 * 
+		 * 
+		 */		
+		private function startLoadResource(dataPath:String,loadCompleteFun:Function,loadProgressFun:Function):void
+		{
 			var loader:Loader=new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadComplete);
 			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,loadProgress);
@@ -71,7 +90,6 @@
 			
 			this.loadCompleteFun=loadCompleteFun;
 			this.loadProgressFun=loadProgressFun;
-			
 		}
 		
 		protected function loadProgress(event:ProgressEvent):void
@@ -100,10 +118,13 @@
 	
 		
 		
-		//初始化
-		public function InitManager()
+		/**
+		 * 初始化管理器
+		 */
+		private function InitManager()
 		{
-			
+			//初始化输入管理器
+			Input.Init(s);
 			TimeManager.getInstance();
 			HitManager.getInstance();
 		}

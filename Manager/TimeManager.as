@@ -3,7 +3,7 @@
 	
 	/**
 	 * ...
-	 * @author o
+	 * 帧率管理器
 	 */
 	public class TimeManager extends BaseManager
 	{

@@ -1,9 +1,13 @@
 ﻿package XGameEngine.GameObject
 {
 	import XGameEngine.GameEngine;
+	import XGameEngine.GameObject.Component.Anime.AnimeComponent;
 	import XGameEngine.GameObject.CommonComponent.*;
 	import XGameEngine.GameObject.Component.*;
+	import XGameEngine.GameObject.Component.Collider.CollideComponent;
 	import XGameEngine.GameObject.Component.Collider.RectCollider;
+	import XGameEngine.GameObject.Component.StateMachine.AbstractState;
+	import XGameEngine.GameObject.Component.StateMachine.StateComponent;
 	import XGameEngine.Manager.*;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Structure.List;
@@ -46,17 +50,11 @@
 		private var needLoopComponents:List = new List();
 		public function BaseGameObject(_name:String=null)
 		{
+			this.xname = _name;
 			
+			//注册到游戏各个管理器中
 			registerToGame();
-			if (_name != null)
-			{
-				this.xname = _name;
-			}
-			tag = TagManager.TAG_DEFAULT;
-			layerName = LayerManager.LAYER_DEFAULT;
-			
-			
-			
+			//初始化组件
 			InitComponent();
 			InitEvent();
 		}
@@ -67,14 +65,17 @@
 		private function registerToGame()
 		{
 			
-			//创建默认名字
-			if (_xname != null)
-			{this._xname = _xname }
-			else
+			//如果创建对象时没有传入名字，则创建默认名字
+			if (_xname == null)
 			{this._xname = "object" + GameEngine.getInstance().getGameObjectManager().size; }	
 			
-			//注册
+			//注册到对象管理器中
 			GameEngine.getInstance().getGameObjectManager().register(this);
+			
+			//添加默认标签
+			tag = TagManager.TAG_DEFAULT;
+			//添加到默认层中
+			layerName = LayerManager.LAYER_DEFAULT;
 			
 		
 			
@@ -300,12 +301,12 @@
 			_layerName = value;
 		}
 		
-		public function get state():String 
+		public function get state():AbstractState 
 		{
 			return getStateComponent().state;
 		}
 		
-		public function set state(value:String):void 
+		public function set state(value:AbstractState):void 
 		{
 			
 			getStateComponent().state = value;
@@ -375,7 +376,7 @@
 		 * 如果有多个状态,把状态填在数组中
 		 * @param	state
 		 */
-		public function tryChangeState(newstate:String,conditionState:String,otherState:Array=null)
+		public function tryChangeState(newstate:AbstractState, conditionState:AbstractState,otherState:Array=null)
 		{
 			//trace(state+" "+conditionState);
 			

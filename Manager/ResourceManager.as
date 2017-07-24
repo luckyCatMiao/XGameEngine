@@ -1,7 +1,7 @@
 package XGameEngine.Manager
 {
 	import XGameEngine.GameEngine;
-	import XGameEngine.GameObject.Animation;
+	import XGameEngine.GameObject.Component.Anime.Animation;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -28,6 +28,12 @@ package XGameEngine.Manager
 		
 		
 		
+		/**
+		 *加载声音文件 
+		 * @param name
+		 * @return 
+		 * 
+		 */		
 		public function LoadSoundByName(name:String):Sound
 		{
 			var cls:Class=getClassByName(name);
@@ -44,7 +50,7 @@ package XGameEngine.Manager
 		
 		private function getClassByName(name:String):Class
 		{
-			//优先从本swf里取 这样方便测试 可以先把要多次测试的剪辑先放在主swf里面调整 调整差不多后再检测到资源swf里
+			//优先从本swf里取 这样方便测试 可以先把要多次测试的剪辑先放在主swf里面调整 调整差不多后再放到资源swf里
 			var cls1:Class
 			try
 			{
@@ -62,7 +68,7 @@ package XGameEngine.Manager
 			return cls1==null?cls:cls1;
 		}
 		
-		public  function LoadAnimationByName(name:String):XGameEngine.GameObject.Animation
+		public  function LoadAnimationByName(name:String):XGameEngine.GameObject.Component.Anime.Animation
 		{
 			var cls:Class=getClassByName(name);
 			
@@ -78,6 +84,8 @@ package XGameEngine.Manager
 			
 			return anim;
 		}
+		
+		
 		
 		public  function LoadDisPlayObjectByName(name:String):DisplayObject
 		{

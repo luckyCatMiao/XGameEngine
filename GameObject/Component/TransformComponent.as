@@ -14,7 +14,7 @@
 	import flash.geom.Rectangle;
 	
 	/**
-	 * ...
+	 * 变换组件
 	 * @author o
 	 */
 	public class TransformComponent extends BaseComponent

@@ -3,7 +3,7 @@
 	
 	import XGameEngine.Util.*;
 	/**
-	 * ...
+	 * 
 	 * @author o
 	 */
 	public class Map 

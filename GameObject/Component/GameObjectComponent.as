@@ -1,10 +1,12 @@
 ﻿package XGameEngine.GameObject.Component
 {
-	import XGameEngine.Util.GameUtil;
-	import flash.display.DisplayObject;
-	import flash.geom.Point;
 	import XGameEngine.GameObject.AutoDestroyObject;
 	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.Manager.ResourceManager;
+	import XGameEngine.Util.GameUtil;
+	
+	import flash.display.DisplayObject;
+	import flash.geom.Point;
 	
 	/**
 	 * ...
@@ -108,7 +110,7 @@
 			 */
 			public function loadDisplayObjectByName(name:String,highest:Boolean=true):DisplayObject 
 			{
-				var o:DisplayObject = GameUtil.LoadDisPlayObjectByName(name);
+				var o:DisplayObject = ResourceManager.getInstance().LoadDisPlayObjectByName(name);
 				if (highest)
 				{
 					host.addChild(o);	
@@ -136,12 +138,12 @@
 				return o;
 			}
 			
-			public  function quickLoadEffectParent(name:String):void
-			{
-				var effect:AutoDestroyObject = new AutoDestroyObject(host.getResourceManager().LoadAnimationByName(name));
-				addToParentSamePosition(effect);
-				
-			}
+//			public  function quickLoadEffectParent(name:String):void
+//			{
+//				var effect:AutoDestroyObject = new AutoDestroyObject(host.getResourceManager().LoadAnimationByName(name));
+//				addToParentSamePosition(effect);
+//				
+//			}
 	}
 	
 }

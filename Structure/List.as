@@ -1,36 +1,74 @@
 ﻿package XGameEngine.Structure
 {
+	import fl.transitions.Fade;
+	
 	import flash.geom.Point;
 	
 	/**
-	 * ...
-	 * 基础的线性表 可以添加重复值
+	 * 基础的线性表 
 	 */
-	public class List 
+	public class List extends AbstractCollection
 	{
-		protected var arr:Array=[];
 		
-		public function List(array:Array=null)
+		protected var arr:Array=[];
+
+	
+		/**
+		 * 
+		 * @param flag_canNull
+		 * @param flag_canSame
+		 * @param comparefun
+		 * 
+		 */		
+		public function List(flag_canNull:Boolean=false,flag_canSame:Boolean=false,comparefun:Function=null)
 		{
-			if (array != null)
-			{
-				for each(var o:Object in array)
-				{
-					arr.push(o);
-				}
-			}
+			super(flag_canNull,flag_canSame,comparefun);
 		}
 		
+		/**
+		 *添加 
+		 * @param a
+		 * @return 
+		 * 
+		 */		
 		public function add(a:Object)
 		{
-			arr.push(a);
+			
+			if(a==null&&flag_canNull==false)
+			{
+				//不能为空 报错	
+				throw new Error("the "+a+" is null!")
+			}
+			
+			if (contains(a)&&flag_canSame==false)
+			{
+				//不能重复 报错	
+				throw new Error("the "+a+" has Exist!")
+
+			}
+			else
+			{
+				
+				arr.push(a);
+			}
+			
+			
 		}
 		
-		public function clone():List
+		
+		/**
+		 * 浅克隆 
+		 * @return 
+		 * 
+		 */		
+		 public function shallowClone():List
 		{
-			return new List(arr);
+			var list:List=new List();
+			list.addAll(arr);
+			return list;
 
 		}
+		
 		
 		public function get(index:int):Object
 		{
@@ -54,6 +92,7 @@
 			arr = [];
 		}
 		
+		
 		public function remove(o:Object)
 		{
 			var index:int = arr.indexOf(o);
@@ -71,18 +110,26 @@
 			}
 		}
 		
+		/**
+		 * 过滤 
+		 * @param fun
+		 * @return 
+		 * 
+		 */		
 		public function filter(fun:Function):List
 		{
 			
-		var fun2:Function=function(element:*, index:int, arr:Array):Boolean {
+			var fun2:Function=function(element:*, index:int, arr:Array):Boolean {
             return fun(element);
         }
 
 			
 			var arr:Array = arr.filter(fun2);
 			
+			var list:List=new List(flag_canNull,flag_canSame);
+			list.addAll(arr);
 			
-			return new List(arr);
+			return list;
 		}
 		
 		public function toString():String 
@@ -111,18 +158,32 @@
 			return null;
 		}
 		
+		
+		
 		public function contains(o:Object):Boolean 
 		{
+			
+
 			for each(var q:Object in arr)
 			{
-				if (q == o)
+				//如果没有设置相等检测方法 默认比较引用相等
+				if(comparefun==null)
 				{
-					return true;
+					if (q == o)
+					{
+						return true;
+					}
+				}
+				else
+				{
+				//使用compareFun比较
+					return comparefun(q, o);
 				}
 			}
 			
 			return false;
 		}
+		
 		
 		public function forEach(fun:Function):void 
 		{
@@ -133,6 +194,24 @@
 			arr.forEach(fun2);
 		}
 		
+		public function addAll(arr:Array):void
+		{
+			for each(var q:Object in arr)
+			{
+				add(q);
+			}
+			
+		}
+		
+		
+		public function addAllList(list:List):void
+		{
+			for each(var q:Object in list.Raw)
+			{
+				add(q);
+			}
+			
+		}
 	}
 	
 }

@@ -4,7 +4,7 @@
 	import flash.display.Stage;
 	
 	/**
-	 * ...
+	 * 游戏管理器基类
 	 * @author o
 	 */
 	public class BaseManager 

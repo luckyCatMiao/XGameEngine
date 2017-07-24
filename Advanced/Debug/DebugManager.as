@@ -176,6 +176,7 @@
 		
 		
 		/**
+		 * 添加一个debug值
 		 * add a value that able to show in a plane,which value can be dynamic 
 		 * within the game,the plane is just used in the game test,for a quick
 		 * value change instead of every time change a value then recompile it

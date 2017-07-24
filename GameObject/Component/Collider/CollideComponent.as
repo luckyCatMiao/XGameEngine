@@ -1,7 +1,6 @@
-﻿package XGameEngine.GameObject.Component
+﻿package XGameEngine.GameObject.Component.Collider
 {
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.Component.Collider.*;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.HitManager;
 	import XGameEngine.Structure.Math.Rect;
@@ -12,6 +11,8 @@
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import XGameEngine.GameObject.Component.BaseComponent;
+
 	/**
 	 * ...
 	 * 碰撞器组件

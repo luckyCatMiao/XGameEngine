@@ -1,15 +1,18 @@
 ﻿package XGameEngine.Manager
 {
-	import flash.display.Stage;
 	import XGameEngine.GameObject.*;
 	import XGameEngine.Structure.*;
-	import XGameEngine.Structure.List.DifferentList;
 	import XGameEngine.Structure.Math.*;
+	
+	import fl.transitions.Fade;
+	
+	import flash.display.Stage;
+
 	/**
-	 * ...
+	 * 游戏对象管理器
 	 * @author o
 	 */
-	//保存所有游戏对象
+
 	public class GameObjectManager extends BaseManager
 	{
 		
@@ -28,7 +31,7 @@
 		}
 		
 		
-		private var gobjects:DifferentList = new DifferentList();
+		private var gobjects:List;
 		
 		public function GameObjectManager()
 		{
@@ -37,7 +40,7 @@
 			{
 				return o1.xname == o2.xname;
 			}
-			gobjects.setEqual(fun);
+			gobjects=new List(false,false,fun);
 		}
 		
 		
@@ -46,7 +49,7 @@
 		 */
 		public function get objects():List
 		{
-			return gobjects.clone()
+			return gobjects.shallowClone()
 		}
 		
 		public function get size()

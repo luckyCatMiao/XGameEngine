@@ -6,7 +6,6 @@
 	import XGameEngine.Advanced.Debug.DebugManager;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.List.DifferentList;
 	import XGameEngine.Structure.Map;
 	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.Structure.Math.Vector2;
@@ -18,55 +17,82 @@
 	 * ...
 	 *	夹层地图 包含一个主层和若干其他层
 	 */
-	public class LayerMap extends BaseMap
+	public class LayerMap extends AbstractMap
 	{
 		/*static public var LAYER_MAIN:String = "main layer";
 		static public var LAYER_NORMAL:String = "normal layer";*/
 		
+		/**
+		 * 地图的边界是否可以显示在地图内
+		 */
+		public var canOver:Boolean = false;
 		
+		
+		/**
+		 * 主层 
+		 */		
 		private var mainMap:MapLayer;
+		
+		/**
+		 *主层的主对象  由该对象来驱动计算
+		 */		
 		private var mainChara:BaseGameObject;
+		
 		/**
 		 * 主角色的可移动范围,范围内移动主层 否则移动所有其他层
 		 */
 		private var _moveRect:Rect;
 		
-		private var otherMaps:DifferentList = new DifferentList();
+		/**
+		 *主层外的其余层 
+		 */		
+		private var otherMaps:List;
 		
 		/**
 		 * debug模式中是否绘制出移动范围
 		 */
 		public var debugRect:Boolean = false;
 		
-		
-		
+		/**
+		 *缓动系数 
+		 */		
 		private var _springScale:Number;
+		
+		
+		
 		public function LayerMap(_springScale:Number=-1)
 		{
 			this.xname ="layerMap "+this.name;
 			
-			otherMaps.throwErrorWhenSame = true;
+			
 			//设置比较方法为MapLayer的名字
 			var fun:Function = function(o1:Object, o2:Object):Boolean
 			{
 				
 				return (o1 as MapLayer).name == (o2 as MapLayer).name;
 			}
-			otherMaps.setEqual(fun);
+			otherMaps=new List(false,false,fun);
+			
 			
 			this.springScale = _springScale == -1?1:_springScale;
 	
 		}
 		
-		
-		
+
 		override protected function loop() 
 		{
-			moveCam();
+			moveMap();
 		}
 		
-		private function moveCam():void 
+		
+		/**
+		 *移动 
+		 * 
+		 */		
+		private function moveMap():void 
 		{
+			
+			//获取玩家中心坐标
 			var point:Point = mainChara.centerGlobalPoint;
 			var moveX:Number=0;
 			var moveY:Number=0;
@@ -112,9 +138,9 @@
 			}
 	
 			
-			if (canMoveOtherLayer(moveX, 0))
+				//使用计算出来的移动值进行移动
+				if (canMoveOtherLayer(moveX, 0))
 				{
-					
 				this.mainMap.map.move(moveX, 0);
 				moveOtherLayer(moveX, 0);
 				}
@@ -201,13 +227,19 @@
 			
 		}
 		
+	
+		
 		/**
 		 * 添加物体到普通层
-		 * @param	player
-		 * @param	string
-		 * @param	boolean 如果普通层不存在 是否自动创建普通层
-		 */
-		public function addToNormalLayer(o:DisplayObject, name:String="", autoCreate:Boolean=false,moveScale:Number=1,springScale:Number=1,canOver:Boolean=false)
+		 * @param	o
+		 * @param	name
+		 * @param	autoCreate 如果普通层不存在 是否自动创建普通层
+		 * @param moveScale 该层移动比例
+		 * @param canOver 地图的边界是否可以显示在地图内
+		 * @return 
+		 * 
+		 */		
+		public function addToNormalLayer(o:DisplayObject, name:String="", autoCreate:Boolean=false,moveScale:Number=1,canOver:Boolean=false)
 		{
 
 			if (autoCreate == false)

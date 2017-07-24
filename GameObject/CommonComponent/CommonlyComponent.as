@@ -23,6 +23,23 @@
 				throw new Error(errorMsg);
 			}
 		}
+		
+		
+		public function checkNull(obj:Object, errorMsg:String=null):void 
+		{
+			
+			if(obj==null)
+			{
+				if(errorMsg==null)
+				{
+					throw new Error("null value!");
+				}
+				else 
+				{
+					throw new Error(errorMsg);
+				}
+			}
+		}
 	}
 	
 }
