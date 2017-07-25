@@ -1,4 +1,4 @@
-﻿package XGameEngine.GameObject.Component.Collider
+﻿package XGameEngine.GameObject.Component.Collider.Collider
 {
 	import XGameEngine.UI.Draw.Color;
 	import flash.display.Shape;
@@ -23,6 +23,7 @@
 		{
 			if (a != null)
 			{
+				//使用传入的sprite初始化
 				//a必须只有一个子级而且必须是shape
 				getCommonlyComponent().throwWhileNotTrue(a.numChildren == 1 && (a.getChildAt(0) is Shape), "mesh collider init error");
 				
@@ -34,6 +35,7 @@
 			
 			else 
 			{
+				//使用默认sprite初始化
 				c = new Sprite();
 				addChild(c);
 			}
@@ -59,16 +61,17 @@
 	
 		override public function debugShape() 
 		{
+			//这里通过调整c的透明度实现debug切换
 			
-			if (GameEngine.getInstance().debug && debug)
+			//如果需要debug 
+			if (GameEngine.getInstance().debug&&debug==true)
 			{
-				//这里必须要有一个shape 就算不是debug模式 也要设置为透明 因为碰撞器必须实际存在
-			
-				c.alpha = 0.5;
+					c.alpha=0.5;
 			}
-			else if(GameEngine.getInstance().debug==false || debug==false)
+				//不需要debug
+			else if (GameEngine.getInstance().debug==false||debug==false)
 			{
-				c.alpha = 0;
+					c.alpha=0;
 			}
 		}
 		

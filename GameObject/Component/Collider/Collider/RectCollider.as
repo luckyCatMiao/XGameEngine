@@ -1,19 +1,21 @@
-﻿package XGameEngine.GameObject.Component.Collider
+﻿package XGameEngine.GameObject.Component.Collider.Collider
 {
-	import XGameEngine.Structure.Math.Rect;
-	import XGameEngine.UI.Draw.Color;
-	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.geom.Point;
 	import XGameEngine.GameEngine;
 	import XGameEngine.Structure.List;
+	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.UI.Draw.Color;
+	
+	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
+	import flash.display.Shape;
+	import flash.display.Sprite;
+	import flash.geom.Point;
 	
 	/**
-	 * ...
+	 * 代表一个方形的碰撞体
 	 * @author o
 	 */
-	//代表一个方形的碰撞体
+	
 	public class RectCollider extends Collider
 	{
 		static public var POINT_LEFT:String = "left";
@@ -31,26 +33,25 @@
 		
 		
 	public function RectCollider(width:uint,height:uint,color:uint)
-	{
-
-			
-			this.shape.graphics.beginFill(color,0.4);
-			this.shape.graphics.drawRect(0, 0, width, height);
-			this.shape.graphics.endFill();
-			
+	{	
 			boxWidth = width;
 			boxHeight = height;
-
+			
+			debugColor=color;
+			
+			//这里一开始就要初始化 而且和其他的debug不同 不能remove掉 只能调节透明度
+			//因为碰撞检测时需要提供形状 只提供点不行
+			shape=new Shape();
+			this.shape.graphics.beginFill(debugColor,0.4);
+			this.shape.graphics.drawRect(0, 0, width, height);
+			this.shape.graphics.endFill();
 			//画出碰撞点
 			DrawCheckPoint();
-
-			
-			
-			
+			addChild(this.shape);
 	}
 		
 	
-	public function DrawCheckPoint() 
+	private function DrawCheckPoint() 
 	{
 			this.shape.graphics.beginFill(Color.GREEN);
 			for each(var p:Point in getCheckPoint().Raw)
@@ -89,15 +90,15 @@
 	
 	override public function debugShape() 
 	{
-		if (GameEngine.getInstance().debug && debug)
+		//如果需要debug 
+		if (GameEngine.getInstance().debug&&debug==true)
 		{
-			//这里必须要有一个shape 就算不是debug模式 也要设置为透明 因为碰撞器必须实际存在
-			
-			shape.alpha = 1;
+			shape.alpha=0.5;
 		}
-		else if(GameEngine.getInstance().debug==false || debug==false)
+			//不需要debug
+		else if (GameEngine.getInstance().debug==false||debug==false)
 		{
-			shape.alpha = 0;
+			shape.alpha=0;
 		}
 	}
 		

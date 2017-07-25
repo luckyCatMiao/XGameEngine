@@ -17,7 +17,13 @@
 	 * 发起检测碰撞的物体本身
 	 */
 	public var self:BaseGameObject;
+	/**
+	 *碰撞到的物体 
+	 */	
 	public var hitObject:BaseGameObject;
+	/**
+	 *状态 
+	 */	
 	public var state:String;
 	/**
 	 * 第一个检测到的碰撞点

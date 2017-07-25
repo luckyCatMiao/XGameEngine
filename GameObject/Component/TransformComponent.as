@@ -2,9 +2,10 @@
 {
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.Component.Collider.RectCollider;
+	import XGameEngine.GameObject.Component.Collider.Collider.RectCollider;
 	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.UI.Draw.Color;
+	import XGameEngine.UI.XDebugText;
 	import XGameEngine.UI.XTextField;
 	import XGameEngine.Util.MathTool;
 	
@@ -20,39 +21,63 @@
 	public class TransformComponent extends BaseComponent
 	{
 		
-		private var oldWidth:Number;
-		private var oldHeight:Number;
-		private var oldScaleX:Number;
-		private var oldScaleY:Number;
-		
-		private var aabbDebugShape:Shape;
-		
+		private var _oldWidth:Number;
+		private var _oldHeight:Number;
+		private var _oldScaleX:Number;
+		private var _oldScaleY:Number;
 		private var _oldaabb:Rect;
 		
-		private var _debugPosition:Boolean=false;
-		public var debugAABB:Boolean = false;
 		
-		private var posTextfield:XTextField = new XTextField();
+		
+		
+		
+		
+		private var aabbDebugShape:Shape;
+		public var debugAABB:Boolean = false;
+
+		
+		private var posTextfield:XTextField;
+		public var debugPosition:Boolean=false;
+		
+		
 		public function TransformComponent(o:BaseGameObject)
 		{
 			super(o);
 			
 			//保存了一些原始数据
-			oldWidth = host.width;
-			oldHeight = host.height;
-			oldScaleX = host.scaleX;
-			oldScaleY = host.scaleY;
-			
-		
-			
+			_oldWidth = host.width;
+			_oldHeight = host.height;
+			_oldScaleX = host.scaleX;
+			_oldScaleY = host.scaleY;
+			_oldaabb=aabb;
 		}
 		
 		
+		public function get oldScaleY():Number
+		{
+			return _oldScaleY;
+		}
+
+		public function get oldScaleX():Number
+		{
+			return _oldScaleX;
+		}
+
+		public function get oldHeight():Number
+		{
+			return _oldHeight;
+		}
+
+		public function get oldWidth():Number
+		{
+			return _oldWidth;
+		}
+
 		/**
-		 * 设置X轴方向(不影响当前的缩放参数)
+		 * 设置X轴朝向(不影响当前的缩放参数)
 		 * @param	o
 		 */
-		public function setXAxis(d:Boolean)
+		public function setXDirection(d:Boolean)
 		{
 			var value:Number=MathTool.getPVMSG(oldScaleX);
 			if (d)
@@ -85,99 +110,116 @@
 		 */
 		public function get oldaabb():Rect
 		{
-			//oldAABB即第一次确定的值 因为有些对象运动时会改变aabb的大小
-			if(_oldaabb==null)
-			{
-				_oldaabb = aabb;
-			}
-			
+
 			return _oldaabb;
 		}
 		
-		public function get debugPosition():Boolean 
-		{
-			return _debugPosition;
-		}
-		
-		public function set debugPosition(value:Boolean):void 
-		{
-			if (value == true)
-			{
-				host.stage.addChild(posTextfield);
-			}
-			else if (value == false)
-			{
-				host.stage.removeChild(posTextfield);
-			}
-			
-			_debugPosition = value;
-		}
-		
+	
 		
 		public function loop()
 		{
-			if (GameEngine.getInstance().debug == true)
-			{
-				if (debugAABB == true)
-				{
-					DrawAABB();
-				}
-				if (_debugPosition == true)
-				{
-					DebugPosition();
-				}	
-			}
-			else if (GameEngine.getInstance().debug == false)
-			{
-				if (aabbDebugShape != null)
-				{
-				aabbDebugShape.graphics.clear();
-				}
-				
-				
-				if (posTextfield.parent != null)
-				{
-					posTextfield.parent.removeChild(posTextfield);
-				}
-				
-			}
+			
+			debug();
+			
+			
+		}
+		
+		private function debug():void
+		{
+			DebugAABB();
+			DebugPosition();
+			
+			
 			
 		}
 		
 		private function DebugPosition():void 
 		{
-			if (posTextfield.parent == null)
+			//如果需要debug 
+			if (GameEngine.getInstance().debug&&debugPosition==true)
 			{
-				host.stage.addChild(posTextfield);
-			}
-			
-			posTextfield.text = "X:" + host.centerGlobalPoint.x + "Y:" + host.centerGlobalPoint.y;
-			posTextfield.size = 15;
-			posTextfield.x = host.centerGlobalPoint.x-posTextfield.textWidth/2;
-			posTextfield.y = host.leftTopGlobalPoint.y - 30;
-		}
-		
-		public function DrawAABB()
-		{
-			
-			if (aabbDebugShape == null)
-			{
-				aabbDebugShape = new Shape();
+				//如果当前没有初始化
+				if (posTextfield == null)
+				{
+					posTextfield = new XDebugText();
+				}
 				
-				//设置为最高深度
-				host.getGameObjectComponent().addChildToHighestDepth(aabbDebugShape);
-
+				//添加到host中
+				if (posTextfield.parent == null)
+				{
+					//设置为最高深度
+					host.stage.addChild(posTextfield);
+				}
+				
+				//设置位置
+				posTextfield.text = "X:" + host.centerGlobalPoint.x + "Y:" + host.centerGlobalPoint.y;
+				posTextfield.x = host.centerGlobalPoint.x-posTextfield.textWidth/2;
+				posTextfield.y = host.leftTopGlobalPoint.y - 30;
+				
+			}
+				//不需要debug
+			else if (GameEngine.getInstance().debug==false||debugPosition==false)
+			{
+				if (posTextfield!=null&&posTextfield.parent != null)
+				{
+					//设置为最高深度
+					posTextfield.parent.removeChild(posTextfield);
+				}
 			}
 			
-			aabbDebugShape.graphics.clear();
-			aabbDebugShape.graphics.lineStyle(2, Color.YELLOW, 0.7);
-			aabbDebugShape.graphics.moveTo(aabb.getLeftTopPoint().x+3, aabb.getLeftTopPoint().y+3);
-			aabbDebugShape.graphics.lineTo(aabb.getRightTopPoint().x-3, aabb.getRightTopPoint().y+3);
-			aabbDebugShape.graphics.lineTo(aabb.getRightBottomPoint().x-3, aabb.getRightBottomPoint().y-3);
-			aabbDebugShape.graphics.lineTo(aabb.getLeftBottomPoint().x+3, aabb.getLeftBottomPoint().y-3);
-			aabbDebugShape.graphics.lineTo(aabb.getLeftTopPoint().x+3, aabb.getLeftTopPoint().y+3);
+			
+			
+		}
+		
+		
+		
+		/**
+		 *debug包围框 
+		 * @return 
+		 * 
+		 */		
+		private function DebugAABB()
+		{
+			//如果需要debug 
+			if (GameEngine.getInstance().debug&&debugAABB==true)
+			{
+				//如果当前没有初始化
+				if (aabbDebugShape == null)
+				{
+					aabbDebugShape = new Shape();
+
+				}
+
+				//添加到host中
+				if (aabbDebugShape.parent == null)
+				{
+					//设置为最高深度
+					host.getGameObjectComponent().addChildToHighestDepth(aabbDebugShape);
+				}
+				
+				//设置位置
+				aabbDebugShape.graphics.clear();
+				aabbDebugShape.graphics.lineStyle(2, Color.YELLOW, 0.7);
+				aabbDebugShape.graphics.moveTo(aabb.getLeftTopPoint().x+3, aabb.getLeftTopPoint().y+3);
+				aabbDebugShape.graphics.lineTo(aabb.getRightTopPoint().x-3, aabb.getRightTopPoint().y+3);
+				aabbDebugShape.graphics.lineTo(aabb.getRightBottomPoint().x-3, aabb.getRightBottomPoint().y-3);
+				aabbDebugShape.graphics.lineTo(aabb.getLeftBottomPoint().x+3, aabb.getLeftBottomPoint().y-3);
+				aabbDebugShape.graphics.lineTo(aabb.getLeftTopPoint().x+3, aabb.getLeftTopPoint().y+3);
+				
+			}
+				//不需要debug
+			else if (GameEngine.getInstance().debug==false||debugAABB==false)
+			{
+				if (aabbDebugShape!=null&&aabbDebugShape.parent != null)
+				{
+					//设置为最高深度
+					aabbDebugShape.parent.removeChild(aabbDebugShape);
+				}
+			}
+				
 		
 		}
+		
 		
 		
 		override public function destroyComponent():void

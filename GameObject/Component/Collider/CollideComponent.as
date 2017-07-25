@@ -12,6 +12,9 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import XGameEngine.GameObject.Component.BaseComponent;
+	import XGameEngine.GameObject.Component.Collider.Collider.Collider;
+	import XGameEngine.GameObject.Component.Collider.Collider.MeshCollider;
+	import XGameEngine.GameObject.Component.Collider.Collider.RectCollider;
 
 	/**
 	 * ...
@@ -30,8 +33,10 @@
 		 static  public const  COLLIDER_TYPE_CIRCLE:String = "circle";
 		
 		
-		
-		
+		 /**
+		  *碰撞器对象 
+		  */		
+		 private var c:Collider;
 		
 		/**
 		 * 是否debug碰撞器
@@ -41,12 +46,11 @@
 		public function CollideComponent(o:BaseGameObject)
 		{
 			super(o);
-			host.addLoopFun(this.loop);
 		}
 		
 		
 		
-		private var c:Collider;
+		
 		
 		/**
 		 * 生成方形的碰撞器
@@ -144,9 +148,9 @@
 			//生成方碰撞
 			if (type==COLLIDER_TYPE_RECT)
 			{
-				//方形碰撞是根据给定的形状重新绘制的,所以把原sprite透明度设置为0
-				a.alpha = 0;
-				//变换坐标系
+			//方形碰撞是根据给定的形状重新绘制的,所以把原sprite透明度设置为0
+			a.alpha = 0;
+			//变换坐标系
 			var s:Shape = a.getChildAt(0) as Shape;
 			var r:Rectangle = s.getRect(s);
 			
@@ -165,6 +169,10 @@
 			c = mesh;
 			host.getGameObjectComponent().addChildToHighestDepth(mesh);
 			
+			}
+			else
+			{
+				throw new Error("invalid collider type!");
 			}
 			
 			
@@ -280,15 +288,23 @@
 		/**
 		 * 由host调用
 		 */
-		private function loop():void 
+		public function loop():void 
+		{
+			debug();
+		}
+		
+		
+		
+		private function debug():void
 		{
 			if (collider != null)
 			{
+				//debug collider
 				collider.debug = this.debugCollider;
 				collider.debugShape();
 			}
-		}
-		
+			
+		}		
 		
 	}
 	

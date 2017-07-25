@@ -5,7 +5,7 @@
 	import XGameEngine.GameObject.CommonComponent.*;
 	import XGameEngine.GameObject.Component.*;
 	import XGameEngine.GameObject.Component.Collider.CollideComponent;
-	import XGameEngine.GameObject.Component.Collider.RectCollider;
+	import XGameEngine.GameObject.Component.Collider.Collider.RectCollider;
 	import XGameEngine.GameObject.Component.StateMachine.AbstractState;
 	import XGameEngine.GameObject.Component.StateMachine.StateComponent;
 	import XGameEngine.Manager.*;
@@ -46,8 +46,7 @@
 		protected var _layerName:String;
 		
 	
-		
-		private var needLoopComponents:List = new List();
+
 		public function BaseGameObject(_name:String=null)
 		{
 			this.xname = _name;
@@ -132,28 +131,14 @@
 			
 			state_com.loop();
 			transform_com.loop();
-		
+			collide_com.loop();
 			
 
-			//循环调用需要循环的子组件的循环方法
-			var fun:Function = function(obj:Object):void {
-			(obj as Function)();
-			};
-			needLoopComponents.forEach(fun);
-			
-			
-			//调用外部循环 子类覆盖
+		
 			loop();
 		}
 		
 		
-		/**
-		 * 引擎内部调用 组件使用该方法注册自己的循环方法
-		 */
-		public function addLoopFun(c:Function)
-		{
-			needLoopComponents.add(c);
-		}
 		
 		protected function Init()
 		{

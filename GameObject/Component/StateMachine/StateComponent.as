@@ -92,6 +92,7 @@
 		
 		public function loop()
 		{
+			
 			DebugState();
 			
 			
@@ -104,41 +105,36 @@
 		
 		
 		/**
-		 * 绘制当前状态
+		 * debug 绘制当前状态
 		 */
 		public function DebugState()
 		{
-			
+			//如果需要debug 
 			if (GameEngine.getInstance().debug&&debugState==true)
 			{
-				
-				if (currentState != null)
-				{
+				//如果当前没有初始化
 					if (debug_stateTF == null)
 					{
-						debug_stateTF = new XTextField();
-						host.stage.addChild(debug_stateTF);
-						debug_stateTF.size = 20;
-						debug_stateTF.textColor = Color.BLACK;
-
-						debug_stateTF.autoSize = TextFieldAutoSize.CENTER;
-						
-						
+						debug_stateTF = new XDebugText();
+					
 					}
 					
+					//添加到父级中
 					if (debug_stateTF.parent == null)
 					{
 						host.stage.addChild(debug_stateTF);
 					}
 					
+					//设置位置
 					 var point:Point = host.getTransformComponent().oldaabb.getLeftTopPoint();
 					 var point2:Point=host.localToGlobal(point);
 					debug_stateTF.x = point2.x;
 					debug_stateTF.y = point2.y-20;
 					
 					debug_stateTF.setText(currentState.getName());
-				}
+				
 			}
+			//不需要debug
 			else if (GameEngine.getInstance().debug==false||debugState==false)
 			{
 				if (debug_stateTF!=null&&debug_stateTF.parent != null)
@@ -152,8 +148,7 @@
 		
 		override public function destroyComponent():void
 		{
-			
-			
+
 			if(debug_stateTF!=null)
 			{
 				debug_stateTF.alpha=0;

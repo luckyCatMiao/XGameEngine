@@ -1,4 +1,4 @@
-﻿package XGameEngine.GameObject.Component.Collider
+﻿package XGameEngine.GameObject.Component.Collider.Collider
 {
 	
 	/**

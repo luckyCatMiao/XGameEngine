@@ -1,7 +1,7 @@
 ﻿package XGameEngine.Manager
 {
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.Component.Collider.Collider;
+	import XGameEngine.GameObject.Component.Collider.Collider.Collider;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.LayerManager;
 	import XGameEngine.Structure.List;
@@ -15,7 +15,7 @@
 	import flash.geom.Rectangle;
 
 	/**
-	 * ...
+	 * 碰撞管理器
 	 * @author o
 	 */
 	public class HitManager extends BaseManager
@@ -198,15 +198,7 @@
 				{
 				applyHitState();
 				}	
-				
-				
-			
-				
-			
-			
-			
-			
-			
+
 			
 		}
 		

@@ -1,11 +1,12 @@
-﻿package XGameEngine.GameObject.Component.Collider
+﻿package XGameEngine.GameObject.Component.Collider.Collider
 {
+	import XGameEngine.GameObject.CommonComponent.CommonlyComponent;
+	import XGameEngine.Structure.List;
+	
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import XGameEngine.GameObject.CommonComponent.CommonlyComponent;
-	import XGameEngine.Structure.List;
 
 	/**
 	 * ...
@@ -15,15 +16,21 @@
 	{
 	
 		/**
-		 * 滑板 所有碰撞必须在这个里面画出来
+		 * 是否debug
 		 */
 		public var debug:Boolean = false;
-		public var shape:Shape = new Shape();
+		/**
+		 *debug的面板 
+		 */		
+		public var shape:Shape;
+		/**
+		 *绘制颜色 
+		 */		
+		public var debugColor:uint;
 		
 		private var common_com:CommonlyComponent;
 		public function Collider()
 		{
-			addChild(this.shape);
 			common_com = new CommonlyComponent();
 		}
 		
@@ -45,10 +52,10 @@
 		}
 		
 		
-			public function getCommonlyComponent():CommonlyComponent
-			{
-				return common_com;
-			}
+		public function getCommonlyComponent():CommonlyComponent
+		{
+			return common_com;
+		}
 		
 		
 	}
