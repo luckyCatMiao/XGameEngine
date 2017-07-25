@@ -246,41 +246,7 @@
 		}
 		
 		
-		/**
-		 * 根据碰撞点返回名字 这样可以知道碰撞的是哪个点,只适用于碰撞器是方形碰撞器
-		 * @param	hit
-		 */
-		public function getRectColliderHitPoint(hit:Point):String
-		{
-
-			var co:RectCollider = collider as RectCollider;
-			if (co == null)
-			{
-				throw new Error("the function only apply to rectCollider");
-			}
-			
-			
-			if (hit.equals(co.getLeftPoint()))
-			{
-				return RectCollider.POINT_LEFT;
-			}
-			else if (hit.equals(co.getRightPoint()))
-			{
-				return RectCollider.POINT_RIGHT;
-			}
-			else if (hit.equals(co.getDownPoint()))
-			{
-				return RectCollider.POINT_DOWN;
-			}
-			else if (hit.equals(co.getTopPoint()))
-			{
-				return RectCollider.POINT_UP;
-			}
-			else
-			{
-				throw new Error("no point find!");
-			}
-		}
+		
 		
 		
 		/**

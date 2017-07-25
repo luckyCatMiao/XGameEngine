@@ -441,7 +441,7 @@
 		
 		public function moveY( y:Number) 
 		{
-			move(0, -y);
+			move(0, y);
 		}
 		
 		public function get moveRect():Rect 

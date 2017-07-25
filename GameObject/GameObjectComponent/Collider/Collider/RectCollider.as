@@ -32,6 +32,7 @@
 		
 		
 		
+		
 	public function RectCollider(width:uint,height:uint,color:uint)
 	{	
 			boxWidth = width;
@@ -128,6 +129,54 @@
 	{
 			return new Point((x+boxWidth)/2,(y+boxHeight)/2);
 	}
+	
+	/**
+	 * 根据碰撞点返回名字 这样可以知道碰撞的是哪个点,只适用于碰撞器是方形碰撞器
+	 * @param	hit
+	 */
+	public function getHitPointName(hit:Point):String
+	{
+
+		if (hit.equals(getLeftPoint()))
+		{
+			return RectCollider.POINT_LEFT;
+		}
+		else if (hit.equals(getRightPoint()))
+		{
+			return RectCollider.POINT_RIGHT;
+		}
+		else if (hit.equals(getDownPoint()))
+		{
+			return RectCollider.POINT_DOWN;
+		}
+		else if (hit.equals(getTopPoint()))
+		{
+			return RectCollider.POINT_UP;
+		}
+		else
+		{
+			throw new Error("no point find!");
+		}
+	}
+	
+	
+	/**
+	 * 根据碰撞点组 可以知道有哪几个位置的点碰撞了
+	 * @param	hit
+	 */
+	public function getHitPointNames(pointArray:List):List
+	{
+		
+		var arr:List=new List();
+		for each(var p:Point in pointArray.Raw)
+		{
+			arr.add(getHitPointName(p));
+		}
+		
+		
+		return arr;
+	}
+	
 	
 	
 	

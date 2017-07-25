@@ -26,7 +26,7 @@
 	 */	
 	public var state:String;
 	/**
-	 * 第一个检测到的碰撞点
+	 * 第一个检测到的碰撞点(该点有时候不准，所以尽量不要使用该点)
 	 */
 	public var hitPoint:Point;
 	
@@ -38,6 +38,9 @@
 	 *碰撞点是属于自身还是另外一个对象 
 	 */	
 	public var hitPointsSelf:Boolean;
+	
+	
+
 	
 	public function containPoint(p:Point):Boolean 
 	{

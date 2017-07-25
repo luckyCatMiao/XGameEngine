@@ -72,7 +72,32 @@
 			return i;
 		}
 		
-		
+		/**
+		 *两个数是否正负相同? 
+		 * @param value
+		 * @param scaleX
+		 * @return  相同返回1,不同返回-1
+		 * 
+		 */		
+		public static function isSameZF(value1:Number, value2:Number):Number
+		{
+		 	//都大于0	
+			if(value1>=0&&value2>=0)
+			{
+				return 1;
+			}
+			//都小于0
+			else if(value1<0&&value2<0)
+			{
+				return 1;
+			}
+			//不相同
+			else
+			{
+				return -1;
+			}
+			
+		}
 	}
 	
 }

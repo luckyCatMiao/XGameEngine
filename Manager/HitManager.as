@@ -600,8 +600,10 @@
 			var hitPoints:List = new List();
 			//全都转化到全局坐标系
 			
-			for each(var p:Point in points.Raw)
+			for(var i:int=0;i<points.size;i++)
 			{
+				
+				var p:Point=points.get(i) as Point;
 				//发现一个问题 就是如果xscale反向 就是很常见的人物左右走
 				//这个时候点是根据玩家的朝向来的 比如右是指玩家面朝的右 而不是在全局坐标系中看上去的右
 				//然后发现以前游戏的解决办法是只考虑了位置的坐标变换 没有考虑旋转 缩放

@@ -233,7 +233,18 @@
 		
 		
 	
-		
+		/**
+		 * 获取x轴朝向的正负(是原始方向的正方向还是负方向)
+		 * @return 
+		 * 
+		 */		
+		public  function getXDirection():Number
+		{
+			
+			var value:Number=MathTool.getPVMSG(oldScaleX);
+			
+			return MathTool.isSameZF(value,host.scaleX);
+		}
 	}
 	
 }
