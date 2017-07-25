@@ -1,7 +1,7 @@
-﻿package XGameEngine.GameObject.Component.Anime
+﻿package XGameEngine.GameObject.GameObjectComponent.Anime
 {
 	import XGameEngine.GameObject.*;
-	import XGameEngine.GameObject.Component.*;
+	import XGameEngine.GameObject.GameObjectComponent.*;
 	import XGameEngine.Util.*;
 	
 

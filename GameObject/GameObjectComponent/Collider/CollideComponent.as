@@ -1,6 +1,10 @@
-﻿package XGameEngine.GameObject.Component.Collider
+﻿package XGameEngine.GameObject.GameObjectComponent.Collider
 {
 	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.GameObject.GameObjectComponent.BaseComponent;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.Collider;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.MeshCollider;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.HitManager;
 	import XGameEngine.Structure.Math.Rect;
@@ -11,10 +15,6 @@
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import XGameEngine.GameObject.Component.BaseComponent;
-	import XGameEngine.GameObject.Component.Collider.Collider.Collider;
-	import XGameEngine.GameObject.Component.Collider.Collider.MeshCollider;
-	import XGameEngine.GameObject.Component.Collider.Collider.RectCollider;
 
 	/**
 	 * ...
@@ -102,7 +102,7 @@
 		/**
 		 * 生成一个空的网格碰撞器
 		 */
-		public function generateMeshCollider()
+		public function generateEmptyMeshCollider()
 		{
 			//如果当前碰撞器不为空
 			if (c != null)
@@ -133,17 +133,14 @@
 			
 			
 			//如果a不是子物体则报错
-			getCommonlyComponent().throwWhileTrue(host.getGameObjectComponent().hasChild(a) == false, "the params is not a child Object of the gameobject");
+			//getCommonlyComponent().throwWhileTrue(host.getGameObjectComponent().hasChild(a) == false, "the params is not a child Object of the gameobject");
 			
-			
-			
-			//转换a里面唯一子物体从a坐标系到host坐标系
 			//其中a的唯一子物体必须是shape类型 即代表碰撞区的只能是一些色块
-			if (a.getChildAt(0) as Shape == null)
-			{
-				throw new Error("the hitbox can only be Shape type!");
-			}
-	
+			getCommonlyComponent().throwWhileTrue(!(a.getChildAt(0) is Shape),"the hitbox can only be Shape type!");
+				
+				
+			
+			
 			
 			//生成方碰撞
 			if (type==COLLIDER_TYPE_RECT)
@@ -156,6 +153,7 @@
 			
 			var p1:Point = new Point(r.x, r.y);
 		
+			//转换a里面唯一子物体从a坐标系到host坐标系
 			p1 = s.localToGlobal(p1);
 			p1 = host.globalToLocal(p1);
 			

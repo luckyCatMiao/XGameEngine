@@ -1,4 +1,4 @@
-﻿package XGameEngine.GameObject.Component.Collider.Collider
+﻿package XGameEngine.GameObject.GameObjectComponent.Collider.Collider
 {
 	import XGameEngine.GameObject.CommonComponent.CommonlyComponent;
 	import XGameEngine.Structure.List;
@@ -32,6 +32,9 @@
 		public function Collider()
 		{
 			common_com = new CommonlyComponent();
+			
+			shape=new Shape();
+			addChild(this.shape);
 		}
 		
 		

@@ -1,20 +1,22 @@
 ﻿package XGameEngine.GameObject
 {
 	import XGameEngine.GameEngine;
-	import XGameEngine.GameObject.Component.Anime.AnimeComponent;
 	import XGameEngine.GameObject.CommonComponent.*;
-	import XGameEngine.GameObject.Component.*;
-	import XGameEngine.GameObject.Component.Collider.CollideComponent;
-	import XGameEngine.GameObject.Component.Collider.Collider.RectCollider;
-	import XGameEngine.GameObject.Component.StateMachine.AbstractState;
-	import XGameEngine.GameObject.Component.StateMachine.StateComponent;
+	import XGameEngine.GameObject.GameObjectComponent.*;
+	import XGameEngine.GameObject.GameObjectComponent.Anime.AnimeComponent;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.CollideComponent;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
+	import XGameEngine.GameObject.GameObjectComponent.StateMachine.AbstractState;
+	import XGameEngine.GameObject.GameObjectComponent.StateMachine.StateComponent;
 	import XGameEngine.Manager.*;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Structure.List;
+	import XGameEngine.Structure.Math.Vector2;
 	import XGameEngine.Util.*;
 	
 	import fl.transitions.Fade;
 	
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -25,7 +27,7 @@
 	 * ...
 	 * the fundamental gameobject,provide a sets of useful features.
 	 */
-	public class BaseGameObject extends Sprite
+	public class BaseGameObject extends MovieClip
 	{
 		
 		/**
@@ -40,6 +42,7 @@
 		protected var state_com:StateComponent;
 		protected var obj_com:GameObjectComponent;
 		protected var fun_com:FunComponent;
+		protected var common_com:CommonlyComponent;
 		
 		protected var _xname:String;
 		protected var _tag:String;
@@ -96,7 +99,7 @@
 			state_com = new StateComponent(this);
 			fun_com = new FunComponent();
 			transform_com = new TransformComponent(this);
-			
+			common_com=new CommonlyComponent();
 		}
 
 		
@@ -214,6 +217,14 @@
 		public function getCollideComponent():CollideComponent 
 		{
 			return collide_com;
+		}
+		/**
+		 * 返回通用组件
+		 * @return
+		 */
+		public function getCommonlyComponent():CommonlyComponent 
+		{
+			return common_com;
 		}
 		/**
 		 * 返回物理组件
@@ -472,6 +483,33 @@
 			
 			return this.parent as BaseGameObject;
 		}
+		
+		/**
+		 * 转换当前坐标系内某点到另一个对象坐标系的中 
+		 * @param point 当前坐标系中的某点
+		 * @param other 另一个对象
+		 * @return 
+		 * 
+		 */		
+		public function localToOtherLocal(point:Point,other:DisplayObject):Vector2
+		{
+			return GameUtil.localToOtherLocal(point,this,other);
+
+		}
+		
+		
+		/**
+		 * 转换另一个坐标系内某点到当前坐标系的中 
+		 * @param point 另一个坐标系中的某点
+		 * @param other 另一个对象
+		 * @return 
+		 * 
+		 */		
+		public function otherLocalToMyLocal(point:Point,other:DisplayObject):Vector2
+		{
+			return GameUtil.localToOtherLocal(point,other,this);
+		}
+		
 		
 	}
 	

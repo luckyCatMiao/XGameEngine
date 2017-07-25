@@ -1,5 +1,6 @@
 ﻿package XGameEngine.Structure.Math
 {
+	import flash.geom.Point;
 	
 	/**
 	 * ...
@@ -26,6 +27,14 @@
 			
 			
 			return new Vector2(x *= i, y *= i);
+		}
+		
+		
+		public function toPoint():Point
+		{
+			
+			
+			return new Point(x,y);
 		}
 		
 		

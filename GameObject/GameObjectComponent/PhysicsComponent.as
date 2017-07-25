@@ -1,10 +1,10 @@
-﻿package XGameEngine.GameObject.Component
+﻿package XGameEngine.GameObject.GameObjectComponent
 {
 	import XGameEngine.GameObject.*;
 	import XGameEngine.Structure.*;
 	import XGameEngine.Structure.Math.*;
 	/**
-	 * ...
+	 * 物理组件 可以施加力和速度之类的
 	 * @author o
 	 */
 	public class PhysicsComponent extends BaseComponent 
@@ -117,10 +117,6 @@
 				ySpeed = 0;
 			}
 			
-			
-			
-			
-			
 		}
 		
 		
@@ -199,19 +195,32 @@
 			this.sumSpeedY=posY;
 			
 			
+			//根据计算出的距离设置host的位置
+			setHostPostion(new Vector2(posX,posY));
+			
+			
+			
+		}
+		
+		private function setHostPostion(v:Vector2):void
+		{
+			
+			var posX:Number =v.x;
+			var posY:Number =v.y;
+			
 			//如果没有监听器 直接变化位置
 			if (listener == null)
 			{
-			if (Math.abs(posX) >= thresholdX)
-			{
-				host.x += posX ;
-				lastMoveX = posX;
-			}
-			if (Math.abs(posY) >= thresholdY)
-			{
-				host.y -= posY;
-				lastMoveY = posY;
-			}
+				if (Math.abs(posX) >= thresholdX)
+				{
+					host.x += posX ;
+					lastMoveX = posX;
+				}
+				if (Math.abs(posY) >= thresholdY)
+				{
+					host.y -= posY;
+					lastMoveY = posY;
+				}
 			}
 			else
 			{
@@ -219,9 +228,7 @@
 				listener(posX, posY);
 			}
 			
-			
-		}
-		
+		}		
 		
 		private function SumUpVector2(l:List):Vector2
 		{
@@ -249,6 +256,19 @@
 			this.listener = onPhysicsMove;
 		}
 		
+		
+		/**
+		 *	施加瞬时的移动 
+		 * @param param0
+		 * 
+		 */		
+		public function instanceMove(move:Vector2):void
+		{
+			setHostPostion(move);
+			
+		}
+		
+	
 	}
 	
 }

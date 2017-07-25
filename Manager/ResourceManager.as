@@ -1,7 +1,7 @@
 package XGameEngine.Manager
 {
 	import XGameEngine.GameEngine;
-	import XGameEngine.GameObject.Component.Anime.Animation;
+	import XGameEngine.GameObject.GameObjectComponent.Anime.Animation;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -68,7 +68,7 @@ package XGameEngine.Manager
 			return cls1==null?cls:cls1;
 		}
 		
-		public  function LoadAnimationByName(name:String):XGameEngine.GameObject.Component.Anime.Animation
+		public  function LoadAnimationByName(name:String):XGameEngine.GameObject.GameObjectComponent.Anime.Animation
 		{
 			var cls:Class=getClassByName(name);
 			

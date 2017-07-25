@@ -59,15 +59,19 @@
 		
 		public function DebugManager()
 		{
+			
 			//注册一个默认更改debug状态热键 debug五个键一起按下可以改变debug状态
 			var keys:Array = [KeyCode.VK_D,KeyCode.VK_E,KeyCode.VK_B,KeyCode.VK_U,KeyCode.VK_G];
-			Input.registerComboKey(CollectionUtil.arrayToVectorInt(keys), "debug", 50);
-			//添加到游戏引擎的主循环中
-			GameEngine.getInstance().addLoopAble(this);
+			Input.registerComboKey(CollectionUtil.arrayToVectorInt(keys), "debug", 200);
+		
 			
 			
 			stage.addChild(debugShapePlane);
 			stage.addChild(debugValuePlane);
+			
+			//添加到游戏引擎的主循环中
+			GameEngine.getInstance().addLoopAble(this);
+			
 		}
 		
 		/**
@@ -77,27 +81,33 @@
 		{
 			
 			
-			if (Input.isComboKey("debug"))
-			{
-				
-				GameEngine.getInstance().debug = GameEngine.getInstance().debug == true?false:true;
-				if (GameEngine.getInstance().debug == false)
-				{
-					//移除显示debug数据的板
-					debugValuePlane.getGameObjectComponent().removeSelf();
-					//移除显示矢量图数据的版
-					debugShapePlane.getGameObjectComponent().removeSelf();
-					
-				}
-				else
-				{
-					stage.addChild(debugValuePlane);
-					stage.addChild(debugShapePlane);
-				}
-				
-			}
+			
 		}
 		
+		
+		
+		/**
+		 *切换debug状态 
+		 * 
+		 */		
+		public function toggleDebug():void
+		{
+			GameEngine.getInstance().debug = GameEngine.getInstance().debug == true?false:true;
+			if (GameEngine.getInstance().debug == false)
+			{
+				//移除显示debug数据的板
+				debugValuePlane.getGameObjectComponent().removeSelf();
+				//移除显示矢量图数据的版
+				debugShapePlane.getGameObjectComponent().removeSelf();
+				
+			}
+			else
+			{
+				stage.addChild(debugValuePlane);
+				stage.addChild(debugShapePlane);
+			}
+			
+		}		
 		
 		
 		/**

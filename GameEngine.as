@@ -123,10 +123,13 @@
 		 */
 		private function InitManager()
 		{
-			//初始化输入管理器
-			Input.Init(s);
+			DebugManager.getInstance();
 			TimeManager.getInstance();
 			HitManager.getInstance();
+			
+			//初始化输入管理器
+			Input.Init(s);
+			
 		}
 		
 		public function getTimeManager():TimeManager
@@ -166,6 +169,8 @@
 			{
 				(list.get(i) as LoopAble).loop();
 			}
+			
+			
 		}
 		
 		public function addLoopAble(l:LoopAble)

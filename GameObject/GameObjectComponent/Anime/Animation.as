@@ -1,4 +1,4 @@
-﻿package XGameEngine.GameObject.Component.Anime
+﻿package XGameEngine.GameObject.GameObjectComponent.Anime
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;

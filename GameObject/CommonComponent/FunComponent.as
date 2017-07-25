@@ -41,6 +41,7 @@
 			delayFuns.add(r);
 		}
 		
+		
 		public function AddInvokeTime(name:String):void 
 		{
 			for each(var f:ReCallFun in delayFuns.Raw)

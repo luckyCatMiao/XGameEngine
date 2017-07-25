@@ -1,8 +1,8 @@
-﻿package XGameEngine.GameObject.Component
+﻿package XGameEngine.GameObject.GameObjectComponent
 {
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.Component.Collider.Collider.RectCollider;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
 	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.UI.Draw.Color;
 	import XGameEngine.UI.XDebugText;

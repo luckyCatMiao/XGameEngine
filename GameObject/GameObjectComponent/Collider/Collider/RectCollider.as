@@ -1,4 +1,4 @@
-﻿package XGameEngine.GameObject.Component.Collider.Collider
+﻿package XGameEngine.GameObject.GameObjectComponent.Collider.Collider
 {
 	import XGameEngine.GameEngine;
 	import XGameEngine.Structure.List;
@@ -41,13 +41,13 @@
 			
 			//这里一开始就要初始化 而且和其他的debug不同 不能remove掉 只能调节透明度
 			//因为碰撞检测时需要提供形状 只提供点不行
-			shape=new Shape();
+			
 			this.shape.graphics.beginFill(debugColor,0.4);
 			this.shape.graphics.drawRect(0, 0, width, height);
 			this.shape.graphics.endFill();
 			//画出碰撞点
 			DrawCheckPoint();
-			addChild(this.shape);
+			
 	}
 		
 	
@@ -93,7 +93,7 @@
 		//如果需要debug 
 		if (GameEngine.getInstance().debug&&debug==true)
 		{
-			shape.alpha=0.5;
+			shape.alpha=0.75;
 		}
 			//不需要debug
 		else if (GameEngine.getInstance().debug==false||debug==false)

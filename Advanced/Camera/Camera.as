@@ -20,7 +20,7 @@ package XGameEngine.Advanced.Camera
 		private var b:Bitmap;
 		
 		/**
-		 * 需要显示的对象显示的舞台范围和摄像机本身的范围
+		 * 需要显示的对象   显示的舞台范围    摄像机本身的范围
 		 */
 		public function Camera(o:DisplayObject,r:Rect,r2:Rect)
 		{

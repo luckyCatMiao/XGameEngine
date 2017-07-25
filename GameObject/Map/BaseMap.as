@@ -4,7 +4,7 @@
 	
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.CommonComponent.FunComponent;
-	import XGameEngine.GameObject.Component.GameObjectComponent;
+	import XGameEngine.GameObject.GameObjectComponent.GameObjectComponent;
 	import XGameEngine.Structure.Math.Spring;
 	import XGameEngine.Structure.Math.Vector2;
 	

@@ -1,7 +1,7 @@
 ﻿package XGameEngine.Manager
 {
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.Component.Collider.Collider.Collider;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.Collider;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.LayerManager;
 	import XGameEngine.Structure.List;

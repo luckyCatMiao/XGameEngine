@@ -9,6 +9,12 @@
 	 */
 	public class  MathTool
 	{
+		/**
+		 * 
+		 * @param rect
+		 * @return 
+		 * 
+		 */		
 		static public function rectToPointArray(rect:Rectangle):Vector.<Point>
 		{
 		var array:Vector.<Point> = new Vector.<Point>;

@@ -81,13 +81,14 @@ package XGameEngine.Manager
 		   
 		   for each(var c:comboKey in comboKeys)
 		   {
+			   //如果已经触发
 			   if (c.isTrigger)
 			   {
-				  if (c.isLock == false && c.isTrigger)
+				  if (c.isLock == false && c.isTrigger==true)
 				  {
 					  c.isTrigger = false;
 				  }
-				   if (c.isLock)
+				  else if (c.isLock)
 				  {
 					  c.isLock = false;
 				  }
@@ -96,6 +97,7 @@ package XGameEngine.Manager
 			   c.reduceTime(1 / sta.frameRate);
 		   }
 		   	
+		   
 		}
 		
 		
@@ -193,9 +195,15 @@ package XGameEngine.Manager
 		
 		
 		
-		//注册组合键,当按键在规定时间内都(按下过)后触发 
-		//触发状态保持一帧
-		//时间默认值为-1,即无限时
+		/**
+		 *注册组合键,当按键在规定时间内都(按下过)后触发 
+	     *触发状态保持一帧
+		 *时间默认值为-1,即无限时 
+		 * @param keyCodes
+		 * @param comboName
+		 * @param time
+		 * 
+		 */		
 		static public function registerComboKey(keyCodes:Vector.<int>,comboName:String,time:Number=-1):void
 		{
 		  if (comboKeys[comboName] != null)

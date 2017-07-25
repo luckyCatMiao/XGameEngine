@@ -1,4 +1,4 @@
-﻿package XGameEngine.GameObject.Component.Collider.Collider
+﻿package XGameEngine.GameObject.GameObjectComponent.Collider.Collider
 {
 	import XGameEngine.UI.Draw.Color;
 	import flash.display.Shape;

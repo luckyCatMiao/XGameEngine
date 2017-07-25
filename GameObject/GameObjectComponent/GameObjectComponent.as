@@ -1,4 +1,4 @@
-﻿package XGameEngine.GameObject.Component
+﻿package XGameEngine.GameObject.GameObjectComponent
 {
 	import XGameEngine.GameObject.AutoDestroyObject;
 	import XGameEngine.GameObject.BaseGameObject;
@@ -9,7 +9,7 @@
 	import flash.geom.Point;
 	
 	/**
-	 * ...
+	 * 对象管理器 管理对象关系
 	 * @author o
 	 */
 	public class GameObjectComponent extends BaseComponent 
@@ -22,7 +22,7 @@
 		
 		
 		/**
-		 * 设置最低深度
+		 * 加入对象,设置最低深度
 		 * @param	o
 		 */
 		public function addChildToLowestDepth(o:DisplayObject)
@@ -82,6 +82,7 @@
 				return false;
 			}
 			
+			
 			public function removeAll():void 
 			{
 				while (host.numChildren > 0)
@@ -95,6 +96,12 @@
 				host.parent.removeChild(host);
 			}
 			
+			/**
+			 * 
+			 * @param o
+			 * @param point
+			 * 
+			 */			
 			public function addByGlobalPoint(o:BaseGameObject, point:Point):void 
 			{
 				var point2:Point = host.globalToLocal(point);

@@ -1,4 +1,4 @@
-package XGameEngine.GameObject.Component.StateMachine
+package XGameEngine.GameObject.GameObjectComponent.StateMachine
 {
 import Script.Config.GameConfig;
 
