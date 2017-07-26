@@ -242,9 +242,9 @@
 					
 					
 					i++;
-					if (i > 100)
+					if (i > 20)
 					{
-						w.valid = false;
+						//w.valid = false;
 						trace(w.o1 + "-" + w.o2 + " has checked over 100 times!Please check!")
 						continue;
 					}

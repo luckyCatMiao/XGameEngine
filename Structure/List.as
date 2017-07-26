@@ -212,6 +212,20 @@
 			}
 			
 		}
+		
+		/**
+		 *移除所有 
+		 * @param needDelete
+		 * 
+		 */		
+		public function removeAll(arr:Array):void
+		{
+			for each(var o:Object in arr)
+			{
+			remove(o);	
+			}
+			
+		}
 	}
 	
 }

@@ -138,17 +138,15 @@
 		/**
 		 *  清空速度和力
 		 * @param	v
-		 * @param	resetSpeed 是否清空当前累加的速度?
 		 */
-		public function clearAll(v:Vector2,resetSpeed:Boolean=false)
+		public function clearAll()
 		{
 			clearForces();
 			clearSpeeds();
 			
-			if (resetSpeed)
-			{
-				ResetSpeed();
-			}
+			//清零当前累加的速度
+			ResetSpeed();
+			
 		}
 		
 		/**

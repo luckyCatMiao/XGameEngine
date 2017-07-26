@@ -11,6 +11,8 @@
 	import XGameEngine.UI.Draw.Color;
 	import XGameEngine.Util.MathTool;
 	
+	import fl.transitions.Fade;
+	
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Point;
@@ -121,12 +123,16 @@
 			
 
 		
+		
 		/**
 		 * 直接设置一个子级为碰撞器
 		 * @param	a
 		 * @param   type 碰撞器类型
-		 */
-		public function setCollider(a:Sprite,type:String=COLLIDER_TYPE_RECT)
+		 * @param isSelf 碰撞区是否是显示对象本身 网格碰撞器会特殊处理
+		 * @return 
+		 * 
+		 */		
+		public function setCollider(a:Sprite,type:String=COLLIDER_TYPE_RECT,isSelf:Boolean=false)
 		{
 			//如果已经有碰撞器就报错
 			getCommonlyComponent().throwWhileTrue(c != null, "the collider has existed,please call the reset before set the new collider.");
@@ -136,7 +142,8 @@
 			//getCommonlyComponent().throwWhileTrue(host.getGameObjectComponent().hasChild(a) == false, "the params is not a child Object of the gameobject");
 			
 			//其中a的唯一子物体必须是shape类型 即代表碰撞区的只能是一些色块
-			getCommonlyComponent().throwWhileTrue(!(a.getChildAt(0) is Shape),"the hitbox can only be Shape type!");
+			//(后来发现不能这样判断啊。。因为碰撞区有可能会变  比如浮动平台 所以可能是嵌套的对象)
+			//getCommonlyComponent().throwWhileTrue(!(a.getChildAt(0) is Shape),"the hitbox can only be Shape type!");
 				
 				
 			
@@ -163,7 +170,7 @@
 			else if(type==COLLIDER_TYPE_MESH)
 			{
 				//生成不规则碰撞器
-			var mesh:MeshCollider = new MeshCollider(a);
+			var mesh:MeshCollider = new MeshCollider(a,isSelf);
 			c = mesh;
 			host.getGameObjectComponent().addChildToHighestDepth(mesh);
 			
