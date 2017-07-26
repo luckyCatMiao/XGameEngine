@@ -8,8 +8,8 @@
 	 */
 	public class Vector2 
 	{
-		static public var VEC2_DOWN = new Vector2(0, -1);
-		static public var VEC2_UP = new Vector2(0, 1);
+		static public var VEC2_DOWN = new Vector2(0, 1);
+		static public var VEC2_UP = new Vector2(0, -1);
 		static public var VEC2_LEFT = new Vector2(-1, 0);
 		static public var VEC2_RIGHT=new Vector2(1,0);
 		

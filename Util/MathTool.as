@@ -46,7 +46,8 @@
 			}
 			else
 			{
-				throw new Error("paramter can't be 0!");
+				return 0;
+				//throw new Error("paramter can't be 0!");
 			}
 			
 		}

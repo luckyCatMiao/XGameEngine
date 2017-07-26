@@ -26,8 +26,8 @@
 		private var _oldScaleX:Number;
 		private var _oldScaleY:Number;
 		private var _oldaabb:Rect;
-		
-		
+		private var _oldX:Number;
+		private var _oldY:Number;
 		
 		
 		
@@ -40,6 +40,7 @@
 		public var debugPosition:Boolean=false;
 		
 		
+		
 		public function TransformComponent(o:BaseGameObject)
 		{
 			super(o);
@@ -49,10 +50,22 @@
 			_oldHeight = host.height;
 			_oldScaleX = host.scaleX;
 			_oldScaleY = host.scaleY;
+			_oldX=host.x;
+			_oldY=host.y;
 			_oldaabb=aabb;
 		}
 		
 		
+		public function get oldY():Number
+		{
+			return _oldY;
+		}
+
+		public function get oldX():Number
+		{
+			return _oldX;
+		}
+
 		public function get oldScaleY():Number
 		{
 			return _oldScaleY;

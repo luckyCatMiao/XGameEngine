@@ -10,19 +10,33 @@
 	public class PhysicsComponent extends BaseComponent 
 	{
 		
-		private var xSpeed:Number=0;
-		private var ySpeed:Number = 0;
 		
-		private var xSpeed2:Number=0;
-		private var ySpeed2:Number=0;
+		/**
+		 *由加速度累加起来的那一部分合速度 加上固定速度后才是总速度 
+		 */		
+		private var partXSpeed:Number=0;
+		private var partYSpeed:Number = 0;
 		
-		
+	
+		/**
+		 *加速度 
+		 */		
 		private var xASpeed:Number=0;
 		private var yASpeed:Number=0;
 		
+		/**
+		 *力组 每次都会转化为加速度 加速度再累加到最终速度上 
+		 */		
 		private var forces:List = new List();
+		
+		/**
+		 *恒定速度组 每次计算最终速度时这里面的值都会被加入 
+		 */		
 		private var speeds:List = new List();
 		
+		/**
+		 *移动阈值 
+		 */		
 		private var thresholdX:Number = 0;
 		private var thresholdY:Number = 0;
 		
@@ -44,7 +58,7 @@
 		
 		
 		/**
-		 * 施加恒定速度
+		 * 增加一个速度向量到速度组中
 		 * @param	name
 		 * @param	v
 		 */
@@ -73,14 +87,14 @@
 		
 	
 		/**
-		 * 施加一个瞬间速度
+		 * 直接追加一个速度向量到最终速度中
 		 * @param	name
 		 * @param	v
 		 */
 		public function AddInstantSpeed(v:Vector2)
 		{
-			xSpeed += v.x;
-			ySpeed += v.y;
+			partXSpeed += v.x;
+			partYSpeed += v.y;
 			
 			calulate();
 		}
@@ -90,31 +104,40 @@
 		
 		/**
 		 * 清空当前为止累加的速度,不清空速度和力向量,特别注意对已经存在的速度向量无效
+		 * 可以进行反向的位置校准 例如游戏中的墙壁 清空速度之后还可能需要往反方向移动,防止穿过部分墙壁
 		 * @param	x 是否清空x轴的速度
 		 * @param	y 是否清空y轴的速度
-		 * @param	fixX 是否对X轴位置进行校准
-		 * @param	fixY 是否对Y轴位置进行校准
+		 * @param	fixX  x轴需要校准的距离
+		 * @param	fixY  x轴需要校准的距离
 		 */
-		public function ResetSpeed(x:Boolean=true,y:Boolean=true,fixX:Boolean=false,fixY:Boolean=false)
+		public function ResetSpeed(x:Boolean=true,y:Boolean=true,fixX:Number=0,fixY:Number=0)
 		{
 			
-			var v:Vector2 = SumUpVector2(forces);
+			
+		
 			
 			if (x)
 			{
 				if (fixX)
 				{
-					host.x -= v.x;
+					//host.x -= v.x;
+//					var moveX:int=v.x;
+//					setHostPostion(new Vector2(-moveX,0));
+					instanceMove(new Vector2(0,fixX));
 				}
-				xSpeed = 0;
+				partXSpeed = 0;
 			}
 			if (y)
 			{
 				if (fixY)
 				{
-					host.y += v.y;
+//					var moveY:int=v.y;
+//					setHostPostion(new Vector2(-moveY,0));
+//					trace(-moveY);
+					
+					instanceMove(new Vector2(0,fixY));
 				}
-				ySpeed = 0;
+				partYSpeed = 0;
 			}
 			
 		}
@@ -179,25 +202,19 @@
 			
 			
 			//当前速度加上加速度
-			xSpeed += force2.x;
-			ySpeed += force2.y;
+			partXSpeed += force2.x;
+			partYSpeed += force2.y;
 			
 			
 			//追加上恒定速度
-		
-			var posX:Number = xSpeed + speed2.x;
-			var posY:Number =ySpeed+speed2.y;
-			
 			//设置物理速度总和 供外界读取
-			this.sumSpeedX=posX;
-			this.sumSpeedY=posY;
-			
+			this.sumSpeedX =partXSpeed + speed2.x;
+			this.sumSpeedY =partYSpeed+speed2.y;
+		
 			
 			//根据计算出的距离设置host的位置
-			setHostPostion(new Vector2(posX,posY));
-			
-			
-			
+			setHostPostion(new Vector2(sumSpeedX,sumSpeedY));
+
 		}
 		
 		private function setHostPostion(v:Vector2):void
@@ -209,6 +226,7 @@
 			//如果没有监听器 直接变化位置
 			if (listener == null)
 			{
+				//超过阈值才能移动
 				if (Math.abs(posX) >= thresholdX)
 				{
 					host.x += posX ;
@@ -216,7 +234,7 @@
 				}
 				if (Math.abs(posY) >= thresholdY)
 				{
-					host.y -= posY;
+					host.y += posY;
 					lastMoveY = posY;
 				}
 			}
@@ -228,6 +246,13 @@
 			
 		}		
 		
+		
+		/**
+		 *将一组向量全加起来返回结果向量(为了方便起见 值会被缩小10倍) 
+		 * @param l
+		 * @return 
+		 * 
+		 */		
 		private function SumUpVector2(l:List):Vector2
 		{
 			xASpeed = 0;
@@ -238,7 +263,7 @@
 				yASpeed += n.v2.y;
 			}
 				//速度可能太大了 这里缩小一下 不然填的时候只能填小数了，有点麻烦
-			return new Vector2(xASpeed/10, yASpeed/10);
+			return new Vector2(xASpeed/10.0, yASpeed/10.0);
 		}
 		
 		/**

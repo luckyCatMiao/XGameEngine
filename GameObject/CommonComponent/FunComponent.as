@@ -133,12 +133,16 @@
 			}
 		}
 		
-		
+	
+		public function getRecallFunByName(name:String):ReCallFun
+		{
+			return delayFuns.find(name,"name") as ReCallFun;
+			
+		}
 	}
 	
 }
-
-class ReCallFun
+ class ReCallFun
 {
 	/**
 	 *名字 只作为一个标识 
@@ -168,4 +172,6 @@ class ReCallFun
 	 *是否回调一次之后就删除 
 	 */	
 	public var once:Boolean;
+
+	
 }

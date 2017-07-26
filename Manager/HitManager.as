@@ -5,6 +5,7 @@
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.LayerManager;
 	import XGameEngine.Structure.List;
+	import XGameEngine.Structure.Math.Rect;
 	
 	import fl.transitions.Fade;
 	
@@ -221,7 +222,6 @@
 			for each(var w:WhileTest in whileTest.Raw)
 			{
 				
-				if((record=findRecord(w.o1,w.o2))!=null){record.lock=false};
 				i=0;
 				//只要两个物体还在接触中就一直计算碰撞 因此回调方法中应该包含将两个物体分开的方法 、
 				//否则就会达到计算上限100次
@@ -244,8 +244,8 @@
 					i++;
 					if (i > 20)
 					{
-						//w.valid = false;
-						trace(w.o1 + "-" + w.o2 + " has checked over 100 times!Please check!")
+						w.valid = false;
+						trace(w.o1 + "-" + w.o2 + " has checked over 20 times!Please check!")
 						continue;
 					}
 				}
@@ -261,23 +261,7 @@
 		{
 			//遍历对象管理器中 依次进行碰撞检测 
 			
-			var object:List = GameObjectManager.getInstance().objects;
-			
-			//过滤出所有有碰撞器的
-			var fun:Function = function(element:*):Boolean {
-			
-				 var o:BaseGameObject = element as BaseGameObject;
-				if (o.getCollideComponent().hasCollider())
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			};
-			
-			object = object.filter(fun);
+			var object:List =filterAllhasCollider();
 			
 			for (var out:int = 0;out < object.size;out++)
 			{
@@ -290,6 +274,32 @@
 			
 		}
 		
+		/**
+		 *过滤出对象管理中所有有collider的对象 
+		 * @return 
+		 * 
+		 */		
+		private function filterAllhasCollider():List
+		{
+			var objects:List= GameObjectManager.getInstance().objects;
+			
+			//过滤出所有有碰撞器的
+			var fun:Function = function(element:*):Boolean {
+				
+				var o:BaseGameObject = element as BaseGameObject;
+				if (o.getCollideComponent().hasCollider())
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			};
+			
+			objects = objects.filter(fun);
+			return objects;
+		}		
 		
 		
 		
@@ -384,6 +394,7 @@
 				hit.valid = false;
 				return;
 			}
+			
 			hit.o1.getCollideComponent().applyCollision(CreateCollision(hit,true));
 			hit.o2.getCollideComponent().applyCollision(CreateCollision(hit,false));
 			
@@ -393,7 +404,7 @@
 		 * 创建一个碰撞数据包
 		 * @param	o1
 		 * @param	o2
-		 * @param	hasCollider
+		 * @param	isSelf 
 		 */
 		
 		private function CreateCollision(hit:HitRecord,isSelf:Boolean):Collision
@@ -418,6 +429,9 @@
 			c.allhitPoint = hit.allPoints;
 			return c;
 		}
+		
+		
+		
 		/**
 		 * 更新两个物体的碰撞关系
 		 * @param	o1
@@ -579,8 +593,67 @@
 			
 		}
 		
+		
+		
+		
 		/**
-		 * 检测两个物体的碰撞
+		 * 提供一个DisplayObject进行快速碰撞测试  只能返回返回碰撞对象组
+		 * 使用的是包围区相交测试而不是点测试 因此不能用来测试有一方为多边形碰撞器的情况
+		 * 常用于攻击区的碰撞检测
+		 * @param rect
+		 * @param layerName 只检测和指定层的碰撞
+		 * @return 
+		 * 
+		 */		
+		public function oldTypeTest(object:DisplayObject,layerName:String=null):List
+		{
+			//如果输入了layer名 则测试该名字是否存在
+			if(layerName!=null)
+			{
+				var layer=LayerManager.getInstance().getLayer(layerName);
+				getCommonlyComponent().checkNull(layer);
+			}
+			
+			var hits:List=new List();
+			
+			var list:List=filterAllhasCollider();
+			
+			for each(var o:BaseGameObject in list.Raw)
+			{
+				
+				if(layerName!=null)
+				{
+					if(o.layerName==layerName)
+					{
+						
+						if(o.getCollideComponent().collider.hitTestObject(object))
+						{
+							hits.add(o);
+						}
+					}
+				}
+				else
+				{
+					if(o.getCollideComponent().collider.hitTestObject(object))
+					{
+						hits.add(o);
+					}
+				}
+				
+				
+			}
+			
+			
+			return hits;
+		}
+		
+		
+		/**
+		 * 检测两个物体的碰撞  注意这里o1提供点 o2提供形状
+		 * 为了节省起见没有双向互检测!所以o1,o2位置放反可能会有问题
+		 * rect碰撞器和mesh碰撞器的话  rect放o1,mesh放o2
+		 * 两个mesh检测不了
+		 * 两个rect的话随意
 		 * @param	o1
 		 * @param	o2
 		 * @param	record 是否需要记录碰撞数据
@@ -645,7 +718,7 @@
 			{
 				if(record)
 				{
-				updateHitState(o1, o2, false,null,null);
+					updateHitState(o1, o2, false,null,null);
 				}
 				
 			}
@@ -675,7 +748,7 @@ class HitRecord
 	public var valid:Boolean=true;
 	
 	
-	//是否锁定 每次修改后进行一次锁定 这样一帧中只能更新一次状态
+	//是否锁定 每次修改后进行一次锁定 这样一帧中只能更新一次碰撞状态
 	public var lock:Boolean = false;
 	
 	public function toString():String 

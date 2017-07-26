@@ -10,12 +10,12 @@
 	public class Animation extends Sprite 
 	{
 		//实际包装的影片剪辑
-		private var clip:MovieClip;
+		private var _clip:MovieClip;
 		
 		
 		public function Animation(m:MovieClip,add:Boolean=true)
 		{
-			this.clip=m;
+			this._clip=m;
 			
 			//如果需要add 则添加到子级 否则保持一种引用关系 一般最外层的需要添加 否则不能渲染出来
 			if(add)
@@ -26,6 +26,11 @@
 		}
 		
 		
+		public function get clip():MovieClip
+		{
+			return _clip;
+		}
+
 		public function isLastFrame():Boolean
 		{
 			

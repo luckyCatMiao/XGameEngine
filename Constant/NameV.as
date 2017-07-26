@@ -5,7 +5,7 @@
 	 * ...
 	 * @author o
 	 */
-	public class NameConstant 
+	public class NameV 
 	{
 		static public var NAME_PLAYER = "player";
 		static public var NAME_MAP_PLANE = "map_plane";
