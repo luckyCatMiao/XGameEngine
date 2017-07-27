@@ -59,6 +59,9 @@
 			//初始化组件
 			InitComponent();
 			InitEvent();
+			
+			
+			//trace(this.getTransformComponent().aabb);
 		}
 		
 		/**

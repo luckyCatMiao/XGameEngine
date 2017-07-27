@@ -68,28 +68,48 @@
 		}
 		
 		
-	//返回中上的点
+	/**
+	 *返回中上的点 
+	 * @return 
+	 * 
+	 */	
 	public function getTopPoint():Point
 	{
 			return new Point((x+width)/2,y);
 	}
-	//返回中下的点
+	/**
+	 *返回中下的点 
+	 * @return 
+	 * 
+	 */	
 	public function getDownPoint():Point
 	{
 			return new Point((x+width)/2,y+height);
 	}
-	//返回中左的点
+	/**
+	 *返回中左的点 
+	 * @return 
+	 * 
+	 */	
 	public function getLeftPoint():Point
 	{
 			return new Point(x,(y+height)/2);
 	}
-	//返回中右的点
+	/**
+	 *返回中右的点 
+	 * @return 
+	 * 
+	 */	
 	public function getRightPoint():Point
 	{
 			return new Point((x+width),(y+height)/2);
 	}
 	
-	//返回中间点
+	/**
+	 *返回中间点 
+	 * @return 
+	 * 
+	 */	
 	public function getCenterPoint():Point
 	{
 			return new Point((x+width)/2,(y+height)/2);
@@ -97,27 +117,48 @@
 	
 	
 	
-	//返回左上角的点
+	/**
+	 *返回左上角的点 
+	 * @return 
+	 * 
+	 */	
 	public function getLeftTopPoint():Point
 	{
 			return new Point(x,y);
 	}
-	//返回左下角的点
+	/**
+	 *返回左下角的点 
+	 * @return 
+	 * 
+	 */	
 	public function getLeftBottomPoint():Point
 	{
 	
 			return new Point(x,y+height);
 	}
-	//返回右上角的点
+	/**
+	 *返回右上角的点 
+	 * @return 
+	 * 
+	 */	
 	public function getRightTopPoint():Point
 	{
 			return new Point(x+width,y);
 	}
-	//返回右下角的点
+	/**
+	 *返回右下角的点 
+	 * @return 
+	 * 
+	 */	
 	public function getRightBottomPoint():Point
 	{
 			return new Point(x + width, y + height);
 	}
+	
+	
+	
+	
+	
 	
 	public function toRectangle():Rectangle
 	{

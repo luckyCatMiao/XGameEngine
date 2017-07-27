@@ -8,14 +8,15 @@
 	 */
 	public class Vector2 
 	{
-		static public var VEC2_DOWN = new Vector2(0, 1);
-		static public var VEC2_UP = new Vector2(0, -1);
-		static public var VEC2_LEFT = new Vector2(-1, 0);
-		static public var VEC2_RIGHT=new Vector2(1,0);
-		
+		static public var VEC2_DOWN:Vector2 = new Vector2(0, 1);
+		static public var VEC2_UP:Vector2 = new Vector2(0, -1);
+		static public var VEC2_LEFT:Vector2 = new Vector2(-1, 0);
+		static public var VEC2_RIGHT:Vector2=new Vector2(1,0);
+		public static var VEC2_ZERO:Vector2=new Vector2(0,0);
 		
 		public var x:Number;
 		public var y:Number;
+		
 		public function Vector2(x:Number, y:Number)
 		{
 			this.x = x;

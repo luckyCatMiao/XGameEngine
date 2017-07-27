@@ -5,10 +5,12 @@
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.CommonComponent.FunComponent;
 	import XGameEngine.GameObject.GameObjectComponent.GameObjectComponent;
+	import XGameEngine.GameObject.GameObjectComponent.TransformComponent;
 	import XGameEngine.Structure.Math.Spring;
 	import XGameEngine.Structure.Math.Vector2;
 	
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	
 	/**
 	 * 普通单层地图
@@ -35,6 +37,8 @@
 			{
 				this.moveScale = moveScale;
 			}
+		
+			
 		}
 		
 		
@@ -89,45 +93,53 @@
 		
 		/**
 		 * 测试能否移动
-		 * @param	x
-		 * @param	y
+		 * @param	moveX
+		 * @param	moveY
 		 * @return
 		 */
-		override public function canMove(x:Number,y:Number):Boolean
+		override public function canMove(moveX:Number,moveY:Number):Boolean
 		{
+			
+			
 			var b:int = 0;
 			
-		
+			var leftTopGlobal:Point=this.localToGlobal(this.getTransformComponent().aabb.getLeftTopPoint());
+			var rightTopGlobal:Point=this.localToGlobal(this.getTransformComponent().aabb.getRightTopPoint());
+			var leftBottomGlobal:Point=this.localToGlobal(this.getTransformComponent().aabb.getLeftBottomPoint());
 			
 			if (canOver == false)
 			{
 				//测试x值是否能够移动
-				if (x > 0&&this.x < 0)
+				
+				//x往右移动 此时左上角的点x必须<0
+				if (moveX > 0&&leftTopGlobal.x < 0)
 				{
 						b += 1;				
 				}
-				
-				else if (x < 0 && this.x+width > stage.stageWidth)
+				//x往左移动 此时右上角的点x必须大于舞台右侧
+				else if (moveX < 0 && rightTopGlobal.x > stage.stageWidth)
 				{
 					b += 1;
 				}
-				else if (x == 0)
+				else if (moveX == 0)
 				{
 					b += 1;
 				}
 				
 				
 				//测试y值是否能够移动
-				if (y > 0&&this.y < 0)
+				
+				//y往下移动 此时左上角的点y必须小于0
+				if (moveY > 0&&leftTopGlobal.y < 0)
 				{
 						b += 1;					
 				}
-				
-				else if (y < 0 && this.y+height > stage.stageHeight)
+				//y往上移动 此时左下角的点的y必须在舞台下侧
+				else if (moveY < 0 && leftBottomGlobal.y > stage.stageHeight)
 				{
 					b += 1;
 				}
-				else if (y == 0)
+				else if (moveY == 0)
 				{
 					b += 1;
 				}

@@ -22,7 +22,7 @@
 		/*static public var LAYER_MAIN:String = "main layer";
 		static public var LAYER_NORMAL:String = "normal layer";*/
 		
-		/**
+		/** 
 		 * 地图的边界是否可以显示在地图内
 		 */
 		public var canOver:Boolean = false;
@@ -139,19 +139,18 @@
 	
 			
 				//使用计算出来的移动值进行移动
-				if (canMoveOtherLayer(moveX, 0))
-				{
-				this.mainMap.map.move(moveX, 0);
-				moveOtherLayer(moveX, 0);
-				}
 			
-				if (canMoveOtherLayer(0, moveY))
+				//如果所有的其他层都可以移动
+				//(这里有一个而逻辑就是,不能只移动能移动的,否则可能会出现视觉问题,必须一起移动才行)
+				if (canMoveOtherLayer(moveX, moveY))
 				{
-					
-				this.mainMap.map.move(0, moveY);
-				moveOtherLayer(0, moveY);
+				//同步移动玩家和其它层
+				this.mainMap.map.move(moveX, moveY);
+				moveOtherLayer(moveX, moveY);
 				}
 				
+			
+
 			
 		}
 		
@@ -318,6 +317,7 @@
 		 */
 		override public function move(x:Number, y:Number):Vector2
 		{
+			//如果moveRect存在 缓动才起作用  所以移动玩家
 			if (moveRect != null)
 			{
 				
@@ -371,6 +371,7 @@
 				//y轴移动还没写 跟上面差不多
 				
 			}
+			//moveRect不存在 没有缓动环节 所以直接移动其他层
 			else
 			{
 				//主层不移动
