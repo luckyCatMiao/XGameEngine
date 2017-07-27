@@ -81,15 +81,15 @@
 
 		override protected function loop() 
 		{
-			moveMap();
+			fixMap();
 		}
 		
 		
 		/**
-		 *移动 
+		 *固定主角色在rect区中
 		 * 
 		 */		
-		private function moveMap():void 
+		private function fixMap():void 
 		{
 			
 			//获取玩家中心坐标
@@ -398,6 +398,14 @@
 			return true;
 		}
 		
+		
+		/**
+		 *是否所有其他层都可以移动 
+		 * @param x
+		 * @param y
+		 * @return 
+		 * 
+		 */		
 		private function canMoveOtherLayer(x:Number, y:Number):Boolean 
 		{
 			//有一层无法继续移动则返回失败
@@ -411,11 +419,21 @@
 				}
 				
 			}
+			
+			
+			
 			return true;
 
 		}
 		
 		
+		/**
+		 *	移动所有的其他层 
+		 * @param x
+		 * @param y
+		 * @return 
+		 * 
+		 */		
 		private function moveOtherLayer(x:Number, y:Number) 
 		{	
 			

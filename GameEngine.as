@@ -6,6 +6,7 @@
 	import XGameEngine.Structure.*;
 	
 	import flash.display.Loader;
+	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
@@ -50,6 +51,21 @@
 		
 		
 		
+		
+		/**
+		 *游戏面板 
+		 */		
+		public var gamePlane:Sprite;		
+		/**
+		 *ui面板 层级高于游戏面板 
+		 */		
+		public var UIPlane:Sprite;
+		/**
+		 *debug面板 层级高于UI面板 
+		 */		
+		public var debugPlane:Sprite;
+		
+		
 		/**
 		 * this should be called when game inited,generally from the entry class
 		 * 初始化游戏引擎 
@@ -66,6 +82,9 @@
 			this.s = s;
 			s.addEventListener(Event.ENTER_FRAME, loop);
 			
+			
+			initShowPlane();
+			
 			//初始化子模块
 			InitManager();
 			
@@ -74,6 +93,23 @@
 			
 		}
 		
+		
+		/**
+		 *初始化显示面板 
+		 * 
+		 */		
+		private function initShowPlane():void
+		{
+			gamePlane=new Sprite();
+			s.addChild(gamePlane);
+			
+			UIPlane=new Sprite();
+			s.addChild(UIPlane);
+			
+			debugPlane=new Sprite();
+			s.addChild(debugPlane);
+			
+		}		
 		
 		/**
 		 * 
