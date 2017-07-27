@@ -52,6 +52,7 @@
 			{
 				animation.stop();
 				this.removeChild(animation);
+				
 				this.animation = null;
 				destroy();
 			}

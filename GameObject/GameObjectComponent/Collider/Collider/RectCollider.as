@@ -89,19 +89,7 @@
 	}
 	
 	
-	override public function debugShape() 
-	{
-		//如果需要debug 
-		if (GameEngine.getInstance().debug&&debug==true)
-		{
-			shape.alpha=0.75;
-		}
-			//不需要debug
-		else if (GameEngine.getInstance().debug==false||debug==false)
-		{
-			shape.alpha=0;
-		}
-	}
+
 		
 //返回中上的点
 	public function getTopPoint():Point

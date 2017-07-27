@@ -2,6 +2,7 @@
 {
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.BaseComponent;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.CircleCollider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.Collider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.MeshCollider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
@@ -277,6 +278,49 @@
 			
 		}		
 		
+		/**
+		 *生成默认的圆形碰撞器 
+		 * @param scale 缩放 默认半径为width/2
+		 * 
+		 */		
+		public  function generateCircleColliderDefault(scale:Number=0):void
+		{
+			var rect:Rectangle = host.getRect(host);
+			var radius:Number=rect.width/2.0;
+			radius*=scale;
+			
+		
+			generateCircleCollider(radius, Color.RED,0,0);
+			
+		}
+		
+		
+		/**
+		 * 生成圆形碰撞器 
+		 * @param radius
+		 * @param color
+		 * @param x
+		 * @param y
+		 * 
+		 */		
+		public function generateCircleCollider(radius:Number, color:Number, x:int, y:int):void
+		{
+			//如果当前碰撞器不为空
+			if (c != null)
+			{
+				throw new Error("one gameobject only can have one collider!please reset collider before generet another");
+			}
+			//根据rect创建一个方形碰撞器
+			var collider:CircleCollider = new CircleCollider(radius,color);
+			
+			//添加到最高层
+			host.getGameObjectComponent().addChildToHighestDepth(collider);
+			c = collider;
+			
+			collider.x = x;
+			collider.y = y;
+		
+		}
 	}
 	
 }

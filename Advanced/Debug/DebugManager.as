@@ -1,19 +1,20 @@
 ﻿package XGameEngine.Advanced.Debug
 {
-	import XGameEngine.Manager.BaseManager;
+	import XGameEngine.*;
+	import XGameEngine.Advanced.Interface.*;
 	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.Manager.*;
+	import XGameEngine.Manager.BaseManager;
+	import XGameEngine.Structure.*;
+	import XGameEngine.UI.*;
+	import XGameEngine.UI.Draw.*;
 	import XGameEngine.Util.CollectionUtil;
 	
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;
 	import flash.text.*;
-	import XGameEngine.*;
-	import XGameEngine.Advanced.Interface.*;
-	import XGameEngine.Manager.*;
-	import XGameEngine.Structure.*;
-	import XGameEngine.UI.*;
-	import XGameEngine.UI.Draw.*;
+	import flash.utils.Timer;
 	
 	/**
 	 * ...
@@ -80,6 +81,7 @@
 		public function loop()
 		{
 			
+			//计算fps
 			
 			
 		}

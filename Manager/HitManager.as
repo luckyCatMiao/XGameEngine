@@ -1,10 +1,13 @@
 ﻿package XGameEngine.Manager
 {
 	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.CircleCollider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.Collider;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.MeshCollider;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.LayerManager;
 	import XGameEngine.Structure.List;
+	import XGameEngine.Structure.Map;
 	import XGameEngine.Structure.Math.Rect;
 	
 	import fl.transitions.Fade;
@@ -261,15 +264,62 @@
 		{
 			//遍历对象管理器中 依次进行碰撞检测 
 			
-			var object:List =filterAllhasCollider();
+			var objects:List =filterAllhasCollider();
 			
-			for (var out:int = 0;out < object.size;out++)
+			//根据过滤设置 进行碰撞测试
+			//先一次扫描将物体根据层分类
+			var map:Map=new Map();
+			for (var i:int = 0;i < objects.size;i++)
 			{
-				for (var ins:int = (out+1); ins < object.size; ins++)
+				var o:BaseGameObject=objects.get(i) as BaseGameObject;
+				if(map.get(o.layerName)==null)
 				{
-					TryCheckTwobjectHit(object.get(out) as BaseGameObject, object.get(ins) as BaseGameObject);
+					var l:List=new List();
+					map.put(o.layerName,l);
 				}
+				var list:List=map.get(o.layerName) as List;
+				list.add(o);
 			}
+			
+			//接下来再根据过滤设置进行两两list之间的测试 这样将大大避免不必要的测试 
+			
+			for each(var f:Filter in filtters.Raw)
+			{
+				var layer1:String=f.layerName1;
+				var layer2:String=f.layerName2;
+				//查找list进行测试
+				
+				var list1:List=map.get(layer1) as List;
+				var list2:List=map.get(layer2) as List;
+				
+				//这里有可能list为空 因为虽然注册了过滤器 但是该层里是空的 所以有list为空也不需要报错
+				if(list1!=null&&list2!=null)
+				{
+					//进行依次检测
+					for (var out:int = 0;out < list1.size;out++)
+						{
+							for (var ins:int = (out+1); ins < list2.size; ins++)
+								{
+									TryCheckTwobjectHit(list1.get(out) as BaseGameObject, list2.get(ins) as BaseGameObject);
+								}
+						}
+					
+				}
+				
+			}
+			
+			
+			
+			
+			
+			//这种测试有多余的测试 物体多了之后就很卡 
+//			for (var out:int = 0;out < object.size;out++)
+//			{
+//				for (var ins:int = (out+1); ins < object.size; ins++)
+//				{
+//					TryCheckTwobjectHit(object.get(out) as BaseGameObject, object.get(ins) as BaseGameObject);
+//				}
+//			}
 			
 			
 		}
@@ -319,9 +369,9 @@
 				return false;
 			}
 			
-					//判断过滤设定
-					if (FindFilter(o1.layerName, o2.layerName)!=null)
-					{
+					//判断过滤设定(不用判断了 前面已经判断过)
+//					if (FindFilter(o1.layerName, o2.layerName)!=null)
+//					{
 						//如果没有过滤
 						//如果双方的碰撞器都存在
 						if (o1.getCollideComponent().hasCollider() && o2.getCollideComponent().hasCollider())
@@ -359,7 +409,7 @@
 							}
 						}
 						
-					}
+					//}
 					
 					return false;
 					
@@ -654,6 +704,10 @@
 		 * rect碰撞器和mesh碰撞器的话  rect放o1,mesh放o2
 		 * 两个mesh检测不了
 		 * 两个rect的话随意
+		 * 如果双方都有点的 还有两种情况 第一种是 双方都是rect 正常取点判断
+		 * 第二种如果双方有一个是circle 则直接使用hitTestObject (适用于于子弹等大量出现的物体)
+		 * 因为实际应用中发现全用rect来判断实在太卡了 所以用circle来优化子弹 金币类的碰撞
+		 * 此类碰撞只能返回碰撞对象 而不能返回碰撞点
 		 * @param	o1
 		 * @param	o2
 		 * @param	record 是否需要记录碰撞数据
@@ -664,50 +718,76 @@
 			//这里到时候优化下 如果碰撞器数量多卡的话
 			//加入多种碰撞算法
 			
+			
+			//两者是否碰撞
 			var result:Boolean = false;
 	
+			//所有的碰撞点
+			var hitPoints:List = new List();
+			
+			//第一个碰撞点
+			var firstHitPoint:Point;
+			
 			
 			//获取o1的所有检测点依次检测o2的包围形状
 			var points:List = o1.getCollideComponent().collider.getCheckPoint();
 			
-			var hitPoints:List = new List();
-			//全都转化到全局坐标系
 			
-			for(var i:int=0;i<points.size;i++)
+			
+			if(o1.getCollideComponent().collider is CircleCollider||o2.getCollideComponent().collider is CircleCollider)
+			{
+				if(o1.getCollideComponent().collider.hitTestObject(o2.getCollideComponent().collider))
+				{
+					//只设置碰撞结果 不返回碰撞点
+					result=true;
+				}
+			}
+			else
 			{
 				
-				var p:Point=points.get(i) as Point;
-				//发现一个问题 就是如果xscale反向 就是很常见的人物左右走
-				//这个时候点是根据玩家的朝向来的 比如右是指玩家面朝的右 而不是在全局坐标系中看上去的右
-				//然后发现以前游戏的解决办法是只考虑了位置的坐标变换 没有考虑旋转 缩放
-				//现在先采用这种方法 以后再考虑更好的解决办法
-				
-				//想了想3D游戏之后想通了 前后左右都是根据玩家自身坐标系来算的,虽然2D也这么做有点奇怪,不过就是这个道理
-				//所以玩家的右边应该是玩家的正方向 但是玩家反向走之后 这个右边就应该是屏幕看上去的左边
-				//虽然这样在2D看上去真的刚开始很难接受。。要在2D里面思考玩家的朝向
-				//想了想发现还是这样最好..顶多是在回调的时候也把缩放放进去呗...
-				
-				//newPoint = new Point(p.x + o1.x, p.y + o1.y );
-				
-				//trace(newPoint);
-				var newPoint = o1.localToGlobal(p);
-				//trace(newPoint+"  "+o1+"  "+o2);
-				if (o2.getCollideComponent().collider.hitTestPoint(newPoint.x,newPoint.y,true))
+				for(var i:int=0;i<points.size;i++)
 				{
-					result = true;
-					hitPoints.add(p);
 					
+					var p:Point=points.get(i) as Point;
+					//发现一个问题 就是如果xscale反向 就是很常见的人物左右走
+					//这个时候点是根据玩家的朝向来的 比如右是指玩家面朝的右 而不是在全局坐标系中看上去的右
+					//然后发现以前游戏的解决办法是只考虑了位置的坐标变换 没有考虑旋转 缩放
+					//现在先采用这种方法 以后再考虑更好的解决办法
 					
+					//想了想3D游戏之后想通了 前后左右都是根据玩家自身坐标系来算的,虽然2D也这么做有点奇怪,不过就是这个道理
+					//所以玩家的右边应该是玩家的正方向 但是玩家反向走之后 这个右边就应该是屏幕看上去的左边
+					//虽然这样在2D看上去真的刚开始很难接受。。要在2D里面思考玩家的朝向
+					//想了想发现还是这样最好..顶多是在回调的时候也把缩放放进去呗...
+					
+					//newPoint = new Point(p.x + o1.x, p.y + o1.y );
+					
+					//trace(newPoint);
+					//全都转化到全局坐标系
+					var newPoint = o1.localToGlobal(p);
+					//trace(newPoint+"  "+o1+"  "+o2);
+					if (o2.getCollideComponent().collider.hitTestPoint(newPoint.x,newPoint.y,true))
+					{
+						result = true;
+						hitPoints.add(p);
+						//设置第一个碰撞点
+						if(firstHitPoint==null)
+						{
+							firstHitPoint=p;
+						}
+						
+						
+					}
 					
 				}
-				
 			}
+			
+			
 			
 			if (result == true)
 			{
 				if(record)
 				{
-					updateHitState(o1, o2, true,p,hitPoints);
+					updateHitState(o1, o2, true,firstHitPoint,hitPoints);
 				}
 				
 				return true;
@@ -718,6 +798,7 @@
 			{
 				if(record)
 				{
+					//如果该碰撞关系已经存在 则将更新为exit状态
 					updateHitState(o1, o2, false,null,null);
 				}
 				

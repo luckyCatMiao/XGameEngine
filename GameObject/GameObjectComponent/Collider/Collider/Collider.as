@@ -1,5 +1,6 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent.Collider.Collider
 {
+	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.CommonComponent.CommonlyComponent;
 	import XGameEngine.Structure.List;
 	
@@ -38,7 +39,11 @@
 		}
 		
 		
-		//返回需要检测的点组,由子类覆盖
+		/**
+		 *返回需要检测的点组,由子类覆盖 
+		 * @return 这里的点是host坐标系里的 而不是collider坐标系里的
+		 * 
+		 */		
 		public function getCheckPoint():List
 		{
 			throw new Error("调用基类该方法无意义!");
@@ -51,7 +56,17 @@
 		 */
 		public function debugShape()
 		{
-			throw new Error("调用基类该方法无意义!");
+			//throw new Error("调用基类该方法无意义!");
+			//如果需要debug 
+			if (GameEngine.getInstance().debug&&debug==true)
+			{
+				shape.alpha=0.75;
+			}
+				//不需要debug
+			else if (GameEngine.getInstance().debug==false||debug==false)
+			{
+				shape.alpha=0;
+			}
 		}
 		
 		

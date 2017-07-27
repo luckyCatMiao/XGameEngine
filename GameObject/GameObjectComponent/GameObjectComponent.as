@@ -2,6 +2,7 @@
 {
 	import XGameEngine.GameObject.AutoDestroyObject;
 	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.GameObject.GameObjectComponent.Anime.Animation;
 	import XGameEngine.Manager.ResourceManager;
 	import XGameEngine.Util.GameUtil;
 	
@@ -135,14 +136,14 @@
 			 * 加载到父级同位置处
 			 * @param	o
 			 */
-			public function addToParentSamePosition(o:BaseGameObject):BaseGameObject 
+			public function addToParentSamePosition(o:DisplayObject)
 			{
 				host.parent.addChild(o);
 				
 				o.x = host.x;
 				o.y = host.y;
 				
-				return o;
+				
 			}
 			
 //			public  function quickLoadEffectParent(name:String):void
@@ -151,6 +152,9 @@
 //				addToParentSamePosition(effect);
 //				
 //			}
+			
+			
+
 	}
 	
 }
