@@ -4,14 +4,17 @@
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
 	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.Structure.Math.Vector2;
 	import XGameEngine.UI.Draw.Color;
 	import XGameEngine.UI.XDebugText;
 	import XGameEngine.UI.XTextField;
 	import XGameEngine.Util.MathTool;
 	
+	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	/**
@@ -117,6 +120,40 @@
 			return new Rect(r.x, r.y, r.width, r.height);
 		}
 		
+		
+		/**
+		 * 计算出当前的包围框随着人物的动作占用空间可能会一直变化(特别是使用遮罩)
+		 */
+		public function get globalAABB():Rect 
+		{
+			
+			var r:Rectangle=host.getRect(host);
+			var point:Point=host.localToGlobal(new Point(r.x,r.y));
+			
+			return new Rect(point.x, point.y, r.width, r.height);
+		}
+		
+
+		/**
+		 *全局aabb左侧x值 
+		 * @return 
+		 * 
+		 */		
+		public function get globalLeftX():Number
+		{
+			return globalAABB.x;
+		}
+		
+		
+		/**
+		 *全局aabb右侧x值 
+		 * @return 
+		 * 
+		 */		
+		public function get globalRightX():Number
+		{
+			return globalAABB.x+globalAABB.width;
+		}
 		
 		/**
 		 * 使用初始长宽计算的包围框
@@ -257,6 +294,23 @@
 			var value:Number=MathTool.getPVMSG(oldScaleX);
 			
 			return MathTool.isSameZF(value,host.scaleX);
+		}
+		
+		
+		/**
+		 * 获取和其他物体全局坐标距离(距离使用零点来计算) 
+		 * @param other
+		 * @return 
+		 * 
+		 */		
+		public function getGlobalDistance(other:DisplayObject):Number
+		{
+			var point1:Point=host.localToGlobal(Vector2.VEC2_ZERO.clone().toPoint());
+			var point2:Point=other.localToGlobal(Vector2.VEC2_ZERO.clone().toPoint());
+			
+			
+			
+			return MathTool.getDistance(point1,point2);
 		}
 	}
 	

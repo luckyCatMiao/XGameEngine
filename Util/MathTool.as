@@ -99,6 +99,21 @@
 			}
 			
 		}
+		
+		/**
+		 *返回距离 
+		 * @param point1
+		 * @param point2
+		 * @return 
+		 * 
+		 */		
+		public static function getDistance(point1:Point, point2:Point):Number
+		{
+			var xx:Number=point1.x-point2.x;
+			var yy:Number=point1.y-point2.y;
+			
+			return Math.sqrt(Math.pow(xx,2)+Math.pow(yy,2));
+		}
 	}
 	
 }

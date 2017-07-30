@@ -108,7 +108,7 @@
 		 * @param	x 是否清空x轴的速度
 		 * @param	y 是否清空y轴的速度
 		 * @param	fixX  x轴需要校准的距离
-		 * @param	fixY  x轴需要校准的距离
+		 * @param	fixY  y轴需要校准的距离
 		 */
 		public function ResetSpeed(x:Boolean=true,y:Boolean=true,fixX:Number=0,fixY:Number=0)
 		{

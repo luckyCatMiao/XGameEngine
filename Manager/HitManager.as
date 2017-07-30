@@ -245,10 +245,10 @@
 					
 					
 					i++;
-					if (i > 20)
+					if (i > 100)
 					{
 						w.valid = false;
-						trace(w.o1 + "-" + w.o2 + " has checked over 20 times!Please check!")
+						trace(w.o1 + "-" + w.o2 + " has checked over 100 times!Please check!")
 						continue;
 					}
 				}
@@ -265,7 +265,7 @@
 			//遍历对象管理器中 依次进行碰撞检测 
 			
 			var objects:List =filterAllhasCollider();
-			
+		
 			//根据过滤设置 进行碰撞测试
 			//先一次扫描将物体根据层分类
 			var map:Map=new Map();
@@ -298,7 +298,7 @@
 					//进行依次检测
 					for (var out:int = 0;out < list1.size;out++)
 						{
-							for (var ins:int = (out+1); ins < list2.size; ins++)
+							for (var ins:int =0; ins < list2.size; ins++)
 								{
 									TryCheckTwobjectHit(list1.get(out) as BaseGameObject, list2.get(ins) as BaseGameObject);
 								}
@@ -313,11 +313,11 @@
 			
 			
 			//这种测试有多余的测试 物体多了之后就很卡 
-//			for (var out:int = 0;out < object.size;out++)
+//			for (var out:int = 0;out < objects.size;out++)
 //			{
-//				for (var ins:int = (out+1); ins < object.size; ins++)
+//				for (var ins:int = (out+1); ins < objects.size; ins++)
 //				{
-//					TryCheckTwobjectHit(object.get(out) as BaseGameObject, object.get(ins) as BaseGameObject);
+//					TryCheckTwobjectHit(objects.get(out) as BaseGameObject, objects.get(ins) as BaseGameObject);
 //				}
 //			}
 			

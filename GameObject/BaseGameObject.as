@@ -48,7 +48,9 @@
 		protected var _tag:String;
 		protected var _layerName:String;
 		
-	
+		private var _globalX:Number;
+		private var _globalY:Number;
+
 
 		public function BaseGameObject(_name:String=null)
 		{
@@ -64,6 +66,26 @@
 			//trace(this.getTransformComponent().aabb);
 		}
 		
+		public function get globalY():Number
+		{
+			var point:Point=this.localToGlobal(Vector2.VEC2_ZERO.toPoint());
+			
+			
+			return point.y;
+		}
+
+	
+
+		public function get globalX():Number
+		{
+			var point:Point=this.localToGlobal(Vector2.VEC2_ZERO.toPoint());
+			
+			
+			return point.x;
+		}
+
+	
+
 		/**
 		 * 注册该对象到游戏对象管理器中
 		 */
