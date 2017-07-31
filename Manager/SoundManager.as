@@ -38,6 +38,13 @@
 //		}
 //		
 		
+		/**
+		 * 播放音乐 
+		 * @param s 声音类
+		 * @param loopTimes 循环次数 默认为无限循环
+		 * @param volume 音量
+		 * 
+		 */		
 		public function StartPlaySound(s:Sound, loopTimes:Number = -1, volume:Number=1):void 
 		{
 			//9999次差不多算是无限次了 因为这个flash这个类本身没有提供无限次的写法 只能这么写了
@@ -46,6 +53,22 @@
 			var transform:SoundTransform = c.soundTransform;
 			transform.volume = volume;
 			c.soundTransform = transform;
+		}
+		
+		
+		/**
+		 * 直接加载声音并播放
+		 * @param name 名字
+		 * @param loopTimes 循环次数 默认为无限循环
+		 * @param volume 音量
+		 * 
+		 */		
+		public function StartPlaySoundByName(name:String, loopTimes:Number = -1, volume:Number=1):void
+		{
+			var sound:Sound=ResourceManager.getInstance().LoadSoundByName(name);
+			
+			
+			StartPlaySound(sound,loopTimes,volume);
 		}
 	}
 	

@@ -125,7 +125,7 @@
 			var s:Stage = GameEngine.getInstance().getStage();
 			
 			
-			debugValuePlane.getGameObjectComponent().removeAll();
+			debugValuePlane.getGameObjectComponent().removeAllChilds();
 			
 			
 			

@@ -50,7 +50,8 @@
 		
 		private var _globalX:Number;
 		private var _globalY:Number;
-
+	
+		
 
 		public function BaseGameObject(_name:String=null)
 		{
@@ -404,6 +405,7 @@
 			getStateComponent().tryChangeState(newstate,conditionState,otherState);
 		}
 		
+	
 		
 		
 		/**
@@ -439,6 +441,10 @@
 				this.parent.removeChild(this);
 				GameObjectManager.getInstance().remove(this);
 				LayerManager.getInstance().removeFromLayer(this);
+				
+				
+				//回收所有子级
+				getGameObjectComponent().destroyAllChilds();
 		}
 		
 		
@@ -535,6 +541,16 @@
 			return GameUtil.localToOtherLocal(point,other,this);
 		}
 		
+		
+		/**
+		 *只销毁所有子级(递归) ,不销毁本身
+		 * @return 
+		 * 
+		 */		
+		public function destroyAllChild()
+		{
+			getGameObjectComponent().destroyAllChilds();
+		}
 		
 	}
 	

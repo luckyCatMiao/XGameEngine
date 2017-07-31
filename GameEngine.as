@@ -2,6 +2,7 @@
 {
 	import XGameEngine.Advanced.Debug.*;
 	import XGameEngine.Advanced.Interface.LoopAble;
+	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.Manager.*;
 	import XGameEngine.Structure.*;
 	
@@ -55,15 +56,19 @@
 		/**
 		 *游戏面板 
 		 */		
-		public var gamePlane:Sprite;		
+		public var gamePlane:BaseGameObject;		
 		/**
 		 *ui面板 层级高于游戏面板 
 		 */		
-		public var UIPlane:Sprite;
+		public var UIPlane:BaseGameObject;
+		/**
+		 *ui面板2  备用
+		 */		
+		public var UIPlane2:BaseGameObject;
 		/**
 		 *debug面板 层级高于UI面板 
 		 */		
-		public var debugPlane:Sprite;
+		public var debugPlane:BaseGameObject;
 		
 		
 		/**
@@ -100,13 +105,16 @@
 		 */		
 		private function initShowPlane():void
 		{
-			gamePlane=new Sprite();
+			gamePlane=new BaseGameObject();
 			s.addChild(gamePlane);
 			
-			UIPlane=new Sprite();
+			UIPlane=new BaseGameObject();
 			s.addChild(UIPlane);
 			
-			debugPlane=new Sprite();
+			UIPlane2=new BaseGameObject();
+			s.addChild(UIPlane2);
+			
+			debugPlane=new BaseGameObject();
 			s.addChild(debugPlane);
 			
 		}		

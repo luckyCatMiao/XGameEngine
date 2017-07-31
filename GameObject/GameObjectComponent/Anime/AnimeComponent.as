@@ -2,7 +2,10 @@
 {
 	import XGameEngine.GameObject.*;
 	import XGameEngine.GameObject.GameObjectComponent.*;
+	import XGameEngine.Structure.List;
 	import XGameEngine.Util.*;
+	
+	import flash.display.FrameLabel;
 	
 
 	/**
@@ -92,7 +95,35 @@
 			animeClip.play();
 		}
 		
+		/**
+		 *检查动画是否具有所需要的标签
+		 * @param an
+		 * @param labels
+		 * @return 
+		 * 
+		 */		
+		public function checkAnimeLabel(an:Animation,labels:Array)
+		{
+			//转换成名字
+			var arr:Array=an.clip.currentLabels;
+			var hasLabels:List=new List();
+			for each(var l:FrameLabel in arr)
+			{
+				hasLabels.add(l.name);
+			}
+			
 		
+			
+			for each(var s:String in labels)
+			{
+				if(!hasLabels.contains(s))
+				{
+					throw new Error("the target "+s+" anime don't exist!");
+				}
+			}
+			
+			
+		}
 		
 		public function get totalFrames()
 		{

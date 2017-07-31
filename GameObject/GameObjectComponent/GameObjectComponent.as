@@ -4,9 +4,12 @@
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.Animation;
 	import XGameEngine.Manager.ResourceManager;
+	import XGameEngine.Structure.List;
 	import XGameEngine.Util.GameUtil;
 	
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 	import flash.geom.Point;
 	
 	/**
@@ -84,13 +87,58 @@
 			}
 			
 			
-			public function removeAll():void 
+			/**
+			 *移除所有子级 
+			 * 
+			 */			
+			public function removeAllChilds():void 
 			{
 				while (host.numChildren > 0)
 				{
 					host.removeChildAt(0);
 				}
 			}
+			
+			/**
+			 *递归销毁所有子级 
+			 * 
+			 */			
+			public function destroyAllChilds():void 
+			{
+				_destroy(host);
+			}
+			
+			private function _destroy(sprite:Sprite):void
+			{
+				//将所有子级DisplayObject加入
+				var list:List=new List();
+				for(var i:int=0;i<sprite.numChildren;i++)
+				{
+					var o:DisplayObject=sprite.getChildAt(i);
+					list.add(o);
+				}
+				
+				for each(var object:DisplayObject in list.Raw)
+				{
+					//如果是BaseGameObject直接destroy
+					if(object is BaseGameObject)
+					{
+						(object as BaseGameObject).destroy();
+					}
+						//这里有一种情况是子级是普通object 但是子级的子级包括BaseGameObject
+						//所以不能简单的略过普通object
+						//如果普通的子级还包括子级的话
+					else if(object is Sprite)
+					{
+						//递归检测
+						_destroy(object as Sprite);
+					}
+					
+				}
+
+			}		
+			
+			
 			
 			public function removeSelf():void 
 			{
