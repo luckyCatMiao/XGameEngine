@@ -119,10 +119,7 @@
 			
 		}		
 		
-		/**
-		 * 
-		 * 
-		 */		
+		
 		private function startLoadResource(dataPath:String,loadCompleteFun:Function,loadProgressFun:Function):void
 		{
 			var loader:Loader=new Loader();

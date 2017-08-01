@@ -11,8 +11,8 @@ package XGameEngine.Test
 		
 		static public function runTest():void
 		{
-			//ListTest.runTest();
-			StackTest.runTest();
+			ListTest.runTest();
+			//StackTest.runTest();
 		}
 		
 	}

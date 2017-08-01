@@ -226,6 +226,20 @@
 			}
 			
 		}
+		
+		
+		/**
+		 *在索引处替换
+		 * @param value
+		 * @param index
+		 * 
+		 */		
+		public function replace(value:Object, index:int):void
+		{
+			checkIndex(index);
+			arr.splice(index, 1,value);
+			
+		}
 	}
 	
 }

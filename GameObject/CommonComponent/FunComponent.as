@@ -2,6 +2,8 @@
 {
 	import XGameEngine.Structure.List;
 	
+	import flash.system.System;
+	
 	/**
 	 * ...
 	 * @author o
@@ -137,6 +139,19 @@
 		public function getRecallFunByName(name:String):ReCallFun
 		{
 			return delayFuns.find(name,"name") as ReCallFun;
+			
+		}
+		
+		
+		/**
+		 *快速添加一个单次的自动延时回调 
+		 * @param fun
+		 * @param time
+		 * 
+		 */		
+		public function addDelayRecall(fun:Function, time:int):void
+		{
+			addRecallFun(new Object().toString(),time,fun,null,true,true);
 			
 		}
 	}

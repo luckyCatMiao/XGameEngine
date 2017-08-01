@@ -115,7 +115,13 @@
 				for(var i:int=0;i<sprite.numChildren;i++)
 				{
 					var o:DisplayObject=sprite.getChildAt(i);
-					list.add(o);
+					//有时候会出现o==null?????现在还不清楚怎么回事 只能随便补救一下
+				
+					if(o!=null)
+					{
+						list.add(o);
+					}
+					
 				}
 				
 				for each(var object:DisplayObject in list.Raw)
