@@ -24,13 +24,16 @@
 	public class TransformComponent extends BaseComponent
 	{
 		
-		private var _oldWidth:Number;
-		private var _oldHeight:Number;
-		private var _oldScaleX:Number;
-		private var _oldScaleY:Number;
+		/**
+		 *最初被赋值的值(除(0,0)点之外) 
+		 */		
+		private var _oldWidth:Number=0;
+		private var _oldHeight:Number=0;
+		private var _oldScaleX:Number=0;
+		private var _oldScaleY:Number=0;
 		private var _oldaabb:Rect;
-		private var _oldX:Number;
-		private var _oldY:Number;
+		private var _oldX:Number=0;
+		private var _oldY:Number=0;
 		
 		
 		
@@ -48,16 +51,28 @@
 		{
 			super(o);
 			
-			//保存了一些原始数据
-			_oldWidth = host.width;
-			_oldHeight = host.height;
-			_oldScaleX = host.scaleX;
-			_oldScaleY = host.scaleY;
-			_oldX=host.x;
-			_oldY=host.y;
-			_oldaabb=aabb;
+			
 		}
 		
+		private function getOldValue():void
+		{
+			//这里是这样的 一个对象使用代码实例化之后 所有值全是零
+			//这样这些old值就没有意义了 所以则不断循环 当对象实际具有值之后才赋值
+			//如果是拖动到舞台上则一开始就有值
+			if(host.height!=0&&host.width!=0&&_oldWidth==0&&_oldHeight==0)
+			{
+				
+				_oldWidth = host.width;
+				_oldHeight = host.height;
+				_oldScaleX = host.scaleX;
+				_oldScaleY = host.scaleY;
+				_oldX=host.x;
+				_oldY=host.y;
+				_oldaabb=aabb;
+			}
+			
+			
+		}		
 		
 		public function get oldY():Number
 		{
@@ -127,10 +142,12 @@
 		public function get globalAABB():Rect 
 		{
 			
-			var r:Rectangle=host.getRect(host);
-			var point:Point=host.localToGlobal(new Point(r.x,r.y));
+//			var r:Rectangle=host.getRect(host);
+//			var point:Point=host.localToGlobal(new Point(r.x,r.y));
 			
-			return new Rect(point.x, point.y, r.width, r.height);
+			var r:Rectangle=host.getRect(host.stage);
+			
+			return new Rect(r.x, r.y, r.width, r.height);
 		}
 		
 
@@ -142,6 +159,28 @@
 		public function get globalLeftX():Number
 		{
 			return globalAABB.x;
+		}
+		
+		
+		/**
+		 *全局aabb顶上y值
+		 * @return 
+		 * 
+		 */		
+		public function get globalTopY():Number
+		{
+			return globalAABB.y;
+		}
+		
+		
+		/**
+		 *全局aabb底下y值
+		 * @return 
+		 * 
+		 */		
+		public function get globalBottomY():Number
+		{
+			return globalAABB.y+globalAABB.height;
 		}
 		
 		
@@ -168,6 +207,8 @@
 		
 		public function loop()
 		{
+			
+			getOldValue();
 			
 			debug();
 			

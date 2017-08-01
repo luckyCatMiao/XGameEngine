@@ -104,7 +104,16 @@ package XGameEngine.Manager
 		//进行按键状态锁定 每帧只能改变一次按键状态,防止变化过快捕捉不到
 		private static function keyDown(e:KeyboardEvent):void
 		{
-			setKeyDown(e.keyCode);
+			//使用中文输入法会有bug 直接忽略
+			try
+			{
+				setKeyDown(e.keyCode);	
+			} 
+			catch(error:Error) 
+			{
+				
+			}
+			
 
 		}
 		private static function setKeyDown(keyCode:int):void
@@ -131,7 +140,15 @@ package XGameEngine.Manager
 		
 		private static function keyUp(e:KeyboardEvent):void
 		{
-			setKeyUp(e.keyCode);
+			try
+			{
+				setKeyUp(e.keyCode);
+				
+			} 
+			catch(error:Error) 
+			{
+				
+			}
 			
 			
 		}
