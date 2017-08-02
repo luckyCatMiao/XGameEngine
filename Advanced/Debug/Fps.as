@@ -1,6 +1,6 @@
 package XGameEngine.Advanced.Debug
 {
-	import Script.Game.Game;
+	import Script.Game.Enter;
 	
 	import XGameEngine.GameEngine;
 	

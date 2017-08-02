@@ -87,13 +87,13 @@
 			this.s = s;
 			s.addEventListener(Event.ENTER_FRAME, loop);
 			
-			
+			//初始化放子对象的几个面板
 			initShowPlane();
 			
 			//初始化子模块
 			InitManager();
 			
-			//加载资源
+			//开始加载资源
 			startLoadResource(dataPath,loadCompleteFun,loadProgressFun);
 			
 		}

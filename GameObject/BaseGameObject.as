@@ -52,6 +52,12 @@
 		private var _globalY:Number;
 	
 		
+		
+		protected var engine:GameEngine;
+		protected var gamePlane:BaseGameObject;			
+		protected var UIPlane:BaseGameObject;	
+		protected var UIPlane2:BaseGameObject;	
+		protected var debugPlane:BaseGameObject;
 
 		public function BaseGameObject(_name:String=null)
 		{
@@ -106,6 +112,13 @@
 			layerName = LayerManager.LAYER_DEFAULT;
 			
 		
+			
+			//将一些engine经常需要访问的内部值设置引用 翻遍使用
+			engine=GameEngine.getInstance();
+			gamePlane=engine.gamePlane;
+			UIPlane=engine.UIPlane;
+			UIPlane2=engine.UIPlane2;
+			debugPlane=engine.debugPlane;
 			
 		}
 		
