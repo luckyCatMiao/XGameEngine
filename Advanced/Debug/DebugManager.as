@@ -8,6 +8,7 @@
 	import XGameEngine.Structure.*;
 	import XGameEngine.UI.*;
 	import XGameEngine.UI.Draw.*;
+	import XGameEngine.UI.Special.XTextField;
 	import XGameEngine.Util.CollectionUtil;
 	
 	import flash.display.*;

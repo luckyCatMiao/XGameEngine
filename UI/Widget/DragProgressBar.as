@@ -78,7 +78,7 @@ package XGameEngine.UI.Widget
 		
 		}		
 		
-		override protected function _loop():void
+		override protected function loop():void
 		{
 			var percent:Number;
 			

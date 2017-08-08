@@ -12,7 +12,7 @@
 	 * ...
 	 * @author o
 	 */
-	public class AnimeComponent extends BaseComponent
+	public class AnimeComponent extends BaseGameObjectComponent
 	{
 		/**
 		 *所控制的动画 即每个游戏对象只有一个动画对象 所以所有子动画都要放在该动画下面 

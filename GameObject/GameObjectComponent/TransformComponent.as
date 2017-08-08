@@ -1,5 +1,6 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent
 {
+	import XGameEngine.BaseComponent;
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
@@ -21,7 +22,7 @@
 	 * 变换组件
 	 * @author o
 	 */
-	public class TransformComponent extends BaseComponent
+	public class TransformComponent extends BaseGameObjectComponent
 	{
 		
 		/**

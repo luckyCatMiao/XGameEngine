@@ -1,11 +1,14 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent.StateMachine
 {
+	import XGameEngine.BaseComponent;
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.GameObjectComponent.BaseComponent;
+	import XGameEngine.GameObject.GameObjectComponent.BaseGameObjectComponent;
 	import XGameEngine.Structure.Stack;
 	import XGameEngine.UI.*;
 	import XGameEngine.UI.Draw.*;
+	import XGameEngine.UI.Special.XDebugText;
+	import XGameEngine.UI.Special.XTextField;
 	
 	import fl.transitions.Fade;
 	
@@ -16,7 +19,7 @@
 	 * ...
 	 * @author o
 	 */
-	public class StateComponent extends BaseComponent
+	public class StateComponent extends BaseGameObjectComponent
 	{
 		
 		/**

@@ -1,4 +1,4 @@
-﻿package XGameEngine.GameObject.GameObjectComponent
+﻿package XGameEngine
 {
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.CommonComponent.CommonlyComponent;
@@ -9,18 +9,20 @@
 	 */
 	public class BaseComponent 
 	{
-		protected var host:BaseGameObject;
+	
 		public var enable:Boolean = true;
 		
 		private var common_com:CommonlyComponent;
 		
-		public function BaseComponent(o:BaseGameObject)
+		public function BaseComponent()
 		{
-			host = o;
+		
 			common_com = new CommonlyComponent();
 		}
 		
 		
+	
+
 		public function getCommonlyComponent():CommonlyComponent
 		{
 			return common_com;
@@ -37,7 +39,7 @@
 			
 		}
 		
-	
+		
 		
 		
 	}

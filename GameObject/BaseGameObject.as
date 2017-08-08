@@ -1,5 +1,6 @@
 ﻿package XGameEngine.GameObject
 {
+	import XGameEngine.BaseDisplayObject;
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.CommonComponent.*;
 	import XGameEngine.GameObject.GameObjectComponent.*;
@@ -27,7 +28,7 @@
 	 * ...
 	 * the fundamental gameobject,provide a sets of useful features.
 	 */
-	public class BaseGameObject extends MovieClip
+	public class BaseGameObject extends BaseDisplayObject
 	{
 		
 		/**
@@ -40,9 +41,7 @@
 		protected var physics_com:PhysicsComponent;
 		protected var transform_com:TransformComponent;
 		protected var state_com:StateComponent;
-		protected var obj_com:GameObjectComponent;
-		protected var fun_com:FunComponent;
-		protected var common_com:CommonlyComponent;
+
 		
 		protected var _xname:String;
 		protected var _tag:String;
@@ -51,26 +50,15 @@
 		private var _globalX:Number;
 		private var _globalY:Number;
 	
-		
-		
-		protected var engine:GameEngine;
-		protected var gamePlane:BaseGameObject;			
-		protected var UIPlane:BaseGameObject;	
-		protected var UIPlane2:BaseGameObject;	
-		protected var debugPlane:BaseGameObject;
 
 		public function BaseGameObject(_name:String=null)
 		{
 			this.xname = _name;
-			
 			//注册到游戏各个管理器中
 			registerToGame();
-			//初始化组件
-			InitComponent();
-			InitEvent();
 			
 			
-			//trace(this.getTransformComponent().aabb);
+			
 		}
 		
 		public function get globalY():Number
@@ -109,16 +97,7 @@
 			//添加默认标签
 			tag = TagManager.TAG_DEFAULT;
 			//添加到默认层中
-			layerName = LayerManager.LAYER_DEFAULT;
-			
-		
-			
-			//将一些engine经常需要访问的内部值设置引用 翻遍使用
-			engine=GameEngine.getInstance();
-			gamePlane=engine.gamePlane;
-			UIPlane=engine.UIPlane;
-			UIPlane2=engine.UIPlane2;
-			debugPlane=engine.debugPlane;
+			layerName = LayerManager.LAYER_DEFAULT;	
 			
 		}
 		
@@ -128,39 +107,25 @@
 		/**
 		 * 初始化组件
 		 */
-		protected function InitComponent()
+		override protected function InitComponent():void
 		{
-			
-			obj_com = new GameObjectComponent(this);
+
+			super.InitComponent();			
 			anime_com = new AnimeComponent(this);
 			collide_com = new CollideComponent(this);
 			physics_com = new PhysicsComponent(this);
 			state_com = new StateComponent(this);
-			fun_com = new FunComponent();
 			transform_com = new TransformComponent(this);
-			common_com=new CommonlyComponent();
-		}
-
-		
-		/**
-		 * 初始化事件监听器
-		 */
-		protected function InitEvent()
-		{
-			this.addEventListener(Event.ADDED_TO_STAGE, addTo, false, 0, true);
-			this.addEventListener(Event.ENTER_FRAME, _loop, false, 0, true);
-		}
-		private function addTo(a:Event)
-		{
-			Init();
+			
 		}
 		
 		/**
 		 * 内部循环
 		 * @param	e
 		 */
-		protected function _loop(e:Event)
+		override protected function _loop(e:Event):void
 		{
+			
 			if(valid==false)
 			{
 				return;
@@ -181,12 +146,6 @@
 		}
 		
 		
-		
-		protected function Init()
-		{
-			
-		}
-		
 		/**
 		 * set the position
 		 * @param	x
@@ -198,14 +157,7 @@
 			this.y = y;
 		}
 		
-		
-		/**
-		 * 子类进行覆盖的循环
-		 */
-		protected function loop()
-		{
-			
-		}
+	
 		
 		
 		
@@ -257,14 +209,7 @@
 		{
 			return collide_com;
 		}
-		/**
-		 * 返回通用组件
-		 * @return
-		 */
-		public function getCommonlyComponent():CommonlyComponent 
-		{
-			return common_com;
-		}
+	
 		/**
 		 * 返回物理组件
 		 * @return
@@ -290,23 +235,7 @@
 			return state_com;
 		}
 		
-		/**
-		 * 返回对象管理器组件
-		 * @return
-		 */
-		public function getGameObjectComponent():GameObjectComponent 
-		{
-			return obj_com;
-		}
 		
-		/**
-		 * 返回方法管理组件(支持例如延迟的方法调用)
-		 * @return
-		 */
-		public function getFunComponent():FunComponent 
-		{
-			return fun_com;
-		}
 		
 		
 		public function set tag(value:String):void 
@@ -347,35 +276,7 @@
 			getStateComponent().state = value;
 		}
 
-		public function getTagManager():TagManager 
-		{
-			return gameEngine.getTagManager();
-		}
-		public function getLayerManager():LayerManager 
-		{
-			return gameEngine.getLayerManager();
-		}
-		public function getHitManager():HitManager 
-		{
-			return gameEngine.getHitManager();
-		}
-		public function getGameObjectManager():GameObjectManager 
-		{
-			return gameEngine.getGameObjectManager();
-		}
-		public function getTimeManager():TimeManager 
-		{
-			return gameEngine.getTimeManager();
-		}
-		public function getResourceManager():ResourceManager 
-		{
-			return gameEngine.getResourceManager();
-		}
-		public function getSoundManager():SoundManager
-		{
-			return gameEngine.getSoundManager();
-			
-		}
+	
 		
 		
 		public function onHitEnter(c:Collision) 
@@ -392,19 +293,7 @@
 			
 		}
 		
-		//状态机
-		public function onStateEnter(newstate:String,lastState:String)
-		{
-			
-		}
-		public function onStateDuring(state:String)
-		{
-			
-		}
-		public function onStateExit(state:String)
-		{
-			
-		}
+		
 		
 		/**
 		 * 如果当前处在第二个状态就把当前状态变换到当前状态
@@ -425,11 +314,11 @@
 		/**
 		 * 销毁物体 必须把所有与之有关的引用都断开 否则该物体不会回收 会造成游戏越来越卡
 		 */
-		public function destroy()
+		override public function destroy()
 		{
 				
-			this.removeEventListener(Event.ENTER_FRAME, _loop);
-			this.removeEventListener(Event.ADDED_TO_STAGE, addTo);
+			super.destroy();
+			
 
 			//其实我感觉组件应该是自动回收的..不过不太放心
 			//还是手动清空一下 其实就是我不太清楚 如果组件被该对象以外的其他对象引用了 那这个对象还会不会被回收?

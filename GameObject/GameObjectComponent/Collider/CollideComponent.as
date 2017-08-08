@@ -1,7 +1,8 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent.Collider
 {
+	import XGameEngine.BaseComponent;
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.GameObjectComponent.BaseComponent;
+	import XGameEngine.GameObject.GameObjectComponent.BaseGameObjectComponent;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.CircleCollider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.Collider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.MeshCollider;
@@ -23,7 +24,7 @@
 	 * ...
 	 * 碰撞器组件
 	 */
-	public class CollideComponent extends BaseComponent
+	public class CollideComponent extends BaseGameObjectComponent
 	{
 		
 		

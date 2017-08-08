@@ -1,5 +1,7 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent
 {
+	import XGameEngine.BaseComponent;
+	import XGameEngine.BaseDisplayObject;
 	import XGameEngine.GameObject.AutoDestroyObject;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.Animation;
@@ -18,9 +20,10 @@
 	 */
 	public class GameObjectComponent extends BaseComponent 
 	{
-		public function GameObjectComponent(o:BaseGameObject)
+		private var host:BaseDisplayObject;
+		public function GameObjectComponent(o:BaseDisplayObject)
 		{
-			super(o);
+			host=o;
 		}
 		
 		

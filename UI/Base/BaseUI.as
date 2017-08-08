@@ -1,5 +1,9 @@
 package XGameEngine.UI.Base
 {
+	import XGameEngine.BaseDisplayObject;
+	import XGameEngine.GameObject.CommonComponent.CommonlyComponent;
+	import XGameEngine.GameObject.CommonComponent.FunComponent;
+	import XGameEngine.GameObject.GameObjectComponent.GameObjectComponent;
 	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.UI.Draw.Color;
 	
@@ -9,52 +13,15 @@ package XGameEngine.UI.Base
 	import flash.display.Sprite;
 	import flash.events.Event;
 
-	public class BaseUI extends Sprite
+	public class BaseUI extends BaseDisplayObject
 	{
+
 		public function BaseUI()
 		{
-			//初始化组件
-			InitComponent();
-			InitEvent();
 			
 		}
 		
-		private function InitEvent():void
-		{
-			this.addEventListener(Event.ADDED_TO_STAGE, addTo, false, 0, true);
-			this.addEventListener(Event.ENTER_FRAME,loop);
-			
-		}
-		
-		protected function addTo(event:Event):void
-		{
-			Init();
-			
-		}
-		
-		protected function Init():void
-		{
-			// TODO Auto Generated method stub
-			
-		}
-		
-		private function InitComponent():void
-		{
-			// TODO Auto Generated method stub
-			
-		}
-		
-		protected function loop(event:Event):void
-		{
-			_loop();
-			
-		}		
-		
-		protected function _loop():void
-		{
-			// TODO Auto Generated method stub
-			
-		}		
+
 		
 		/**
 		 *根据名字查找子级 查找失败的话报错 
