@@ -1,4 +1,4 @@
-package XGameEngine.UI
+package XGameEngine.UI.Special
 {
 	import XGameEngine.UI.Draw.Color;
 	

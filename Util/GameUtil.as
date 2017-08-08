@@ -8,6 +8,7 @@
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.media.Sound;
 	import flash.utils.getDefinitionByName;
 
@@ -37,6 +38,8 @@
 		}
 		
 		
+		
+	
 		
 	
 	}

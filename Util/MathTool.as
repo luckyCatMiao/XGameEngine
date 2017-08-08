@@ -114,6 +114,53 @@
 			
 			return Math.sqrt(Math.pow(xx,2)+Math.pow(yy,2));
 		}
+		
+		
+		
+		
+		/**
+		 *检查一个值是否在某个范围内  如果不在则报错 
+		 * @param value
+		 * @param min
+		 * @param max
+		 * 
+		 */		
+		public static function checkRange(value:Number, min:Number, max:Number):void
+		{
+			if (value>max)
+			{
+				throw new Error(value+">"+max);
+			}
+			else if(value<min)
+			{
+				throw new Error(value+"<"+min);
+			}
+			
+		}
+		
+		
+		
+		/**
+		 *收缩一个数的范围,如果小于最小值为最小值 大于最大值为最大值 
+		 * @param value
+		 * @param min
+		 * @param max
+		 * @return 
+		 * 
+		 */		
+		static public function restrictRange(value:Number, min:Number, max:Number):Number
+		{
+			if (value< min)
+			{
+				return min;
+			}
+			if (value > max)
+			{
+				return max
+			}
+			
+			return value;
+		}
 	}
 	
 }

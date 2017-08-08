@@ -6,8 +6,8 @@
 	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.Structure.Math.Vector2;
 	import XGameEngine.UI.Draw.Color;
-	import XGameEngine.UI.XDebugText;
-	import XGameEngine.UI.XTextField;
+	import XGameEngine.UI.Special.XDebugText;
+	import XGameEngine.UI.Special.XTextField;
 	import XGameEngine.Util.MathTool;
 	
 	import flash.display.DisplayObject;

@@ -1,4 +1,4 @@
-﻿package XGameEngine.UI
+﻿package XGameEngine.UI.Special
 {
 	import flash.text.TextField;
 	import flash.text.TextFormat;

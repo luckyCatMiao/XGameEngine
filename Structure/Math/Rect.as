@@ -82,7 +82,7 @@
 	 * @return 
 	 * 
 	 */	
-	public function getDownPoint():Point
+	public function getBottomPoint():Point
 	{
 			return new Point((x+width)/2,y+height);
 	}
@@ -112,7 +112,7 @@
 	 */	
 	public function getCenterPoint():Point
 	{
-			return new Point((x+width)/2,(y+height)/2);
+			return new Point((getLeftPoint().x+getRightPoint().x)/2,(getTopPoint().y+getBottomPoint().y)/2);
 	}
 	
 	
@@ -156,8 +156,62 @@
 	}
 	
 	
+	/**
+	 *返回右边的x 
+	 * @return 
+	 * 
+	 */	
+	public function getRightX():Number
+	{
+		return getRightBottomPoint().x;
+	}
+	/**
+	 *返回左边的x (等同于直接的x)
+	 * @return 
+	 * 
+	 */	
+	public function getLeftX():Number
+	{
+		return getLeftBottomPoint().x;
+	}
+	/**
+	 *返回中间的x 
+	 * @return 
+	 * 
+	 */	
+	public function getCenterX():Number
+	{
+		return getCenterPoint().x;
+	}
 	
 	
+	/**
+	 *返回上面的Y (等同于直接的y)
+	 * @return 
+	 * 
+	 */	
+	public function getTopX():Number
+	{
+		return getTopPoint().y;
+	}
+	/**
+	 *返回下面的y 
+	 * @return 
+	 * 
+	 */	
+	public function getBottomY():Number
+	{
+		return getLeftBottomPoint().y;
+	}
+	/**
+	 *返回中间y
+	 * @return 
+	 * 
+	 */	
+	public function getCenterY():Number
+	{
+		return getCenterPoint().y;
+	}
 	
 	
 	public function toRectangle():Rectangle
@@ -172,5 +226,11 @@
 		return "[Rect x=" + x + " y=" + y + " width=" + width + " height=" + height + "]";
 	}
 	
+	public static function RectangleToRect(r:Rectangle):Rect
+	{
+		var rect:Rect=new Rect(r.x,r.y,r.width,r.height);
+		
+		return rect;
+	}
 	}
 }

@@ -2,6 +2,7 @@ package XGameEngine.Manager
 {
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.Animation;
+	import XGameEngine.UI.Base.BaseUI;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -55,6 +56,7 @@ package XGameEngine.Manager
 			try
 			{
 				cls1=flash.utils.getDefinitionByName(name) as Class;
+				return cls1;
 			} 
 			catch(error:Error) 
 			{
@@ -62,10 +64,9 @@ package XGameEngine.Manager
 			}
 			
 			
-			var cls:Class=GameEngine.getInstance().dataDomain.getDefinition(name) as Class;
 			
-			
-			return cls1==null?cls:cls1;
+			cls1=GameEngine.getInstance().dataDomain.getDefinition(name) as Class;
+			return cls1;
 		}
 		
 		public  function LoadAnimationByName(name:String):XGameEngine.GameObject.GameObjectComponent.Anime.Animation
@@ -87,7 +88,7 @@ package XGameEngine.Manager
 		
 		
 		
-		public  function LoadDisPlayObjectByName(name:String):DisplayObject
+		public function LoadDisPlayObjectByName(name:String):DisplayObject
 		{
 			var cls:Class=getClassByName(name);
 			
@@ -95,6 +96,27 @@ package XGameEngine.Manager
 			if(value==null)
 			{
 				throw new Error("load DisplayObject "+name+" failed");
+			}
+			
+			return value;
+		}
+		
+		
+		/**
+		 *加载一个ui 因为fb里面并不能获取到flash里面创建的类的信息 所以不用字符串来创建类就会出错
+		 * 虽然最后还是用flash编译 但是出错提示看的很不爽 还是用字符串来加载好了 
+		 * @param name
+		 * @return 
+		 * 
+		 */		
+		public function LoadUIByName(name:String):BaseUI
+		{
+			var cls:Class=getClassByName(name);
+			
+			var value:BaseUI=new cls() as BaseUI;
+			if(value==null)
+			{
+				throw new Error("load UI "+name+" failed");
 			}
 			
 			return value;
