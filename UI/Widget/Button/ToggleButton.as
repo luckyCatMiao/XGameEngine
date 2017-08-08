@@ -13,7 +13,7 @@ package XGameEngine.UI.Widget.Button
 		/**
 		 *开启状态 初始为关闭 
 		 */		
-		private var isOpen:Boolean=false;
+		public var isOpen:Boolean=false;
 		private var listener:Function;
 		public function ToggleButton()
 		{
@@ -42,7 +42,7 @@ package XGameEngine.UI.Widget.Button
 		 * @param fun
 		 * 
 		 */		
-		protected function addToggleListener(fun:Function):void
+		public function addToggleListener(fun:Function):void
 		{
 			this.listener=fun;
 		}

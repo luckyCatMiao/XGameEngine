@@ -6,6 +6,8 @@ package XGameEngine.UI.Widget.Button
 
 	public class BaseButton extends BaseUI
 	{
+		
+		
 		public function BaseButton()
 		{
 			
