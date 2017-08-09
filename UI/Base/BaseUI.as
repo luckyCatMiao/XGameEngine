@@ -23,17 +23,19 @@ package XGameEngine.UI.Base
 		
 
 		
+		
 		/**
-		 *根据名字查找子级 查找失败的话报错 
+		 *根据名字查找子级 
 		 * @param name
+		 * @param mustExist 是否必须存在 如果为true则查找失败的话报错  
 		 * @return 
 		 * 
 		 */		
-		protected function searchChild(name:String):DisplayObject
+		protected function searchChild(name:String,mustExist:Boolean=true):DisplayObject
 		{
 			
 			var o:DisplayObject=this.getChildByName(name);
-			if(o==null)
+			if(o==null&&mustExist)
 			{
 				throw new Error(name+"子级不存在")
 			}
