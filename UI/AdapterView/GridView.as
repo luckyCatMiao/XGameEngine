@@ -2,32 +2,27 @@ package XGameEngine.UI.AdapterView
 {
 	import XGameEngine.Structure.Map;
 	import XGameEngine.Structure.Math.Rect;
-	import XGameEngine.UI.Config.UIConfig;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.geom.Orientation3D;
-	
-	import script.TestAdapter;
 
 	/**
-	 * 单排显示的列表 可以横着或者竖着
+	 *从左往右显示 自动换行的列表 
 	 * @author Administrator
 	 * 
 	 */	
-	public class ListView extends BaseAdapterView
+	public class GridView extends BaseAdapterView
 	{
 		
 		/**
-		 *view之间的间隔 
+		 *横间隔 
 		 */		
-		public var space:Number=0;
-		
+		public var Hspace:Number=0;
 		/**
-		 *横竖 默认是竖着 
+		 * 竖间隔 
 		 */		
-		public var orientationType:String=UIConfig.ORIENTATION_VERTICAL;
+		public var Vspace:Number=0;
 		
 		/**
 		 *监听器 
@@ -39,14 +34,16 @@ package XGameEngine.UI.AdapterView
 		 * 
 		 */		
 		private var map:Map;
+		/**
+		 *每一行可以显示几个 
+		 */		
+		public var Hcount:int;
 		
 		
-		public function ListView()
+		public function GridView()
 		{
-	
 		}
 		
-	
 		
 		override public function renderModel():void
 		{
@@ -55,20 +52,22 @@ package XGameEngine.UI.AdapterView
 			//重置绑定关系
 			map=new Map();
 			
+			
+			
 			//根据adapter加载
 			for(var i:int=0;i<adapter.getCount();i++)
 			{
 				var o:DisplayObject=adapter.getView(i);
 				var rect:Rect=Rect.RectangleToRect(this.getRect(this));
-				if(orientationType==UIConfig.ORIENTATION_VERTICAL)
-				{
-					o.y=rect.getBottomY()+space;
-				}
-				else if(orientationType==UIConfig.ORIENTATION_HORIZONTAL)
-				{
-					o.x=rect.getRightX()+space;
-				}
-
+				
+				//转换成行数和列数
+				var row:int=i/Hcount;
+				var column:int=i%Hcount;
+				
+				o.x=o.width*column+Hspace*column;
+				o.y=o.height*row+Vspace*row;
+				
+				
 				addChild(o);
 				//绑定view和索引
 				map.put(o.name,i);
@@ -94,8 +93,5 @@ package XGameEngine.UI.AdapterView
 			this.listener=fun;
 			
 		}
-		
-		
-		
 	}
 }

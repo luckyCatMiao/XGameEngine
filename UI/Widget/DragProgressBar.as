@@ -2,6 +2,7 @@ package XGameEngine.UI.Widget
 {
 	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.UI.Base.BaseUI;
+	import XGameEngine.UI.Config.UIConfig;
 	import XGameEngine.Util.GameUtil;
 	import XGameEngine.Util.MathTool;
 	
@@ -86,7 +87,7 @@ package XGameEngine.UI.Widget
 			if(isDrag)
 			{
 				//计算鼠标位置的百分比
-				if (type == TYPE_HORIZONTAL)
+				if (type == UIConfig.ORIENTATION_HORIZONTAL)
 				{
 					
 					var leftX:Number=rect.x;
@@ -94,7 +95,7 @@ package XGameEngine.UI.Widget
 				
 				
 				}
-				else if(type==TYPE_VERTICAL)
+				else if(type==UIConfig.ORIENTATION_VERTICAL)
 				{
 					var bottomY:Number=rect.getBottomY();
 					percent=MathTool.restrictRange(-(mouseY - bottomY) / rect.height * 100,0,100)
@@ -129,14 +130,14 @@ package XGameEngine.UI.Widget
 			var dragboxRect:Rect=Rect.RectangleToRect(element_dragBox.getRect(this));
 			
 			
-			if(type==TYPE_HORIZONTAL)
+			if(type==UIConfig.ORIENTATION_HORIZONTAL)
 			{
 				//计算bar百分比位置和dragbox中间x的差值 然后设置
 				element_dragBox.x-=(dragboxRect.getCenterX()-(barRect.x+barRect.width*percent/100));
 				//计算bar和dragbox中间y的差值 然后设置
 				element_dragBox.y-=(dragboxRect.getCenterY()-barRect.getCenterY());
 			}
-			else if(type==TYPE_VERTICAL)
+			else if(type==UIConfig.ORIENTATION_VERTICAL)
 			{
 				//计算bar百分比位置和dragbox中间x的差值 然后设置
 				element_dragBox.x-=(dragboxRect.getCenterX()-barRect.getCenterX());

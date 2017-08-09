@@ -1,6 +1,7 @@
 package XGameEngine.UI.Widget
 {
 	import XGameEngine.UI.Base.BaseUI;
+	import XGameEngine.UI.Config.UIConfig;
 	import XGameEngine.UI.Draw.Color;
 	import XGameEngine.Util.MathTool;
 	
@@ -10,11 +11,6 @@ package XGameEngine.UI.Widget
 	public class ProgressBar extends BaseUI
 	{
 		
-		/**
-		 *进度条类型 
-		 */		
-		static public var TYPE_HORIZONTAL:String="horizontal";
-		static public var TYPE_VERTICAL:String="vertical";
 		
 		
 		/**
@@ -81,11 +77,11 @@ package XGameEngine.UI.Widget
 		
 			if(element_bar.width>element_bar.height)
 			{
-				type=TYPE_HORIZONTAL;
+				type=UIConfig.ORIENTATION_HORIZONTAL;
 			}
 			else
 			{
-				type=TYPE_VERTICAL;
+				type=UIConfig.ORIENTATION_VERTICAL;
 			}
 			
 		}		
@@ -106,10 +102,10 @@ package XGameEngine.UI.Widget
 			
 			switch (this.type)
 			{
-				case TYPE_HORIZONTAL:
+				case UIConfig.ORIENTATION_HORIZONTAL:
 					this.element_mask.width = maskStartWidth * value / 100;
 					break;
-				case TYPE_VERTICAL:
+				case UIConfig.ORIENTATION_VERTICAL:
 					this.element_mask.height = maskStartHeight * value / 100;
 					break;
 				
