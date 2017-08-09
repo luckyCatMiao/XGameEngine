@@ -5,6 +5,7 @@ package XGameEngine.UI.Composed
 	import XGameEngine.UI.Config.UIConfig;
 	
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 
 	/**
 	 *滚动面板  注意这里的滚动只能调用方法来进行 如果需要使用可视组件来进行滚动 需要再次进行组件复合
@@ -27,6 +28,7 @@ package XGameEngine.UI.Composed
 		 *横竖类型 
 		 */		
 		private var type:String;
+		
 		public function ScorllPlane()
 		{
 			
@@ -69,6 +71,15 @@ package XGameEngine.UI.Composed
 			
 		}
 		
+		/**
+		 *添加物体到滚动面板里 
+		 * @param o
+		 * 
+		 */		
+		public function addToPlane(o:DisplayObject):void
+		{
+			(this.element_scorllObj as DisplayObjectContainer).addChild(o);
+		}
 		
 		
 		
@@ -145,15 +156,68 @@ package XGameEngine.UI.Composed
 		
 		
 		/**
-		 *直接设置为移动到多少距离 该距离是相对于起始点 
+		 *直接设置为移动到多少百分比(0-100)
 		 * @return 
 		 * 
 		 */		
-		public function ScrollTo(value:Number)
+		public function ScrollPercent(percent:Number)
 		{
-			throw new Error("未实现的方法");
+			//算出两个极限距离之间的差值
+			var distance:Number=0;
+			
+			var maskRect:Rect=Rect.RectangleToRect(element_scorllMask.getRect(this));
+			var objRect:Rect=Rect.RectangleToRect(element_scorllObj.getRect(this));
+			
+			//设置距离为该差值的百分比
+			if(type==UIConfig.ORIENTATION_HORIZONTAL)
+			{
+				distance=objRect.width-maskRect.width;
+				
+			}
+			else if(type==UIConfig.ORIENTATION_VERTICAL)
+			{
+				
+				
+				distance=objRect.height-maskRect.height;
+			}	
+			
+			
+			scrollTo(distance*percent/100);
+	
 		}
 		
+		
+		
+		
+		/**
+		 *直接设置移动到多少位置(scroll是增量滚动 这个是一次性设置) 
+		 * (大于0的一个值)
+		 * @param value
+		 * @return 
+		 * 
+		 */		
+		public function scrollTo(value:Number)
+		{
+			
+			
+			var maskRect:Rect=Rect.RectangleToRect(element_scorllMask.getRect(this));
+			var objRect:Rect=Rect.RectangleToRect(element_scorllObj.getRect(this));
+			if(type==UIConfig.ORIENTATION_HORIZONTAL)
+			{
+				element_scorllObj.x+=(maskRect.getLeftX()-value)-objRect.getLeftX();
+				
+			}
+			else if(type==UIConfig.ORIENTATION_VERTICAL)
+			{
+				//这里确实是+= 虽然是直接设置位置  但是这边相当于增加 目标位置和当前的位置的差值
+				//即相当于设置到目标位置 
+				//不直接使用=的原因是因为各个对象的对齐点不同
+				//所以该框架支持子对象位置随意摆放 而不用像之前那个一样每个自对象也需要左上角对齐
+				element_scorllObj.y+=(maskRect.getTopY()-value)-objRect.getTopY();
+			}	
+			
+			
+		}
 		
 	
 		

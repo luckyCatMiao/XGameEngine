@@ -37,7 +37,20 @@ package XGameEngine.UI.AdapterView
 		/**
 		 *每一行可以显示几个 
 		 */		
-		public var Hcount:int;
+		public var Hcount:int=1;
+		
+		
+		/**
+		 *每个控件的宽度 如果没有主动设置的话
+		 * 默认设置为第一个加载的控件的宽度
+		 */		
+		public var viewWidth:Number=0;
+		
+		/**
+		 *每个控件的高度 如果没有主动设置的话
+		 * 默认设置为第一个加载的控件的高度
+		 */		
+		public var viewHeight:Number=0;
 		
 		
 		public function GridView()
@@ -60,12 +73,21 @@ package XGameEngine.UI.AdapterView
 				var o:DisplayObject=adapter.getView(i);
 				var rect:Rect=Rect.RectangleToRect(this.getRect(this));
 				
+				
+				if(viewWidth==0)
+				{
+						viewWidth=rect.width;
+						viewHeight=rect.height;
+				}
+				
 				//转换成行数和列数
 				var row:int=i/Hcount;
 				var column:int=i%Hcount;
 				
-				o.x=o.width*column+Hspace*column;
-				o.y=o.height*row+Vspace*row;
+				
+				
+				o.x=viewWidth*column+Hspace*column;
+				o.y=viewHeight*row+Vspace*row;
 				
 				
 				addChild(o);
