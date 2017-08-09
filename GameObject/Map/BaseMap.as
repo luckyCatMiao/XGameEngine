@@ -3,8 +3,8 @@
 	import Script.GameObject.GameMap;
 	
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.CommonComponent.FunComponent;
-	import XGameEngine.GameObject.GameObjectComponent.GameObjectComponent;
+	import XGameEngine.BaseObject.BaseComponent.FunComponent;
+	import XGameEngine.BaseObject.BaseComponent.GameObjectComponent;
 	import XGameEngine.GameObject.GameObjectComponent.TransformComponent;
 	import XGameEngine.Structure.Math.Spring;
 	import XGameEngine.Structure.Math.Vector2;

@@ -1,7 +1,7 @@
 ﻿package XGameEngine.Manager
 {
 	import XGameEngine.*;
-	import XGameEngine.GameObject.CommonComponent.CommonlyComponent;
+	import XGameEngine.BaseObject.BaseComponent.CommonlyComponent;
 	
 	import flash.display.Stage;
 	

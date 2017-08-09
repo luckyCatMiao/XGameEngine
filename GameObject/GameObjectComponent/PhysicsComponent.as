@@ -3,7 +3,7 @@
 	import XGameEngine.GameObject.*;
 	import XGameEngine.Structure.*;
 	import XGameEngine.Structure.Math.*;
-	import XGameEngine.BaseComponent;
+	import XGameEngine.BaseObject.BaseComponent.BaseComponent;
 
 	/**
 	 * 物理组件 可以施加力和速度之类的

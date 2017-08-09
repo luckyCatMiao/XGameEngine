@@ -1,7 +1,6 @@
-﻿package XGameEngine.GameObject.GameObjectComponent
+﻿package XGameEngine.BaseObject.BaseComponent
 {
-	import XGameEngine.BaseComponent;
-	import XGameEngine.BaseDisplayObject;
+	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameObject.AutoDestroyObject;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.Animation;

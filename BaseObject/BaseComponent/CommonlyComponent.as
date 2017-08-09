@@ -1,4 +1,4 @@
-﻿package XGameEngine.GameObject.CommonComponent
+﻿package XGameEngine.BaseObject.BaseComponent
 {
 	
 	/**

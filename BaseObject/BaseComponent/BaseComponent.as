@@ -1,7 +1,6 @@
-﻿package XGameEngine
+﻿package XGameEngine.BaseObject.BaseComponent
 {
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.CommonComponent.CommonlyComponent;
 	
 	/**
 	 * ...

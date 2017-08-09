@@ -1,14 +1,12 @@
-package XGameEngine
+package XGameEngine.BaseObject
 {
-	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.CommonComponent.CommonlyComponent;
-	import XGameEngine.GameObject.CommonComponent.FunComponent;
-	import XGameEngine.GameObject.GameObjectComponent.GameObjectComponent;
-	import XGameEngine.Manager.TagManager;
-	
-	import XGameEngine.BaseDisplayObject;
+	import XGameEngine.BaseObject.BaseComponent.CommonlyComponent;
+	import XGameEngine.BaseObject.BaseComponent.FunComponent;
+	import XGameEngine.BaseObject.BaseComponent.GameObjectComponent;
+	import XGameEngine.BaseObject.BaseComponent.TweenComponent;
+	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameEngine;
-	import XGameEngine.GameObject.CommonComponent.*;
+	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.*;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.AnimeComponent;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.CollideComponent;
@@ -17,10 +15,14 @@ package XGameEngine
 	import XGameEngine.GameObject.GameObjectComponent.StateMachine.StateComponent;
 	import XGameEngine.Manager.*;
 	import XGameEngine.Manager.Hit.Collision;
+	import XGameEngine.Manager.TagManager;
 	import XGameEngine.Structure.List;
 	import XGameEngine.Structure.Math.Vector2;
 	import XGameEngine.Util.*;
 	
+	import fl.motion.Animator3D;
+	import fl.motion.Motion;
+	import fl.motion.MotionBase;
 	import fl.transitions.Fade;
 	
 	import flash.display.DisplayObject;
@@ -29,8 +31,6 @@ package XGameEngine
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.display.MovieClip;
-	import flash.events.Event;
 
 	
 	/**
@@ -47,6 +47,7 @@ package XGameEngine
 		protected var obj_com:GameObjectComponent;
 		protected var fun_com:FunComponent;
 		protected var common_com:CommonlyComponent;
+		protected var tween_com:TweenComponent;
 		
 		
 		protected var engine:GameEngine;
@@ -54,6 +55,8 @@ package XGameEngine
 		protected var UIPlane:BaseGameObject;	
 		protected var UIPlane2:BaseGameObject;	
 		protected var debugPlane:BaseGameObject;
+		
+	
 		public function BaseDisplayObject()
 		{
 			
@@ -80,7 +83,7 @@ package XGameEngine
 			obj_com = new GameObjectComponent(this);
 			fun_com = new FunComponent();
 			common_com=new CommonlyComponent();
-			
+			tween_com=new TweenComponent(this);
 		}
 		
 		
@@ -144,7 +147,14 @@ package XGameEngine
 		{
 			return fun_com;
 		}
-		
+		/**
+		 * 返回插值动画组件
+		 * @return
+		 */
+		public function getTweenComponent():TweenComponent 
+		{
+			return tween_com;
+		}
 		
 		public function getTagManager():TagManager 
 		{
@@ -181,6 +191,10 @@ package XGameEngine
 			this.removeEventListener(Event.ENTER_FRAME, _loop);
 			this.removeEventListener(Event.ADDED_TO_STAGE, addTo);
 		}
+		
+		
+		
+
 		
 	}
 }

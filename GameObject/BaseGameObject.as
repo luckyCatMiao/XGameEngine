@@ -1,8 +1,7 @@
 ﻿package XGameEngine.GameObject
 {
-	import XGameEngine.BaseDisplayObject;
+	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameEngine;
-	import XGameEngine.GameObject.CommonComponent.*;
 	import XGameEngine.GameObject.GameObjectComponent.*;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.AnimeComponent;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.CollideComponent;

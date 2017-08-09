@@ -11,6 +11,7 @@ package XGameEngine.UI.Widget.Button
 	public class RadioButtonGroup
 	{
 		private var list:List;
+		private var listener:Function;
 		public function RadioButtonGroup()
 		{
 			this.list=new List();
@@ -36,9 +37,18 @@ package XGameEngine.UI.Widget.Button
 				}
 			}
 			
+			
+			if(listener!=null)
+			{
+				listener(button);
+			}
+		
 		}
 		
-		
+		public function setOnSelectedListener(l:Function)
+		{
+			this.listener=l;
+		}
 		
 		public function addButton(r:RadioButton)
 		{
