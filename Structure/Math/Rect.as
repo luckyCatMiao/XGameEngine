@@ -190,7 +190,7 @@
 	 * @return 
 	 * 
 	 */	
-	public function getTopX():Number
+	public function getTopY():Number
 	{
 		return getTopPoint().y;
 	}
@@ -232,5 +232,45 @@
 		
 		return rect;
 	}
+	
+	
+	/**
+	 *移动rect的位置 
+	 * @param x
+	 * @param y
+	 * 
+	 */	
+	public function move(xValue:Number, yValue:Number):void
+	{
+		x+=xValue;
+		y+=yValue;
+		
+	}
+	
+	
+	/**
+	 *移动rect x坐标 
+	 * @param value
+	 * 
+	 */	
+	public function moveX(value:Number):void
+	{
+		move(value,0);
+		
+	}
+	
+	
+	/**
+	 *移动rect y坐标 
+	 * @param value
+	 * 
+	 */	
+	public function moveY(value:Number):void
+	{
+		move(0,value);
+		
+	}
+	
+	
 	}
 }

@@ -13,7 +13,7 @@ package XGameEngine.UI.Widget
 	import flash.geom.Rectangle;
 
 	/**
-	 * 可以拖动的进度条 
+	 * 可以拖动的进度条
 	 */	
 	public class DragProgressBar extends ProgressBar
 	{
