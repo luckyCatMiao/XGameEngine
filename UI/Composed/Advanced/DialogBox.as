@@ -1,4 +1,4 @@
-package XGameEngine.UI.Special.Advanced
+package XGameEngine.UI.Composed.Advanced
 {
 	public class DialogBox
 	{
