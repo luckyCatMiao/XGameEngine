@@ -110,6 +110,11 @@
 	
 		
 		
+		public function stopAnime():void
+		{
+			animeGroup.stopAnime();
+			
+		}
 	}
 	
 }

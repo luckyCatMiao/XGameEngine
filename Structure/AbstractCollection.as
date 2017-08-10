@@ -1,6 +1,5 @@
 package XGameEngine.Structure
 {
-	import XGameEngine.Constant.EngineConfig;
 
 	public class AbstractCollection
 	{

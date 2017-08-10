@@ -2,7 +2,7 @@ package XGameEngine.GameObject.GameObjectComponent.StateMachine
 {
 
 
-import XGameEngine.Constant.EngineConfig;
+import XGameEngine.Constant.Error.AbstractMethodError;
 import XGameEngine.GameObject.BaseGameObject;
 
 import flash.utils.getQualifiedClassName;
@@ -20,17 +20,17 @@ import flash.utils.getQualifiedClassName;
 	
 	 public function enter():void
 	 {
-		 throw new Error(EngineConfig.ERROR_ABSTRACT_METHED);
+		 throw new AbstractMethodError();
 	 }
 	
 	 public function during():void
 	 {
-		 throw new Error(EngineConfig.ERROR_ABSTRACT_METHED);
+		 throw new AbstractMethodError();
 	 }
 	
 	 public function exit():void
 	 {
-		 throw new Error(EngineConfig.ERROR_ABSTRACT_METHED); 
+		 throw new AbstractMethodError();
 	 }
 	
 	/**
@@ -38,7 +38,7 @@ import flash.utils.getQualifiedClassName;
 	 */
 	 public function flip():void
 	 {
-		 throw new Error(EngineConfig.ERROR_ABSTRACT_METHED);  
+		 throw new AbstractMethodError();
 	 }
 
 	 

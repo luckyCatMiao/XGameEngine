@@ -4,6 +4,7 @@ package XGameEngine.Manager
 	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
 	import XGameEngine.UI.Base.BaseUI;
 	
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -125,12 +126,12 @@ package XGameEngine.Manager
 		
 		
 		/**
-		 *加载bitmapdata 
+		 *加载bitmap
 		 * @param name
 		 * @return 
 		 * 
 		 */		
-		public function LoadBitmapDataByName(name:String):BitmapData
+		public function LoadBitmapByName(name:String): Bitmap
 		{
 			var cls:Class=getClassByName(name);
 			
@@ -140,7 +141,9 @@ package XGameEngine.Manager
 				throw new Error("load BitmapData "+name+" failed");
 			}
 			
-			return value;
+			
+			
+			return new Bitmap(value);
 		}
 	}
 }

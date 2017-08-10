@@ -1,5 +1,8 @@
 package XGameEngine.GameObject.GameObjectComponent.Anime
 {
+	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.Constant.Error.AbstractMethodError;
+	
 	import flash.display.Sprite;
 
 	/**
@@ -7,7 +10,7 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 	 * @author Administrator
 	 * 
 	 */	
-	public class AbstractAnimeGroup extends Sprite
+	public class AbstractAnimeGroup extends BaseDisplayObject
 	{
 		public function AbstractAnimeGroup()
 		{
@@ -21,7 +24,7 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 		public function playAnime(labelName:String):void
 		{
 			
-		throw new Error("抽象方法");
+			throw new AbstractMethodError();
 		}
 		
 		
@@ -30,7 +33,7 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 		 */
 		public function get currentClip():AbstractAnimeClip
 		{
-			throw new Error("抽象方法");
+			throw new AbstractMethodError();
 		}
 		
 		
@@ -39,7 +42,28 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 		 */
 		public function get animeCount():int
 		{
-			throw new Error("抽象方法");
+			throw new AbstractMethodError();
 		}
+		
+		
+		 /**
+		  *停止正在播放的动画 
+		  * 
+		  */		
+		 public function stopAnime():void
+		{
+			throw new AbstractMethodError();
+		}
+			
+		
+		protected function throwNoSuchAnimeError(name:String):void
+		{
+			throw new Error("动画组没有"+name+"该子动画");
+			
+		}		
+		
+		
+		
+		
 	}
 }

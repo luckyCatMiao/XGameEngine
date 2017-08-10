@@ -57,6 +57,8 @@ package XGameEngine.BaseObject
 		protected var debugPlane:BaseGameObject;
 		
 	
+	
+	
 		public function BaseDisplayObject()
 		{
 			
@@ -74,6 +76,9 @@ package XGameEngine.BaseObject
 			UIPlane=engine.UIPlane;
 			UIPlane2=engine.UIPlane2;
 			debugPlane=engine.debugPlane;
+			
+			
+			
 		}
 		
 	
@@ -98,7 +103,7 @@ package XGameEngine.BaseObject
 		
 		protected function _loop(event:Event):void
 		{
-			
+			fun_com.loop();
 			loop();
 			
 		}
@@ -109,8 +114,11 @@ package XGameEngine.BaseObject
 			
 		}
 		
+		
 		protected function addTo(event:Event):void
 		{
+			//即使多次添加舞台移除 只有在第一次的时候会调用初始化 
+			this.removeEventListener(Event.ADDED_TO_STAGE, addTo);
 			Init();
 			
 		}
@@ -201,7 +209,7 @@ package XGameEngine.BaseObject
 		public function destroy()
 		{
 			this.removeEventListener(Event.ENTER_FRAME, _loop);
-			this.removeEventListener(Event.ADDED_TO_STAGE, addTo);
+			
 		}
 		
 		

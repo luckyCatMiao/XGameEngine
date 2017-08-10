@@ -43,7 +43,7 @@
 			}
 			catch(e:ArgumentError)
 			{
-				throw new Error("the target label "+labelName+" doesn't exist in the movieclip")
+				throwNoSuchAnimeError(labelName);
 			}
 		}
 		
@@ -67,6 +67,15 @@
 			
 			//查找标签数量来返回
 			return 0;
+		}
+		
+		/**
+		 *停止正在播放的动画 
+		 * 
+		 */		
+		override public function stopAnime():void
+		{
+			currentClip.stop();
 		}
 		
 		

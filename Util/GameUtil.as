@@ -4,7 +4,10 @@
 	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
 	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.UI.Draw.Color;
 	
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
@@ -41,7 +44,25 @@
 		
 	
 		
-	
+		/**
+		 *创建一个简单的bitmap 
+		 * @param param0
+		 * @param param1
+		 * @return 
+		 * 
+		 */		
+		public static function createSimpleBitmap(width:int, height:int,color:Number=-1):Bitmap
+		{
+			if(color==-1)
+			{
+				color=Color.RED;
+			}
+			var data:BitmapData=new BitmapData(width,height,true,color);
+			var bitmap:Bitmap=new Bitmap(data);
+			
+			
+			return bitmap;
+		}
 	}
 	
 }
