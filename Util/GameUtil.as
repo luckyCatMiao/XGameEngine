@@ -1,7 +1,7 @@
 ﻿package XGameEngine.Util
 {
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.GameObjectComponent.Anime.Animation;
+	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
 	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.Structure.Math.Vector2;
 	

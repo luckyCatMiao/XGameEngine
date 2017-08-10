@@ -1,9 +1,10 @@
 package XGameEngine.Manager
 {
 	import XGameEngine.GameEngine;
-	import XGameEngine.GameObject.GameObjectComponent.Anime.Animation;
+	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
 	import XGameEngine.UI.Base.BaseUI;
 	
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.media.Sound;
@@ -69,7 +70,7 @@ package XGameEngine.Manager
 			return cls1;
 		}
 		
-		public  function LoadAnimationByName(name:String):XGameEngine.GameObject.GameObjectComponent.Anime.Animation
+		public  function LoadAnimationByName(name:String):XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup
 		{
 			var cls:Class=getClassByName(name);
 			
@@ -80,7 +81,7 @@ package XGameEngine.Manager
 				throw new Error("load Animation "+name+" failed");
 			}
 			
-			var anim:Animation=new Animation(value);
+			var anim:MovieClipAnimeGroup=new MovieClipAnimeGroup(value);
 			
 			
 			return anim;
@@ -117,6 +118,26 @@ package XGameEngine.Manager
 			if(value==null)
 			{
 				throw new Error("load UI "+name+" failed");
+			}
+			
+			return value;
+		}
+		
+		
+		/**
+		 *加载bitmapdata 
+		 * @param name
+		 * @return 
+		 * 
+		 */		
+		public function LoadBitmapDataByName(name:String):BitmapData
+		{
+			var cls:Class=getClassByName(name);
+			
+			var value:BitmapData=new cls() as BitmapData;
+			if(value==null)
+			{
+				throw new Error("load BitmapData "+name+" failed");
 			}
 			
 			return value;

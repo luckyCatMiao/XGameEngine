@@ -272,5 +272,28 @@
 	}
 	
 	
+	/**
+	 *朝rect中心收缩rect  
+	 * @param scale 比例
+	 * @return 
+	 * 
+	 */	
+	public function shrink(scale:Number):Rect
+	{
+	
+		var shrinkX:Number=width*scale;
+		x+=shrinkX/2;
+		width-=shrinkX;
+		
+		
+		var shrinkY:Number=height*scale;
+		y+=shrinkY/2;
+		height-=shrinkY;
+		
+		
+		return this;
+	}
+	
+	
 	}
 }

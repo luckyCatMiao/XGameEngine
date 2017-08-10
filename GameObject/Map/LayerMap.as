@@ -79,7 +79,7 @@
 		}
 		
 
-		override protected function loop() 
+		override protected function loop():void
 		{
 			fixMap();
 		}
@@ -91,6 +91,11 @@
 		 */		
 		private function fixMap():void 
 		{
+			
+			if(mainChara==null)
+			{
+				return;
+			}
 			
 			//获取玩家中心坐标
 			var point:Point = mainChara.centerGlobalPoint;

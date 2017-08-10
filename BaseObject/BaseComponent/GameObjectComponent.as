@@ -3,7 +3,7 @@
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameObject.AutoDestroyObject;
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.GameObjectComponent.Anime.Animation;
+	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
 	import XGameEngine.Manager.ResourceManager;
 	import XGameEngine.Structure.List;
 	import XGameEngine.Util.GameUtil;
