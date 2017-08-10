@@ -125,6 +125,8 @@
 		override protected function _loop(e:Event):void
 		{
 			
+			
+			
 			if(valid==false)
 			{
 				return;

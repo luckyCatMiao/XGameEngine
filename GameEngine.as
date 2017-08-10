@@ -83,7 +83,7 @@
 		 * @return 
 		 * 
 		 */		
-		public function Init(s:Stage,dataPath:String,loadCompleteFun:Function=null,loadProgressFun:Function=null)
+		public function Init(s:Stage,dataPath:String=null,loadCompleteFun:Function=null,loadProgressFun:Function=null)
 		{
 			
 			this.s = s;
@@ -95,8 +95,15 @@
 			//初始化子模块
 			InitManager();
 			
-			//开始加载资源
-			startLoadResource(dataPath,loadCompleteFun,loadProgressFun);
+			
+			//如果有资源文件则开始加载资源
+			if(dataPath!=null)
+			{
+				startLoadResource(dataPath,loadCompleteFun,loadProgressFun);
+			}
+			
+			
+			
 			
 		}
 		
@@ -205,6 +212,10 @@
 		{
 			return ResourceManager.getInstance();
 		}
+		public function getTweenManager():TweenManager
+		{
+			return TweenManager.getInstance();
+		}
 		
 		private function loop(e:Event)
 		{
@@ -214,6 +225,8 @@
 			}
 			
 			
+			
+			TweenManager.getInstance().loop();
 		}
 		
 		public function addLoopAble(l:LoopAble)

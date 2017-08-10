@@ -10,14 +10,25 @@
 	 */
 	public class FunComponent
 	{
+		private var _autoIncrementName:Number=999;
 		
 		private var delayFuns:List = new List();
+		
 		public function FunComponent()
 		{
 			
 		}
 		
 		
+		/**
+		 *为自动回调的方法赋值一个不重复的id值，每次调用都会自动增加 
+		 */
+		public function get autoIncrementName():String
+		{
+			
+			return (_autoIncrementName++)+"";
+		}
+
 		/**
 		 * 添加一个延迟调用的方法 可以通过不停调用AddInvokeTime来增加延时触发回调,
 		 * 或者设置为自动回调 则按帧数自动累加
@@ -149,9 +160,9 @@
 		 * @param time
 		 * 
 		 */		
-		public function addDelayRecall(fun:Function, time:int):void
+		public function addDelayRecall(fun:Function, time:int,param:Array=null):void
 		{
-			addRecallFun(new Object().toString(),time,fun,null,true,true);
+			addRecallFun(autoIncrementName,time,fun,param,true,true);
 			
 		}
 	}

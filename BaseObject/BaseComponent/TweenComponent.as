@@ -1,11 +1,13 @@
 package XGameEngine.BaseObject.BaseComponent
 {
 	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.Manager.TweenManager;
 	
 	import fl.motion.Animator;
 	import fl.motion.Animator3D;
 	import fl.motion.Motion;
 	import fl.motion.MotionBase;
+	import fl.transitions.Tween;
 
 	public class TweenComponent extends BaseComponent
 	{
@@ -29,6 +31,12 @@ package XGameEngine.BaseObject.BaseComponent
 		
 		
 		
+		/**
+		 *播放一个motion动画 通常使用ide制作后使用脚本导出 
+		 * @param motion
+		 * @return 
+		 * 
+		 */		
 		public function playMotion(motion:MotionBase)
 		{
 			//这里使用3d播放 motionBase 2d播放motion
@@ -47,7 +55,23 @@ package XGameEngine.BaseObject.BaseComponent
 				animator3D.target = host;
 				animator3D.play();
 			}
+
+		}
+		
+		
+		/**
+		 * 播放一个简单的tween插值动画
+		 * @param fieldName 需要变化的属性名
+		 * @param fun 变化方法
+		 * @param fieldChange 需要变化的值(在当前值的基础上)
+		 * @param lastTime 变化时间 帧数
+		 * @param delay 启动延时
+		 * 
+		 */		
+		public function playTween(fieldName:String, fun:Function, fieldChange:Number,lastTime:int,delay:int=0):Tween
+		{
 			
+			return TweenManager.getInstance().playTween(host,fieldName, fun, fieldChange,lastTime,delay);
 			
 		}
 	}

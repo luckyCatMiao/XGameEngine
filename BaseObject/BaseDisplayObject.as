@@ -98,6 +98,7 @@ package XGameEngine.BaseObject
 		
 		protected function _loop(event:Event):void
 		{
+			
 			loop();
 			
 		}
@@ -160,31 +161,42 @@ package XGameEngine.BaseObject
 		{
 			return engine.getTagManager();
 		}
+		
 		public function getLayerManager():LayerManager 
 		{
 			return engine.getLayerManager();
 		}
+		
 		public function getHitManager():HitManager 
 		{
 			return engine.getHitManager();
 		}
+		
 		public function getGameObjectManager():GameObjectManager 
 		{
 			return engine.getGameObjectManager();
 		}
+		
 		public function getTimeManager():TimeManager 
 		{
 			return engine.getTimeManager();
 		}
+		
 		public function getResourceManager():ResourceManager 
 		{
 			return engine.getResourceManager();
 		}
+		
 		public function getSoundManager():SoundManager
 		{
-			return engine.getSoundManager();
-			
+			return engine.getSoundManager();	
 		}
+		
+		public function getTweenManager():TweenManager
+		{
+			return engine.getTweenManager();	
+		}
+		
 		
 		public function destroy()
 		{
