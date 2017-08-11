@@ -5,6 +5,7 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 	import XGameEngine.Util.GameUtil;
 	
 	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 
 	/**
@@ -23,7 +24,7 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 		/**
 		 *图片 
 		 */		
-		private var b:Bitmap;
+		private var b:DisplayObject;
 		/**
 		 *图片类型 
 		 */		
@@ -43,9 +44,10 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 		
 		
 		private var isAnimePlay:Boolean=false;
+		private var currentPlayAnime:String;
 		
 		
-		public function RPGImageAnimeGroup(b:Bitmap,type:int,playSpeed:int=3)
+		public function RPGImageAnimeGroup(b:DisplayObject,type:int,playSpeed:int=3)
 		{
 			
 			this.b=b;
@@ -79,7 +81,6 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 		
 		private function changePosition():void
 		{
-			
 			//不断变换图片位置 形成动画错觉 
 			if(isAnimePlay)
 			{
@@ -144,6 +145,14 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 		override public function playAnime(labelName:String):void
 		{
 			
+			if(labelName==currentPlayAnime)
+			{
+				return;
+			}
+			
+			
+			currentPlayAnime=labelName;
+			
 			if(type==TYPE_NORMAL4X4)
 			{
 				isAnimePlay=true;
@@ -184,6 +193,7 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 		override public function stopAnime():void
 		{
 			isAnimePlay=false;
+			currentPlayAnime=null;
 			
 			//设置到每个动画的第一个动作
 			if(type==TYPE_NORMAL4X4)

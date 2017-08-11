@@ -189,6 +189,8 @@
 				//清除结束状态的碰撞记录
 				deleteInvalidHitRecord();
 				
+				deleteInvalidWhileTest();
+				
 				if (i % workrate == 0)
 				{
 					CheckHitOnce();
@@ -206,6 +208,26 @@
 			
 		}
 		
+		private function deleteInvalidWhileTest():void
+		{
+			//删除已经为碰撞结束状态的记录或者设置为无效的记录(比如碰撞开始后就销毁自己 就会卡在这个状态)
+			var fun:Function = function(element:*):Boolean {
+				
+				var t:WhileTest = element as WhileTest;
+				if (t.valid==false)
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			};
+			
+			
+			this.whileTest = whileTest.filter(fun);
+			
+		}		
 		
 		//输出过滤设置
 		public function debugFilters()
@@ -640,6 +662,7 @@
 			
 			
 			whileTest.add(t);
+			
 			
 		}
 		

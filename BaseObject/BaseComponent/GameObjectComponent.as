@@ -6,6 +6,7 @@
 	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
 	import XGameEngine.Manager.ResourceManager;
 	import XGameEngine.Structure.List;
+	import XGameEngine.Structure.Math.Vector2;
 	import XGameEngine.Util.GameUtil;
 	
 	import flash.display.DisplayObject;
@@ -154,18 +155,42 @@
 			}
 			
 			/**
-			 * 
+			 * 根据全局坐标点添加(添加到本坐标系的视觉相同位置 而不是相同坐标)
 			 * @param o
 			 * @param point
 			 * 
 			 */			
-			public function addByGlobalPoint(o:BaseGameObject, point:Point):void 
+			public function addByGlobalPoint(o:DisplayObject, point:Point):void 
 			{
 				var point2:Point = host.globalToLocal(point);
 				o.x = point2.x;
 				o.y = point2.y;
 				addChildToHighestDepth(o);
 			}
+			
+			
+			
+			/**
+			 *根据另外一个对象的本地坐标点添加(添加到本坐标系的视觉相同位置 而不是相同坐标)
+			 * @param o 需要添加的对象
+			 * @param other 另一个对象
+			 * @param point 坐标点
+			 * 
+			 */			
+			public function addByOtherLocalPoint(o:DisplayObject, other:BaseGameObject,point:Point=null):void 
+			{
+				
+				if(point==null)
+				{
+					point=Vector2.VEC2_ZERO.toPoint();
+				}
+				
+				point=other.localToGlobal(point);
+				
+				addByGlobalPoint(o,point);
+				
+			}
+			
 			
 			
 			/**

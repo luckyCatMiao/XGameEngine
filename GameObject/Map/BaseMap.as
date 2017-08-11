@@ -109,15 +109,15 @@
 			
 			if (canOver == false)
 			{
-				//测试x值是否能够移动
+				//测试x值是否能够移动(这边怕有一些微小的计算偏差而导致出现白边  所以加了5个像素值作为缓冲)
 				
-				//x往右移动 此时左上角的点x必须<0
-				if (moveX > 0&&leftTopGlobal.x < 0)
+				//x往右移动 此时左上角的点x必须加上移动距离后<0
+				if (moveX > 0&&leftTopGlobal.x+moveX < -5)
 				{
 						b += 1;				
 				}
-				//x往左移动 此时右上角的点x必须大于舞台右侧
-				else if (moveX < 0 && rightTopGlobal.x > stage.stageWidth)
+				//x往左移动 此时右上角的点x减去移动距离必须大于舞台右侧
+				else if (moveX < 0 && rightTopGlobal.x+moveX > stage.stageWidth+5)
 				{
 					b += 1;
 				}
@@ -130,12 +130,12 @@
 				//测试y值是否能够移动
 				
 				//y往下移动 此时左上角的点y必须小于0
-				if (moveY > 0&&leftTopGlobal.y < 0)
+				if (moveY > 0&&leftTopGlobal.y+moveY < -5)
 				{
 						b += 1;					
 				}
 				//y往上移动 此时左下角的点的y必须在舞台下侧
-				else if (moveY < 0 && leftBottomGlobal.y > stage.stageHeight)
+				else if (moveY < 0 && leftBottomGlobal.y +moveY> stage.stageHeight+5)
 				{
 					b += 1;
 				}

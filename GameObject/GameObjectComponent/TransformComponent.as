@@ -70,6 +70,7 @@
 				_oldX=host.x;
 				_oldY=host.y;
 				_oldaabb=aabb;
+			
 			}
 			
 			
@@ -352,7 +353,7 @@
 			
 			
 			
-			return MathTool.getDistance(point1,point2);
+			return Vector2.getDistance(Vector2.pointToV2(point1),Vector2.pointToV2(point2));
 		}
 	}
 	

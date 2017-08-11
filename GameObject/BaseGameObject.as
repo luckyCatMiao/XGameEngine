@@ -137,11 +137,11 @@
 				physics_com.calulate();
 			}
 			
-			state_com.loop();
+			
 			transform_com.loop();
 			collide_com.loop();
 			fun_com.loop();
-
+			state_com.loop();
 		
 			loop();
 		}

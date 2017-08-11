@@ -302,6 +302,66 @@ package XGameEngine.Manager
 		}
 		
 		
+	
+		/**
+		 *检查是否keys中的任意一个key处在Downing 状态(例如 检测abcd键是否有一个处于按下状态)
+		 * @param keys
+		 * @return 
+		 * 
+		 */		
+		public static function isOneKeyDowning(keys:Array):Boolean
+		{
+			
+			for each(var key:int in keys)
+			{
+				if(isKeyDowning(key))
+				{
+						return true
+				}
+			}
+			
+			return false;
+		}
+		
+		
+		/**
+		 *检查是否keys中的任意一个key处在弹起 状态(例如 检测abcd键是否有一个弹起)
+		 * @param keys
+		 * @return 
+		 * 
+		 */		
+		public static function isOneKeyUp(keys:Array):Boolean
+		{
+			
+			for each(var key:int in keys)
+			{
+				if(isKeyUp(key))
+				{
+					return true
+				}
+			}
+			
+			return false;
+		}
+		
+		/**
+		 *检查是否keys中的任意一个key处在按下 状态(例如 检测abcd键是否有一个按下)
+		 * @param keys
+		 * @return 
+		 * 
+		 */		
+		public static function isOneKeyDown(keys:Array):Boolean
+		{
+			for each(var key:int in keys)
+			{
+				if(isKeyDown(key))
+				{
+					return true
+				}
+			}
+			
+			return false;
+		}
 	}
 	
 }

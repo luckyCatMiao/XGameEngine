@@ -128,6 +128,8 @@
 						host.stage.addChild(debug_stateTF);
 					}
 					
+					
+					
 					//设置位置
 					 var point:Point = host.getTransformComponent().oldaabb.getLeftTopPoint();
 					 var point2:Point=host.localToGlobal(point);

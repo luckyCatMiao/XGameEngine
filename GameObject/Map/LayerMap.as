@@ -147,14 +147,22 @@
 			
 				//如果所有的其他层都可以移动
 				//(这里有一个而逻辑就是,不能只移动能移动的,否则可能会出现视觉问题,必须一起移动才行)
-				if (canMoveOtherLayer(moveX, moveY))
+				//这里分开两次计算逻辑是这样的 只要有一个方向可以移动就进行移动 没必要两个方向都可以移动才移动
+				//否则一个方向已经不能移动了 比如人物在rect上方 此时y已经不能移动了 如果玩家x轴移动也将无效
+				if (canMoveOtherLayer(moveX, 0))
 				{
 				//同步移动玩家和其它层
-				this.mainMap.map.move(moveX, moveY);
-				moveOtherLayer(moveX, moveY);
+				this.mainMap.map.move(moveX, 0);
+				moveOtherLayer(moveX, 0);
 				}
 				
-			
+				if (canMoveOtherLayer(0, moveY))
+				{
+					//同步移动玩家和其它层
+					this.mainMap.map.move(0, moveY);
+					moveOtherLayer(0, moveY);
+				}
+				
 
 			
 		}
@@ -373,7 +381,7 @@
 					
 				}
 				
-				//y轴移动还没写 跟上面差不多
+			
 				
 			}
 			//moveRect不存在 没有缓动环节 所以直接移动其他层

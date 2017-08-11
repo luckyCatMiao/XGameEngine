@@ -1,5 +1,7 @@
 ﻿package XGameEngine.Util
 {
+	import XGameEngine.Structure.Math.Vector2;
+	
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
@@ -9,22 +11,6 @@
 	 */
 	public class  MathTool
 	{
-		/**
-		 * 
-		 * @param rect
-		 * @return 
-		 * 
-		 */		
-		static public function rectToPointArray(rect:Rectangle):Vector.<Point>
-		{
-		var array:Vector.<Point> = new Vector.<Point>;
-		array[0] = new Point(rect.x,rect.y);
-		array[1] = new Point(rect.x+rect.width,rect.y);
-		array[2] = new Point(rect.x,rect.y+rect.height);
-		array[3] = new Point(rect.x+rect.width,rect.y+rect.height);
-			
-			return array;
-		}
 		
 		
 		
@@ -100,21 +86,7 @@
 			
 		}
 		
-		/**
-		 *返回距离 
-		 * @param point1
-		 * @param point2
-		 * @return 
-		 * 
-		 */		
-		public static function getDistance(point1:Point, point2:Point):Number
-		{
-			var xx:Number=point1.x-point2.x;
-			var yy:Number=point1.y-point2.y;
-			
-			return Math.sqrt(Math.pow(xx,2)+Math.pow(yy,2));
-		}
-		
+	
 		
 		
 		
@@ -160,6 +132,32 @@
 			}
 			
 			return value;
+		}
+		
+		
+		/**
+		 *返回两点间的夹角(第三个点默认第一个点的x值 第二个点的值) 
+		 * @return 
+		 * 
+		 */		
+		public static function getTwoPointRotation(p1:Point,p2:Point):Number
+		{
+			
+			
+			return Math.atan2(p2.y-p1.y,p2.x-p1.x)*180/Math.PI;
+		}
+		
+		
+		
+		/**
+		 *随机返回1或者-1 
+		 * @return 
+		 * 
+		 */		
+		public static function randomZF():Number
+		{
+			
+			return Math.random()>=0.5?1:-1;
 		}
 	}
 	

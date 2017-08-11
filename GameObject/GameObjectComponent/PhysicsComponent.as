@@ -197,7 +197,8 @@
 		{
 			//计算出加速度
 			var force2:Vector2 = SumUpVector2(forces);
-		
+			//加速度可能太大了 这里缩小一下 不然填的时候只能填小数了，有点麻烦
+			force2.divide(10.0);
 			
 			//计算出恒定速度的总和
 			var speed2:Vector2 = SumUpVector2(speeds);
@@ -211,7 +212,7 @@
 			//追加上恒定速度
 			//设置物理速度总和 供外界读取
 			this.sumSpeedX =partXSpeed + speed2.x;
-			this.sumSpeedY =partYSpeed+speed2.y;
+			this.sumSpeedY =partYSpeed+ speed2.y;
 		
 			
 			//根据计算出的距离设置host的位置
@@ -264,8 +265,8 @@
 				xASpeed += n.v2.x;
 				yASpeed += n.v2.y;
 			}
-				//速度可能太大了 这里缩小一下 不然填的时候只能填小数了，有点麻烦
-			return new Vector2(xASpeed/10.0, yASpeed/10.0);
+				
+			return new Vector2(xASpeed, yASpeed);
 		}
 		
 		/**

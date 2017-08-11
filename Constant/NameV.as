@@ -7,8 +7,8 @@
 	 */
 	public class NameV 
 	{
-		static public var NAME_PLAYER = "player";
-		static public var NAME_MAP_PLANE = "map_plane";
+		static public var PLAYER = "player";
+		static public var MAP_PLANE = "map_plane";
 	}
 	
 }

@@ -63,7 +63,7 @@
 		{
 			
 			//注册一个默认更改debug状态热键 debug五个键一起按下可以改变debug状态
-			var keys:Array = [KeyCode.VK_D,KeyCode.VK_E,KeyCode.VK_B,KeyCode.VK_U,KeyCode.VK_G];
+			var keys:Array = [KeyCode.D,KeyCode.E,KeyCode.B,KeyCode.U,KeyCode.G];
 			Input.registerComboKey(CollectionUtil.arrayToVectorInt(keys), "debug", 200);
 		
 			

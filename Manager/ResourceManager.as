@@ -1,6 +1,8 @@
 package XGameEngine.Manager
 {
 	import XGameEngine.GameEngine;
+	import XGameEngine.GameObject.GameObjectComponent.Anime.AbstractAnimeClip;
+	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeClip;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
 	import XGameEngine.UI.Base.BaseUI;
 	
@@ -71,35 +73,36 @@ package XGameEngine.Manager
 			return cls1;
 		}
 		
-		public  function LoadAnimationByName(name:String):XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup
+		
+		
+		
+		
+		/**
+		 * 根据名字加载一个displayobject的父类 还可以加载bitmapdata 
+		 * @param name
+		 * @param packBitmapdata 如果是bitmapdata，是否自动包装为bitmap返回
+		 * @return 
+		 * 
+		 */		
+		public function LoadDisPlayObjectByName(name:String,packBitmapdata:Boolean=false):DisplayObject
 		{
 			var cls:Class=getClassByName(name);
 			
-			var value:MovieClip=new cls() as MovieClip;
-			
-			if(value==null)
+			if((new cls() is BitmapData)&&packBitmapdata)
 			{
-				throw new Error("load Animation "+name+" failed");
+				var data:BitmapData=new cls() as BitmapData ;
+				var bitmap:Bitmap=new Bitmap(data);
+				return bitmap;
 			}
-			
-			var anim:MovieClipAnimeGroup=new MovieClipAnimeGroup(value);
-			
-			
-			return anim;
-		}
-		
-		
-		
-		public function LoadDisPlayObjectByName(name:String):DisplayObject
-		{
-			var cls:Class=getClassByName(name);
-			
-			var value:DisplayObject=new cls() as DisplayObject;
-			if(value==null)
+			else
 			{
-				throw new Error("load DisplayObject "+name+" failed");
+				var value:DisplayObject=new cls() as DisplayObject;
+				if(value==null)
+				{
+					throw new Error("load DisplayObject "+name+" failed");
+				}
+				
 			}
-			
 			return value;
 		}
 		
@@ -144,6 +147,24 @@ package XGameEngine.Manager
 			
 			
 			return new Bitmap(value);
+		}
+		
+		
+		public function LoadAnimeClipByName(name:String):AbstractAnimeClip
+		{
+			var cls:Class=getClassByName(name);
+			
+			var value:MovieClip=new cls() as MovieClip;
+			
+			if(value==null)
+			{
+				throw new Error("load Animation "+name+" failed");
+			}
+			
+			var anim:MovieClipAnimeClip=new MovieClipAnimeClip(value);
+			
+			
+			return anim;
 		}
 	}
 }

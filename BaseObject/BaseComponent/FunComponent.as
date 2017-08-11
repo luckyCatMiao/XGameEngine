@@ -2,13 +2,14 @@
 {
 	import XGameEngine.Structure.List;
 	
+	import flash.events.EventDispatcher;
 	import flash.system.System;
 	
 	/**
 	 * ...
 	 * @author o
 	 */
-	public class FunComponent
+	public class FunComponent extends EventDispatcher
 	{
 		private var _autoIncrementName:Number=999;
 		

@@ -1,6 +1,7 @@
 ﻿package XGameEngine.GameObject
 {
 	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.GameObject.GameObjectComponent.Anime.AbstractAnimeClip;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
 	import XGameEngine.Manager.ResourceManager;
 	
@@ -14,31 +15,32 @@
 	public class AutoDestroyObject extends BaseGameObject
 	{
 		
-		private var animation:MovieClipAnimeGroup;
+		private var anime:AbstractAnimeClip;
 		
 		/**
 		 * 两者参数只要填一个就可以 都填了默认优先第一个
 		 * @param	animation
 		 * @param	animationName
 		 */
-		public function AutoDestroyObject(animation:MovieClipAnimeGroup=null,animationName:String=null)
+		public function AutoDestroyObject(animeClip:AbstractAnimeClip=null,animeClipName:String=null)
 		{
-			if (animation != null)
+			if (animeClip != null)
 			{
 				
-				this.animation = animation;
-				addChild(animation);
+				this.anime = animeClip;
+				addChild(this.anime);
 			}
-			else if (animationName != null)
+			else if (animeClipName != null)
 			{
-				this.animation = ResourceManager.getInstance().LoadAnimationByName(animationName);
+				this.anime = ResourceManager.getInstance().LoadAnimeClipByName(animeClipName);
+				addChild(this.anime);
 			}
 			else
 			{
 				throw new Error("need a animation!");
 			}
 			
-			this.animation.play();
+			this.anime.play();
 		}
 		
 		
@@ -46,14 +48,14 @@
 		
 		
 		
-		override protected function loop() 
+		override protected function loop():void
 		{
-			if (animation.currentFrame == animation.totalFrames)
+			if (anime.currentFrame == anime.totalFrames)
 			{
-				animation.stop();
-				this.removeChild(animation);
+				anime.stop();
+				this.removeChild(anime);
 				
-				this.animation = null;
+				this.anime = null;
 				destroy();
 			}
 		}
