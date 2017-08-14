@@ -236,6 +236,42 @@
 			
 			
 
+			
+			/**
+			 *查找子级 不存在则报错 
+			 * @param name
+			 * @return 
+			 * 
+			 */			
+			public function searchChildByName(name:String):DisplayObject
+			{
+				var o:DisplayObject=host.getChildByName(name);
+				
+				if(o==null)
+				{
+					throw new Error(name+"子级不存在");
+				}
+				
+				return o;
+			}
+			
+			
+			/**
+			 *返回所有子级 
+			 * @return 
+			 * 
+			 */			
+			public function getAllChilds():List
+			{
+				var list:List=new List();
+				for( var i:int=0;i<host.numChildren;i++)
+				{
+					list.add(host.getChildAt(i));
+				}
+				
+				
+				return list;
+			}
 	}
 	
 }

@@ -1,7 +1,10 @@
 package XGameEngine.Manager
 {
+	import Script.UI.GameUI.Tip;
+	
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	
+	import fl.motion.MotionBase;
 	import fl.transitions.Tween;
 	
 	import flash.display.DisplayObject;
@@ -65,7 +68,7 @@ package XGameEngine.Manager
 			var nowValue:Number=obj[fieldName] as Number;
 			var targetValue:Number=nowValue+fieldChange;
 			
-			var tween:Tween=new Tween(obj,fieldName,fun,nowValue,targetValue,lastTime,true);
+			var tween:Tween=new Tween(obj,fieldName,fun,nowValue,targetValue,lastTime,false);
 			tween.stop();
 			
 			getFunComponent().addDelayRecall(startPlayTween,delay,[tween]);
@@ -87,5 +90,21 @@ package XGameEngine.Manager
 			getFunComponent().loop();
 			
 		}
+		
+//	
+//		/**
+//		 *对Motion的xyz值进行修正  因为自带的那个脚本生成出来的代码是一段固定值的变化 比如x从100变化到200
+//		 * 实用性比较差，所以这里修正为增量值,改为从当前x增加100
+//		 * 暂时只修正坐标值 其他值比如缩放的旋转只要做的时候注意一下就好
+//		 * @param __motion_tipStartMotion
+//		 * @param param1
+//		 * @return 
+//		 * (发现实际上播放的时候会根据初始值来.. 只不过要注意先设置初始值 然后再播放 不能在构造函数中播放 因为此时xy都为0)
+//		 */		
+//		public function correctMotion(motion:MotionBase, param1:Tip):fl.motion.MotionBase
+//		{
+//			// TODO Auto Generated method stub
+//			return motion;
+//		}
 	}
 }

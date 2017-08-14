@@ -342,13 +342,11 @@
 			valid = false;
 			
 				
-				this.parent.removeChild(this);
+			
 				GameObjectManager.getInstance().remove(this);
 				LayerManager.getInstance().removeFromLayer(this);
 				
-				
-				//回收所有子级
-				getGameObjectComponent().destroyAllChilds();
+			
 		}
 		
 		

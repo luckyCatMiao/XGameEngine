@@ -208,6 +208,9 @@ package XGameEngine.BaseObject
 		
 		public function destroy()
 		{
+			this.parent.removeChild(this);
+			//回收所有子级
+			getGameObjectComponent().destroyAllChilds();
 			this.removeEventListener(Event.ENTER_FRAME, _loop);
 			
 		}

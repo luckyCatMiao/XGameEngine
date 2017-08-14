@@ -7,6 +7,7 @@ package XGameEngine.BaseObject.BaseComponent
 	import fl.motion.Animator3D;
 	import fl.motion.Motion;
 	import fl.motion.MotionBase;
+	import fl.motion.MotionEvent;
 	import fl.transitions.Tween;
 
 	public class TweenComponent extends BaseComponent
@@ -21,14 +22,82 @@ package XGameEngine.BaseObject.BaseComponent
 		
 		
 		private var host:BaseDisplayObject;
+		private var startListener:Function;
+		private var endListener:Function;
+		private var updateFunListener:Function;
 		public function TweenComponent(o:BaseDisplayObject)
 		{
 			host=o;
 			animator3D=new Animator3D();
+			animator3D.addEventListener(MotionEvent.MOTION_START,start3d)
+			animator3D.addEventListener(MotionEvent.MOTION_END,end3d);
+			animator3D.addEventListener(MotionEvent.MOTION_UPDATE,update3d);	
+			
 			animator2D=new Animator();
+			animator2D.addEventListener(MotionEvent.MOTION_START,start2d)
+			animator2D.addEventListener(MotionEvent.MOTION_END,end2d);
+			animator2D.addEventListener(MotionEvent.MOTION_UPDATE,update2d);	
+			
 			
 		}
 		
+		protected function update2d(event:MotionEvent):void
+		{
+			if(updateFunListener!=null)
+			{
+				updateFunListener();
+			}
+			
+			
+		}
+		
+		protected function end2d(event:MotionEvent):void
+		{
+			if(endListener!=null)
+			{
+				endListener();
+			}
+
+		}
+		
+		protected function start2d(event:MotionEvent):void
+		{
+			if(startListener!=null)
+			{
+				startListener();
+			}
+			
+			
+		}
+		
+		protected function update3d(event:MotionEvent):void
+		{
+			if(updateFunListener!=null)
+			{
+				updateFunListener();
+			}
+			
+			
+		}
+		
+		protected function end3d(event:MotionEvent):void
+		{
+			if(endListener!=null)
+			{
+				endListener();
+			}
+			
+		}
+		
+		protected function start3d(event:MotionEvent):void
+		{
+			
+			if(startListener!=null)
+			{
+				startListener();
+			}
+			
+		}		
 		
 		
 		/**
@@ -37,8 +106,22 @@ package XGameEngine.BaseObject.BaseComponent
 		 * @return 
 		 * 
 		 */		
-		public function playMotion(motion:MotionBase)
+		public function playMotion(motion:MotionBase,startFun:Function=null,endFun:Function=null,updateFun:Function=null)
 		{
+			
+			if(startFun!=null)
+			{
+				this.startListener=startFun;
+			}
+			if(endFun!=null)
+			{
+				this.endListener=endFun;
+			}
+			if(updateFun!=null)
+			{
+				this.updateFunListener=updateFun;
+			}
+			
 			//这里使用3d播放 motionBase 2d播放motion
 			//真的是很神奇 明明motion继承了motionBase，但是用3D播放motion会出bug
 			//不过没有源码我也不知道内部是如何实现的这么SB的
@@ -51,6 +134,7 @@ package XGameEngine.BaseObject.BaseComponent
 			}
 			else
 			{
+				
 				animator3D.motion = motion;
 				animator3D.target = host;
 				animator3D.play();
