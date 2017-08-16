@@ -16,6 +16,8 @@ package XGameEngine.UI.Composed.Window
 	{
 		private var element_dragBox:DragBox;
 		private var element_exitButton:DisplayObject;
+		private var openListener:Function;
+		private var closeListener:Function;
 		
 		
 		public function BaseWindow()
@@ -56,7 +58,15 @@ package XGameEngine.UI.Composed.Window
 		}		
 		
 		
+		public function addOpenListener(f:Function)
+		{
+			this.openListener=f;
+		}
 	
+		public function addCloseListener(f:Function)
+		{
+			this.closeListener=f;
+		}
 		
 		/**
 		 *使窗口再次显示 
@@ -65,6 +75,11 @@ package XGameEngine.UI.Composed.Window
 		 */		
 		public function open()
 		{
+			
+			if(openListener!=null)
+			{
+				openListener();
+			}
 			this.visible=true;
 		}
 		
@@ -76,8 +91,18 @@ package XGameEngine.UI.Composed.Window
 		 */		
 		public function close()
 		{
-			
+			if(closeListener!=null)
+			{
+				closeListener();
+			}
 			this.visible=false;
 		}
+		
+		
+		public function isOpen():Boolean
+		{
+			return this.visible==true
+		}
+		
 	}
 }

@@ -61,7 +61,7 @@ package XGameEngine.Manager
 		 * 
 		 */		
 		
-		public function playTween(obj:DisplayObject, fieldName:String, fun:Function, fieldChange:Number, lastTime:int,delay:Number=0):Tween
+		public function playTween(obj:Object, fieldName:String, fun:Function, fieldChange:Number, lastTime:int,delay:Number=0):Tween
 		{
 			
 			

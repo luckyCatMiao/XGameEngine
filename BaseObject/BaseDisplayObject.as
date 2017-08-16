@@ -3,6 +3,7 @@ package XGameEngine.BaseObject
 	import XGameEngine.BaseObject.BaseComponent.CommonlyComponent;
 	import XGameEngine.BaseObject.BaseComponent.FunComponent;
 	import XGameEngine.BaseObject.BaseComponent.GameObjectComponent;
+	import XGameEngine.BaseObject.BaseComponent.Render.RenderComponent;
 	import XGameEngine.BaseObject.BaseComponent.TweenComponent;
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameEngine;
@@ -48,13 +49,14 @@ package XGameEngine.BaseObject
 		protected var fun_com:FunComponent;
 		protected var common_com:CommonlyComponent;
 		protected var tween_com:TweenComponent;
-		
+		protected var render_com:RenderComponent;
 		
 		protected var engine:GameEngine;
 		protected var gamePlane:BaseGameObject;			
 		protected var UIPlane:BaseGameObject;	
 		protected var UIPlane2:BaseGameObject;	
 		protected var debugPlane:BaseGameObject;
+		
 		
 	
 	
@@ -89,6 +91,7 @@ package XGameEngine.BaseObject
 			fun_com = new FunComponent();
 			common_com=new CommonlyComponent();
 			tween_com=new TweenComponent(this);
+			render_com=new RenderComponent(this);
 		}
 		
 		
@@ -163,6 +166,14 @@ package XGameEngine.BaseObject
 		public function getTweenComponent():TweenComponent 
 		{
 			return tween_com;
+		}
+		/**
+		 * 
+		 * @return
+		 */
+		public function getRenderComponent():RenderComponent 
+		{
+			return render_com;
 		}
 		
 		public function getTagManager():TagManager 
