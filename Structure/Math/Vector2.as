@@ -1,6 +1,5 @@
 ﻿package XGameEngine.Structure.Math
 {
-	import Script.GameObject.Bullet.AbstractBullet;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
