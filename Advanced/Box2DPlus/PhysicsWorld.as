@@ -21,6 +21,17 @@ package XGameEngine.Advanced.Box2DPlus
 	public class PhysicsWorld implements LoopAble
 	{
 		
+		/**
+		 *为了使计算不出现错误的缩放量 
+		 * 因为box2d的单位是米 所以800*600像素等于800*600米 这样巨大的空间缩小到如此小的屏幕中
+		 * 以人眼看上去会很奇怪
+		 * 比如好像物体在很慢的匀速下落 其实是速度达到了最大值 即阻力等于重力  但是速度因为缩放到800*600的环境中
+		 * 其实是很大的，但在屏幕前看过去就觉得速度很慢，甚至察觉不到加速过程
+		 * 又比如两个巨大物体碰撞 看上去会非常迟缓 甚至是因为数字舍去问题根本不发生碰撞
+		 * 所以这里缩放一下 数字越大会感觉越灵敏 一般30比较合适 
+		 */		
+		static public var valueScale:Number=30;
+		
 		private var forces:Map=new Map();
 		private var world:b2World;
 		private var engine:GameEngine;
@@ -43,7 +54,7 @@ package XGameEngine.Advanced.Box2DPlus
 		public function PhysicsWorld(engine:GameEngine,framerate:int=-1)
 		{
 			this.engine=engine;
-			world=new b2World(new b2Vec2,true);
+			world=new b2World(new b2Vec2(),true);
 			
 			engine.addLoopAble(this);
 			
@@ -78,8 +89,8 @@ package XGameEngine.Advanced.Box2DPlus
 				
 				var debug:b2DebugDraw = new b2DebugDraw();
 				debug.SetSprite(value);
-				debug.SetDrawScale(1);
-				debug.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+				debug.SetDrawScale(valueScale);
+				debug.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit|b2DebugDraw.e_centerOfMassBit);
 				
 				debug.SetFillAlpha(0.5);
 				debug.SetLineThickness(1);
@@ -92,9 +103,8 @@ package XGameEngine.Advanced.Box2DPlus
 		public function loop()
 		{
 		
-			//world这里的实际参数是秒 但是我觉得做游戏帧更加直观 比如每帧运动十个像素 而不是每秒运行多少
-			//所以这里就直接默认为一秒 然后再乘上缩放值 即如果实际workRate大于frameRate 运算速度就会有变快的感觉
-			world.Step(1*(workRate/engine.getStage().frameRate),10,10);
+			//如果实际workRate大于frameRate 运算速度就会有变快的感觉
+			world.Step(1/engine.getStage().frameRate*(workRate/engine.getStage().frameRate),10,10);
 			
 			for each(var r:Rigidbody in list.Raw)
 			{
@@ -128,6 +138,7 @@ package XGameEngine.Advanced.Box2DPlus
 			
 			var v2:Vector2=SumUpVector2();
 			var b:b2Vec2=CastTool.castVector2ToB2Vec2(v2);
+		
 			world.SetGravity(b);
 			
 		}
