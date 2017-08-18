@@ -77,7 +77,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		 */		
 		private var _linearSpeed:Vector2=new Vector2(0,0);
 		/**
-		 *线速度阻尼 
+		 *线速度阻尼 (空气阻力)
 		 */		
 		private var _linearDamping:Number=0;
 		
@@ -98,7 +98,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 	
 	
 		/**
-		 *线速度阻尼 
+		 *线速度阻尼 (空气阻力)
 		 */
 		public function get linearDamping():Number
 		{
@@ -410,11 +410,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 						bean.hasAdded=true;
 						
 						var f:b2FixtureDef=new b2FixtureDef();
-						//默认的密度是0不知道怎么搞的 然后运行结果看上去就很奇怪
-						//搞得我以为box2d有什么bug 这里设置为1 就可以了
-						f.density = 1;
-						//f.friction = 0.3;
-						//f.restitution = 0.2;
+					
 						
 						//因为除了shape之外所有其他的属性都可以在fixture里面重新设定
 						//所以b2FixtureDef没有多大意义 实际上我不是很喜欢这种builder模式的写法。。
