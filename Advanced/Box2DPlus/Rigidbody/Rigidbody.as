@@ -416,7 +416,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 						//所以b2FixtureDef没有多大意义 实际上我不是很喜欢这种builder模式的写法。。
 						//所以我们这里创建一个空的b2FixtureDef，然后同步一下shape
 						//最后把实际的fixture设置回给part 这样part也可以进行同步了
-						f.shape=bean.part.shape;
+						f.shape=bean.part.shape.getShape();
 						var a:b2Fixture=body.CreateFixture(f);
 						bean.part.setPackedFixture(a);
 						

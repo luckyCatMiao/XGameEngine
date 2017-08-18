@@ -1,6 +1,7 @@
 package XGameEngine.Advanced.Box2DPlus
 {
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Common.b2Settings;
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2DebugDraw;
@@ -66,6 +67,7 @@ package XGameEngine.Advanced.Box2DPlus
 			this.workRate=framerate;
 			
 			
+		
 			
 			
 		}
