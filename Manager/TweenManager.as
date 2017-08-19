@@ -1,6 +1,5 @@
-package XGameEngine.Manager
+﻿package XGameEngine.Manager
 {
-	import Script.UI.GameUI.Tip;
 	
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	

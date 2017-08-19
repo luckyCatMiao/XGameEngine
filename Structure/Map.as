@@ -13,6 +13,7 @@
 		public function put(key:Object, value:Object)
 		{
 			map[key] = value;
+		
 		}
 		
 		
