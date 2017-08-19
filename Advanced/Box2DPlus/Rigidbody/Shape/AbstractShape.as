@@ -15,6 +15,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody.Shape
 		 */		
 		protected var _x:Number=0;
 		protected var _y:Number=0;
+		protected var _rotation:Number=0;
 		public function AbstractShape()
 		{
 			this.valueScale=PhysicsWorld.valueScale;
@@ -34,7 +35,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody.Shape
 		
 		public function set y(value:Number):void
 		{
-			_y = value;
+			_y = value/valueScale;
 			
 			
 		}
@@ -46,8 +47,26 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody.Shape
 		
 		public function set x(value:Number):void
 		{
-			_x = value;
+			_x = value/valueScale;
 			
 		}
+		
+		
+		public function get rotation():Number
+		{
+			return _rotation;
+		}
+		
+		public function set rotation(value:Number):void
+		{
+			_rotation = value;	
+		}
+		
+		public function copy():AbstractShape
+		{
+			throw new AbstractMethodError();
+		}
+
+	
 	}
 }

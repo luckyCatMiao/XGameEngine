@@ -1,10 +1,14 @@
 package XGameEngine.Advanced.Box2DPlus.Rigidbody
 {
 	import Box2D.Collision.Shapes.b2Shape;
+	import Box2D.Collision.b2AABB;
 	import Box2D.Dynamics.b2FilterData;
 	import Box2D.Dynamics.b2Fixture;
 	
+	import XGameEngine.Advanced.Box2DPlus.PhysicsWorld;
 	import XGameEngine.Advanced.Box2DPlus.Rigidbody.Shape.AbstractShape;
+	import XGameEngine.Advanced.Box2DPlus.Util.CastTool;
+	import XGameEngine.Structure.Math.Rect;
 	import XGameEngine.Util.MathTool;
 
 	/**
@@ -21,7 +25,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		/**
 		 *实际包装的 fixture
 		 */		
-		private var fixture:b2Fixture;
+		internal var fixture:b2Fixture;
 		
 		/**
 		 *密度 
@@ -45,9 +49,13 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		 * 是否仅仅作为trigger使用 (有点奇怪为什么这个属性不是b2body的)
 		 */
 		private var _isSensor:Boolean=false;
+		internal var rigidbody:Rigidbody;
+		private var valueScale:Number;
 
 		public function RigidPart()
 		{
+			
+		this.valueScale=PhysicsWorld.valueScale;
 		}
 		
 		/**
@@ -120,8 +128,9 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 
 		public function set restitution(value:Number):void
 		{
-			MathTool.restrictRange(value,0,1);
+			MathTool.checkRange(value,0,1);
 			_restitution = value;
+			SynchronizeDataTo();
 		}
 
 		public function get friction():Number
@@ -131,8 +140,10 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 
 		public function set friction(value:Number):void
 		{
-			MathTool.restrictRange(value,0,1);
+			MathTool.checkRange(value,0,1);
 			_friction = value;
+			SynchronizeDataTo();
+		
 		}
 
 		public function get density():Number
@@ -143,6 +154,17 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		public function set density(value:Number):void
 		{
 			_density = value;
+			SynchronizeDataTo();
+			
+			//因为子fixture的密度可能变化 所以改变要重新计算body的质量及其他属性
+			//那本书居然没讲 真的坑死人了
+			//否则子fixture的密度改变是没用的
+			if(rigidbody!=null)
+			{
+				rigidbody.resetMassData();
+			}
+		
+			
 		}
 
 		public function setPackedFixture(fixture:b2Fixture)
@@ -154,9 +176,36 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		
 		
 		
+		/**
+		 *返回包围框 
+		 * @return 
+		 * 
+		 */		
+		public function getAABB():Rect
+		{
+			if(fixture!=null)
+			{
+				var aabb:b2AABB=fixture.GetAABB();
+				var rect:Rect=CastTool.castAABBToRect(aabb);
+				rect.x*=valueScale;
+				rect.y*=valueScale;
+				rect.width*=valueScale;
+				rect.height*=valueScale;
+				
+				return rect;
+			}
+			else
+			{
+				return null;
+			}
+			
+		}
+		
+		
+		
 		public function loop()
 		{
-			
+
 			SynchronizeDataFrom();
 		}
 		
@@ -169,6 +218,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		{
 			if(fixture!=null)
 			{
+				
 				_density=fixture.GetDensity();
 				_friction=fixture.GetFriction();
 				_restitution=fixture.GetRestitution();

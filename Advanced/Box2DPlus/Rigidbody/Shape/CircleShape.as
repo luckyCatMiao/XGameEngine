@@ -8,14 +8,14 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody.Shape
 
 	public class CircleShape extends AbstractShape
 	{
-		private var shape:b2CircleShape;
+	 	private var shape:b2CircleShape;
 	
 		private var _radius:Number;
 		
 		public function CircleShape(radius:Number)
 		{
 			this.shape=new b2CircleShape(radius/valueScale);
-			this._radius=radius;
+			this._radius=radius/valueScale;
 			
 		}
 		
@@ -27,10 +27,16 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody.Shape
 
 		public function set radius(value:Number):void
 		{
-			_radius = value;
-			shape.SetRadius(_radius/valueScale);
+			_radius = value/valueScale;
+			shape.SetRadius(_radius);
 		}
-
+		
+		override public function set rotation(value:Number):void
+		{
+			// TODO Auto Generated method stub
+			super.rotation = value;
+		}
+		
 		
 		
 		override public function getShape():b2Shape
@@ -43,14 +49,14 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody.Shape
 		{
 		
 			super.x = value;
-			shape.SetLocalPosition(new b2Vec2(_x/valueScale,_y/valueScale))
+			shape.SetLocalPosition(new b2Vec2(_x,_y))
 		}
 		
 		override public function set y(value:Number):void
 		{
 			// TODO Auto Generated method stub
 			super.y = value;
-			shape.SetLocalPosition(new b2Vec2(_x/valueScale,_y/valueScale))
+			shape.SetLocalPosition(new b2Vec2(_x,_y))
 		}
 		
 	
