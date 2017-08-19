@@ -1,7 +1,5 @@
 ﻿package XGameEngine
 {
-	
-	
 	import XGameEngine.Advanced.Debug.*;
 	import XGameEngine.Advanced.Interface.LoopAble;
 	import XGameEngine.GameObject.BaseGameObject;
@@ -17,7 +15,6 @@
 	import flash.system.ApplicationDomain;
 
 	/**
-	 * ...
 	 * a class that control the overall gameengine
 	 */
 	public class GameEngine 
