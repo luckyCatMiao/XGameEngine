@@ -23,7 +23,7 @@ package XGameEngine.BaseObject.BaseComponent.Render.Filtters
 					[-1,5,-1],
 					[0,-1,0]
 				]
-			var tArr:TwoDArray=TwoDArray.createByArray(arr);
+			var tArr:TwoDArray=TwoDArray.createByTwoDArray(arr);
 			
 			return new ConvolutionFilterX(tArr,1,0);
 		}
@@ -42,7 +42,7 @@ package XGameEngine.BaseObject.BaseComponent.Render.Filtters
 					[1,1,1],
 					[1,1,1]
 				]
-			var tArr:TwoDArray=TwoDArray.createByArray(arr);
+			var tArr:TwoDArray=TwoDArray.createByTwoDArray(arr);
 			
 			return new ConvolutionFilterX(tArr,9,0);
 		}
@@ -61,7 +61,7 @@ package XGameEngine.BaseObject.BaseComponent.Render.Filtters
 					[-1,0,1],
 					[0,1,2]
 				]
-			var tArr:TwoDArray=TwoDArray.createByArray(arr);
+			var tArr:TwoDArray=TwoDArray.createByTwoDArray(arr);
 			
 			return new ConvolutionFilterX(tArr,1,0);
 		}

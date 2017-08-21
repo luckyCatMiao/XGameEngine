@@ -4,6 +4,8 @@ package XGameEngine.BaseObject.BaseComponent.Render
 	import XGameEngine.BaseObject.BaseComponent.Render.Filtters.AbstractFiltter;
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.Structure.List;
+	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.UI.Draw.Color;
 	
 	import flash.display.BlendMode;
 	import flash.filters.BitmapFilter;
@@ -148,7 +150,63 @@ package XGameEngine.BaseObject.BaseComponent.Render
 			
 		
 			return arr;
-		}		
+		}	
+		
+		
+		
+		/**
+		 *画线 
+		 * @param startPoint
+		 * @param endPoint
+		 * @param lineStyle
+		 * @return 
+		 * 
+		 */		
+		public function drawLine(startPoint:Vector2,endPoint:Vector2,lineStyle:LineStyle=null)
+		{
+			if(lineStyle==null)
+			{
+				lineStyle=new LineStyle();
+			}
+			host.graphics.lineStyle(lineStyle.thick,lineStyle.color,lineStyle.alpha);
+			host.graphics.moveTo(startPoint.x,startPoint.y);
+			host.graphics.lineTo(endPoint.x,endPoint.y);		
+		}
+		
+		/**
+		 *画圆 
+		 * @param x
+		 * @param y
+		 * @param radius
+		 * @param color
+		 * @return 
+		 * 
+		 */		
+		public function drawCircle(x:Number,y:Number,radius:Number=1,color:uint=0xffff0000)
+		{
+			host.graphics.beginFill(color,1);
+			host.graphics.drawCircle(x,y,radius)
+			host.graphics.endFill();
+		}
+		
+		
+		/**
+		 *画正方形 
+		 * @param x
+		 * @param y
+		 * @param width
+		 * @param height
+		 * @param color
+		 * @return 
+		 * 
+		 */		
+		public function drawRect(x:Number,y:Number,width:Number,height:Number,color:uint)
+		{
+			host.graphics.beginFill(color,1);
+			host.graphics.drawRect(x,y,width,height)
+			host.graphics.endFill();
+		}
+		
 		
 	}
 }

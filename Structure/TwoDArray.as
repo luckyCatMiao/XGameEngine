@@ -10,7 +10,7 @@ package XGameEngine.Structure
 	public class TwoDArray
 	{
 		
-		public static function createByArray(arr:Array):TwoDArray
+		public static function createByTwoDArray(arr:Array):TwoDArray
 		{
 			//原始数组必须本质上也是一个二维数组
 			if(!(arr[0] is Array))
@@ -32,6 +32,39 @@ package XGameEngine.Structure
 					
 					twoDArray.add(x,y,arr[y][x]);
 				}
+			}
+			
+			
+			return twoDArray;
+		}
+		
+		/**
+		 *根据一维数组创建二维数组 
+		 * @param arr 一维数组
+		 * @param column 列数
+		 * @return 
+		 * 
+		 */		
+		public static function createByOneDArray(arr:Array,column:int,row:int):TwoDArray
+		{
+			//验证长度
+			if(arr.length!=column*row)
+			{
+				throw new Error("数组长度不对");
+			}
+			
+			var twoDArray:TwoDArray=new TwoDArray(column,row);
+		
+			for(var i:int=0;i<arr.length;i++)
+			{
+			
+				var y:int=i/column;
+				var x:int=i%column;
+				
+
+					
+			    twoDArray.add(x,y,arr[i]);
+		
 			}
 			
 			
