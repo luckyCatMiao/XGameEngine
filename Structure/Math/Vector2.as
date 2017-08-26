@@ -1,6 +1,8 @@
 ﻿package XGameEngine.Structure.Math
 {
 	
+	import XGameEngine.Util.MathTool;
+	
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.geom.Point;
@@ -53,11 +55,8 @@
 
 		public function multiply(i:Number):Vector2
 		{
-			x*=i;
-			y*=i;
 			
-			
-			return this;
+			return new Vector2(x*i,y*i);
 		}
 		
 		
@@ -130,13 +129,10 @@
 		}
 		
 		
-		public function divide(param0:Number):Vector2
+		public function divide(i:Number):Vector2
 		{
-			
-			this.x/=param0;
-			this.y/=param0;
-			
-			return this;
+		
+			return new Vector2(x/i,y/i);
 		}
 		
 		
@@ -160,10 +156,8 @@
 		 */		
 		public function reduce(v:Vector2):Vector2
 		{
-			x-=v.x;
-			y-=v.y;
 			
-			return this;
+			return new Vector2(x-v.x,y-v.y);
 
 		}
 		
@@ -175,10 +169,9 @@
 		 */		
 		public function add(v:Vector2):Vector2
 		{
-			x+=v.x;
-			y+=v.y;
+		
 			
-			return this;
+			return new Vector2(x+v.x,y+v.y);
 
 		}
 		
@@ -189,20 +182,24 @@
 		public function normalize():Vector2
 		{
 			var s:Number=size;
+			
+			var newX:Number=0;
+			var newY:Number=0;
+			
 			if(s==0)
 			{
 				//避免除0错
-				x=0;
-				y=0;
+				newX=0;
+				newY=0;
 			}
 			else
 			{
-				x/=s;
-				y/=s;
+				newX=x/s;
+				newY=y/s;
 				
 			}
 			
-			return this;
+			return new Vector2(newX,newY);
 		}
 		
 		
@@ -229,8 +226,9 @@
 		
 		public function toRotation():Number
 		{
+			var v:Vector2=this.normalize();
 		
-			return Math.atan2(y,x)*180/Math.PI;
+			return Math.atan2(v.y,v.x)*180/Math.PI;
 		}
 		
 		/**
@@ -240,9 +238,18 @@
 		 */		
 		public function reverse():Vector2
 		{
-			x=-x;
-			y=-y;
-			return this;
+			return new Vector2(-x,-y);
+		}
+		
+		/**
+		 *返回一个随机朝向的单位向量 
+		 * @return 
+		 * 
+		 */		
+		public static function getRandomNormalizeVector2():Vector2
+		{
+			
+			return Vector2.getDirectionVector2(MathTool.random(0,180));
 		}
 	}
 	
