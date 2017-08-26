@@ -20,17 +20,17 @@ import flash.utils.getQualifiedClassName;
 	
 	 public function enter():void
 	 {
-		 throw new AbstractMethodError();
+		 //throw new AbstractMethodError();
 	 }
 	
 	 public function during():void
 	 {
-		 throw new AbstractMethodError();
+		 //throw new AbstractMethodError();
 	 }
 	
 	 public function exit():void
 	 {
-		 throw new AbstractMethodError();
+		 //throw new AbstractMethodError();
 	 }
 	
 	/**
@@ -38,7 +38,7 @@ import flash.utils.getQualifiedClassName;
 	 */
 	 public function flip():void
 	 {
-		 throw new AbstractMethodError();
+		 //throw new AbstractMethodError();
 	 }
 
 	 

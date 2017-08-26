@@ -53,9 +53,11 @@
 
 		public function multiply(i:Number):Vector2
 		{
+			x*=i;
+			y*=i;
 			
 			
-			return new Vector2(x *i, y *i);
+			return this;
 		}
 		
 		
@@ -128,11 +130,13 @@
 		}
 		
 		
-		public function divide(param0:Number):void
+		public function divide(param0:Number):Vector2
 		{
 			
 			this.x/=param0;
 			this.y/=param0;
+			
+			return this;
 		}
 		
 		
@@ -146,6 +150,99 @@
 		{
 		
 			return new Vector2(o.mouseX,o.mouseY);
+		}
+		
+		/**
+		 *减去一个向量 
+		 * @param v
+		 * @return 
+		 * 
+		 */		
+		public function reduce(v:Vector2):Vector2
+		{
+			x-=v.x;
+			y-=v.y;
+			
+			return this;
+
+		}
+		
+		/**
+		 *加上一个向量 
+		 * @param v
+		 * @return 
+		 * 
+		 */		
+		public function add(v:Vector2):Vector2
+		{
+			x+=v.x;
+			y+=v.y;
+			
+			return this;
+
+		}
+		
+		/**
+		 *向量标准化(转化为单位向量) 
+		 * 
+		 */		
+		public function normalize():Vector2
+		{
+			var s:Number=size;
+			if(s==0)
+			{
+				//避免除0错
+				x=0;
+				y=0;
+			}
+			else
+			{
+				x/=s;
+				y/=s;
+				
+			}
+			
+			return this;
+		}
+		
+		
+		/**
+		 *返回向量的大小 
+		 * @return 
+		 * 
+		 */		
+		public function get size():Number
+		{
+			return Math.sqrt(x*x+y*y);
+		}
+		
+		/**
+		 *返回向量是否相等 
+		 * @param v
+		 * @return 
+		 * 
+		 */		
+		public function equal(v:Vector2):Boolean
+		{
+			return x==v.x&&y==v.y;
+		}
+		
+		public function toRotation():Number
+		{
+		
+			return Math.atan2(y,x)*180/Math.PI;
+		}
+		
+		/**
+		 *翻转向量 
+		 * @return 
+		 * 
+		 */		
+		public function reverse():Vector2
+		{
+			x=-x;
+			y=-y;
+			return this;
 		}
 	}
 	
