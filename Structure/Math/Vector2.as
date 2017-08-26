@@ -251,6 +251,36 @@
 			
 			return Vector2.getDirectionVector2(MathTool.random(0,180));
 		}
+		
+		/**
+		 *返回两个向量的夹角(角度) 
+		 * @param distance
+		 * @param param1
+		 * @return 
+		 * 
+		 */		
+		public static function getTwoVector2Rotation(v1:Vector2, v2:Vector2):Number
+		{
+			
+			var v1N:Vector2=v1.normalize();
+			var v2N:Vector2=v2.normalize();
+			
+			
+		
+			return Math.acos(v1N.dot(v2N))*180/Math.PI;
+		}
+		
+		/**
+		 *求向量点积 
+		 * @param v2N
+		 * @return 
+		 * 
+		 */		
+		public function dot(v:Vector2):Number
+		{
+		
+			return x*v.x+y*v.y;
+		}
 	}
 	
 }
