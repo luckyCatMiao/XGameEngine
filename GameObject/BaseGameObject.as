@@ -48,6 +48,7 @@
 		
 		private var _globalX:Number;
 		private var _globalY:Number;
+		private var _globalPosition:Vector2;
 	
 
 		public function BaseGameObject(_name:String=null)
@@ -60,6 +61,11 @@
 			
 		}
 		
+		public function get globalPosition():Vector2
+		{
+			return new Vector2(globalX,globalY);
+		}
+
 		public function get globalY():Number
 		{
 			var point:Point=this.localToGlobal(Vector2.VEC2_ZERO.toPoint());

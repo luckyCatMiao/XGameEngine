@@ -171,6 +171,10 @@ package XGameEngine.BaseObject.BaseComponent.Render
 			host.graphics.lineStyle(lineStyle.thick,lineStyle.color,lineStyle.alpha);
 			host.graphics.moveTo(startPoint.x,startPoint.y);
 			host.graphics.lineTo(endPoint.x,endPoint.y);		
+			
+			var l:LineStyle=new LineStyle();
+			//复原为默认值
+			host.graphics.lineStyle(l.thick,l.color,l.alpha);
 		}
 		
 		/**

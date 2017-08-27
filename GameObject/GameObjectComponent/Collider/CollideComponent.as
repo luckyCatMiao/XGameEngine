@@ -9,7 +9,10 @@
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.HitManager;
+	import XGameEngine.Structure.List;
+	import XGameEngine.Structure.Math.Line;
 	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.Structure.Math.Vector2;
 	import XGameEngine.UI.Draw.Color;
 	import XGameEngine.Util.MathTool;
 	
@@ -321,6 +324,29 @@
 			collider.x = x;
 			collider.y = y;
 		
+		}
+		
+		
+		/**
+		 *从当前坐标发出一条向量(射线)检测碰撞物体(不包括本身)
+		 * @param v 向量
+		 * @param offest 发出的位置离当前全局坐标的偏移
+		 * @return 
+		 * 
+		 */	
+		public function rayCast(v:Vector2,offset:Vector2=null):List
+		{
+			
+			var list:List=new List();
+			list.add(host);
+			var nowPostion:Vector2=host.globalPosition;
+			if(offset!=null)
+			{
+				nowPostion=nowPostion.add(offset);
+			}
+			var line:Line=new Line(nowPostion,nowPostion.add(v));
+			
+			return HitManager.getInstance().rayCast(line,list);
 		}
 	}
 	

@@ -1,6 +1,7 @@
 ﻿package XGameEngine.Manager
 {
 	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.CollideComponent;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.CircleCollider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.Collider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.MeshCollider;
@@ -8,6 +9,8 @@
 	import XGameEngine.Manager.LayerManager;
 	import XGameEngine.Structure.List;
 	import XGameEngine.Structure.Map;
+	import XGameEngine.Structure.Math.Function.LinearFunction;
+	import XGameEngine.Structure.Math.Line;
 	import XGameEngine.Structure.Math.Rect;
 	
 	import fl.transitions.Fade;
@@ -699,7 +702,7 @@
 					if(o.layerName==layerName)
 					{
 						
-						if(o.getCollideComponent().collider.hitTestObject(object))
+						if(o.getCollideComponent().collider.hitTestObject(object)&&o!=object)
 						{
 							hits.add(o);
 						}
@@ -707,7 +710,7 @@
 				}
 				else
 				{
-					if(o.getCollideComponent().collider.hitTestObject(object))
+					if(o.getCollideComponent().collider.hitTestObject(object)&&o!=object)
 					{
 						hits.add(o);
 					}
@@ -719,6 +722,8 @@
 			
 			return hits;
 		}
+	
+		
 		
 		
 		/**
@@ -832,12 +837,66 @@
 		}
 		
 
-	}
+		/**
+		 * 进行射线碰撞检测 返回的碰撞对象按距离升序
+		 * @param line 射线向量
+		 * @param list 忽略的对象
+		 * @return 
+		 * 
+		 */		
+		public function rayCast(line:Line, list:List=null):List
+		{
+			var list:List=new List();
+			var objects:List =filterAllhasCollider();
+			if(list!=null)
+			{
+				objects.removeAll(list.Raw);
+			}
+			
+			//因为要求直线和任意形状函数的交点很困难。。所以我们这里退而求次
+			//采取在线段上从起点到终点连续取点再调用as3原生的碰撞检测的方法
+			//大部分时候都是精确的 除非有特别小的碰撞区(一般不会有)
+			var l:LinearFunction=LinearFunction.createByLine(line);
+			trace(l.debugString);
+			
+			
+//			for each(var o:BaseGameObject in list.Raw)
+//			{
+//				
+//				if(layerName!=null)
+//				{
+//					if(o.layerName==layerName)
+//					{
+//						
+//						if(o.getCollideComponent().collider.hitTestObject(object)&&o!=object)
+//						{
+//							hits.add(o);
+//						}
+//					}
+//				}
+//				else
+//				{
+//					if(o.getCollideComponent().collider.hitTestObject(object)&&o!=object)
+//					{
+//						hits.add(o);
+//					}
+//				}
+//				
+//				
+//			}
+			
+			
+			
+			return list;
+		}
+	}
+
 	
 }
-import flash.geom.Point;
 import XGameEngine.GameObject.BaseGameObject;
 import XGameEngine.Structure.List;
+
+import flash.geom.Point;
 
 /**
  * 保存暂时的碰撞记录
