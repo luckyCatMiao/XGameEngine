@@ -12,6 +12,7 @@
 	import XGameEngine.Structure.Math.Function.LinearFunction;
 	import XGameEngine.Structure.Math.Line;
 	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.Structure.Math.Vector2;
 	
 	import fl.transitions.Fade;
 	
@@ -841,10 +842,11 @@
 		 * 进行射线碰撞检测 返回的碰撞对象按距离升序
 		 * @param line 射线向量
 		 * @param list 忽略的对象
+		 * @param first 是否只返回第一个对象
 		 * @return 
 		 * 
 		 */		
-		public function rayCast(line:Line, list:List=null):List
+		public function rayCast(line:Line, list:List=null,first:Boolean=false):List
 		{
 			var list:List=new List();
 			var objects:List =filterAllhasCollider();
@@ -857,33 +859,38 @@
 			//采取在线段上从起点到终点连续取点再调用as3原生的碰撞检测的方法
 			//大部分时候都是精确的 除非有特别小的碰撞区(一般不会有)
 			var l:LinearFunction=LinearFunction.createByLine(line);
-			trace(l.debugString);
+			//定义域每隔十个像素检测一个点
+			var start:Number=l.DYRange.v1;
+			var end:Number=l.DYRange.v2;
 			
+			var point:Vector2;
 			
-//			for each(var o:BaseGameObject in list.Raw)
-//			{
-//				
-//				if(layerName!=null)
-//				{
-//					if(o.layerName==layerName)
-//					{
-//						
-//						if(o.getCollideComponent().collider.hitTestObject(object)&&o!=object)
-//						{
-//							hits.add(o);
-//						}
-//					}
-//				}
-//				else
-//				{
-//					if(o.getCollideComponent().collider.hitTestObject(object)&&o!=object)
-//					{
-//						hits.add(o);
-//					}
-//				}
-//				
-//				
-//			}
+			for(var i:Number=start;i<end;i+=10)
+			{
+				//当前的检测点
+				point=new Vector2(i,l.getY(i));
+				//依次与所有对象进行碰撞检测
+				for each(var o:BaseGameObject in objects.Raw)
+				{
+					
+					if(o.getCollideComponent().collider.hitTestPoint(point.x,point.y,true))
+					{
+						if(!list.contains(o))
+						{
+							list.add(o);
+							//如果只需要返回第一个对象 则直接返回
+							if(first==true)
+							{
+								return list;
+							}
+						}
+					}
+					
+					
+					
+				}
+				
+			}
 			
 			
 			

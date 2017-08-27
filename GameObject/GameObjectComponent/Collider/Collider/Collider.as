@@ -1,7 +1,8 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent.Collider.Collider
 {
-	import XGameEngine.GameEngine;
 	import XGameEngine.BaseObject.BaseComponent.CommonlyComponent;
+	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.GameEngine;
 	import XGameEngine.Structure.List;
 	
 	import flash.display.Shape;
@@ -23,7 +24,7 @@
 		/**
 		 *debug的面板 
 		 */		
-		public var shape:Shape;
+		public var shape:BaseDisplayObject;
 		/**
 		 *绘制颜色 
 		 */		
@@ -34,7 +35,7 @@
 		{
 			common_com = new CommonlyComponent();
 			
-			shape=new Shape();
+			shape=new BaseDisplayObject();
 			addChild(this.shape);
 		}
 		
@@ -60,6 +61,7 @@
 			//如果需要debug 
 			if (GameEngine.getInstance().debug&&debug==true)
 			{
+				
 				shape.alpha=0.75;
 			}
 				//不需要debug

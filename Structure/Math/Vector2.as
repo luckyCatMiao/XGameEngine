@@ -83,7 +83,7 @@
 		 * @param param0
 		 * 
 		 */		
-		public static function getDirectionVector2(angle:Number):Vector2
+		public static function getRotationVector2(angle:Number):Vector2
 		{
 			
 			//先转换为弧度
@@ -249,7 +249,7 @@
 		public static function getRandomNormalizeVector2():Vector2
 		{
 			
-			return Vector2.getDirectionVector2(MathTool.random(0,180));
+			return Vector2.getRotationVector2(MathTool.random(0,180));
 		}
 		
 		/**
@@ -280,6 +280,26 @@
 		{
 		
 			return x*v.x+y*v.y;
+		}
+		
+		public function getDistance(target2:Vector2):Number
+		{
+			// TODO Auto Generated method stub
+			return Vector2.getDistance(this,target2);
+		}
+		
+		/**
+		 *返回当前向量的垂直标准化向量 (因为垂直有两个朝向 这边是随机返回一个)
+		 * @return 
+		 * 
+		 */		
+		public function getVerticalNormalizeVector2():Vector2
+		{
+			//计算过程是返回当前角度 随机加减90度 再转化为向量
+			var r:Number=this.toRotation()+MathTool.randomZF()*90;
+			
+			
+			return Vector2.getRotationVector2(r);;
 		}
 	}
 	

@@ -3,6 +3,7 @@ package XGameEngine.Structure.Math.Function
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.Structure.Math.Line;
 	import XGameEngine.Structure.Math.Number2;
+	import XGameEngine.Structure.Math.Vector2;
 	
 	import flash.display.Shader;
 	import flash.display.Shape;
@@ -125,11 +126,27 @@ package XGameEngine.Structure.Math.Function
 		 */		
 		public static function createByLine(line:Line):LinearFunction
 		{
+			
+			var leftPoint:Vector2
+			var rightPoint:Vector2
+			
+			//线段可能是从右向左的 所以要判断一下
+			if(line.end.x>line.start.x)
+			{
+				leftPoint=line.start;
+				rightPoint=line.end;
+			}
+			else
+			{
+				leftPoint=line.end;
+				rightPoint=line.start;
+			}
+			
 			//计算定义域
-			var dyy:Number2=new Number2(line.start.x,line.end.x);
+			var dyy:Number2=new Number2(leftPoint.x,rightPoint.x);
 		
 			//计算斜率
-			var k:Number=(line.end.y-line.start.y)/(line.end.x-line.start.x);
+			var k:Number=(rightPoint.y-leftPoint.y)/(rightPoint.x-leftPoint.x);
 			
 			//计算b(带入起点计算 b=y-kx)
 			var b:Number=line.start.y-k*line.start.x;

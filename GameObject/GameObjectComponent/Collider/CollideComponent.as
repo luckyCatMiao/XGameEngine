@@ -275,7 +275,7 @@
 		{
 			if (collider != null)
 			{
-				//debug collider
+				
 				collider.debug = this.debugCollider;
 				collider.debugShape();
 			}
@@ -287,7 +287,7 @@
 		 * @param scale 缩放 默认半径为width/2
 		 * 
 		 */		
-		public  function generateCircleColliderDefault(scale:Number=0):void
+		public  function generateCircleColliderDefault(scale:Number=1):void
 		{
 			var rect:Rectangle = host.getRect(host);
 			var radius:Number=rect.width/2.0;

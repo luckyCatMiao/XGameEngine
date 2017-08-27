@@ -1,7 +1,7 @@
 package XGameEngine.Structure.Math
 {
 	/**
-	 *线段 由两个点组成 有方向
+	 *线段 由两个点组成 无方向
 	 * @author Administrator
 	 * 
 	 */	
