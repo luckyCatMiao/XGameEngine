@@ -158,5 +158,23 @@ package XGameEngine.Structure.Math.Function
 		
 			return f;
 		}
+		
+		public function toString():String
+		{
+			// TODO Auto Generated method stub
+			return debugString;
+		}
+		
+		
+		/**
+		 *转化为对应朝向的标准化向量(只有180度的范围 因为函数旋转180度会重合)
+		 * @return 
+		 * 
+		 */		
+		public function toNormalizeVector2():Vector2
+		{
+	
+			return Vector2.getRotationVector2(Math.atan(k)*180/Math.PI);
+		}
 	}
 }

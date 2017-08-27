@@ -120,6 +120,40 @@ package XGameEngine.Structure.Math.Function
 			o.getRenderComponent().drawLine(new Vector2(0,-1000),new Vector2(0,1000),l);
 		
 			
-		}		
+		}	
+		
+		
+		/**
+		 *检测给定的值是否在定义域内 
+		 * @param value
+		 * @return 
+		 * 
+		 */		
+		public function checkInDYRange(value:Number):Boolean
+		{
+			if(value<DYRange.v1||value>DYRange.v2)
+			{
+				return false;
+			}
+			
+			return true;
+		}
+		
+		/**
+		 *检测给定的值是否在值域内 
+		 * @param value
+		 * @return 
+		 * 
+		 */		
+		public function checkInZRange(value:Number):Boolean
+		{
+			
+			if(value<ZRange.v1||value>ZRange.v2)
+			{
+				return false;
+			}
+			
+			return true;
+		}
 	}
 }

@@ -288,12 +288,15 @@
 			return Vector2.getDistance(this,target2);
 		}
 		
+		
 		/**
-		 *返回当前向量的垂直标准化向量 (因为垂直有两个朝向 这边是随机返回一个)
+		 *返回当前向量的垂直标准化向量 (因为垂直有两个朝向 如果没有设置参考点的话这边是随机返回一个)
+		 * 如果设置了参考点 会返回 
+		 * @param referencePoint
 		 * @return 
 		 * 
 		 */		
-		public function getVerticalNormalizeVector2():Vector2
+		public function getVerticalNormalizeVector2(referencePoint:Vector2):Vector2
 		{
 			//计算过程是返回当前角度 随机加减90度 再转化为向量
 			var r:Number=this.toRotation()+MathTool.randomZF()*90;
