@@ -1,9 +1,12 @@
 ﻿package XGameEngine.Manager
 {
-	import flash.display.Stage;
+	import XGameEngine.Constant.LayerNameV;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.Structure.List;
 	import XGameEngine.Structure.Map;
+	
+	import flash.display.Stage;
+
 	/**
 	 * ...
 	 * @author o
@@ -12,14 +15,7 @@
 	{
 		
 		
-		//默认加入的层
-		public static var LAYER_DEFAULT:String = "defaultLayer";
-		
-		//提供的一些常量
-		public static var LAYER_PLAYER:String = "playerLayer";
-		public static var LAYER_ENEMY:String = "enemyLayer";
-		public static var LAYER_BULLET:String = "bulletLayer";
-		
+	
 		
 		
 		
@@ -41,11 +37,15 @@
 		public function LayerManager()
 		{
 			
-			registerLayer(LAYER_DEFAULT);
-			registerLayer(LAYER_PLAYER);
-			registerLayer(LAYER_ENEMY);
-			registerLayer(LAYER_BULLET);
-			
+		
+			registerLayer(LayerNameV.BULLET);
+			registerLayer(LayerNameV.BULLET_ENEMY);
+			registerLayer(LayerNameV.BULLET_PLAYER);
+			registerLayer(LayerNameV.ENEMY);
+			registerLayer(LayerNameV.ITEM);
+			registerLayer(LayerNameV.MAP);
+			registerLayer(LayerNameV.PLAYER);
+			registerLayer(LayerNameV.DEFAULT);
 		}
 		
 		

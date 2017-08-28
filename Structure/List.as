@@ -206,6 +206,10 @@
 		
 		public function addAllList(list:List):void
 		{
+			if(list==null)
+			{
+				return;
+			}
 			for each(var q:Object in list.Raw)
 			{
 				add(q);
