@@ -290,19 +290,32 @@
 		
 		
 		/**
-		 *返回当前向量的垂直标准化向量 (因为垂直有两个朝向 如果没有设置参考点的话这边是随机返回一个)
-		 * 如果设置了参考点 会返回 
+		 *返回当前向量的垂直标准化向量 
 		 * @param referencePoint
 		 * @return 
 		 * 
 		 */		
-		public function getVerticalNormalizeVector2(referencePoint:Vector2):Vector2
+		public function getVerticalNormalizeVector2():Vector2
 		{
+			var r:Number;
 			//计算过程是返回当前角度 随机加减90度 再转化为向量
-			var r:Number=this.toRotation()+MathTool.randomZF()*90;
-			
+		
+			r=this.toRotation()+MathTool.randomZF()*90;	
+
 			
 			return Vector2.getRotationVector2(r);;
+		}
+		
+		/**
+		 *返回和另一向量的夹角 
+		 * @param param0
+		 * @return 
+		 * 
+		 */		
+		public function getAngleBetween(param0:Vector2):Number
+		{
+			
+			return Vector2.getTwoVector2Rotation(this,param0);
 		}
 	}
 	
