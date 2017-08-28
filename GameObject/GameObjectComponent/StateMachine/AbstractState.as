@@ -4,7 +4,9 @@ package XGameEngine.GameObject.GameObjectComponent.StateMachine
 
 import XGameEngine.Constant.Error.AbstractMethodError;
 import XGameEngine.GameObject.BaseGameObject;
+import XGameEngine.Structure.List;
 
+import flash.events.Event;
 import flash.utils.getQualifiedClassName;
 
    public class AbstractState {
@@ -12,6 +14,8 @@ import flash.utils.getQualifiedClassName;
 	
 
 	private var entity:BaseGameObject ;
+	private var listeners:List=new List();
+	
 
 	public function AbstractState(entity:BaseGameObject ) {
 		this.entity=entity;
@@ -68,7 +72,44 @@ import flash.utils.getQualifiedClassName;
 	}
 	
 	
+	/**
+	 *接受从host那里接受到的事件 (host要放上侦听器才能接受到时间) 
+	 * @param e
+	 * @return 
+	 * 
+	 */	
+	public function receiveEvent(e:Event)
+	{
+		//根据监听设置 进行传递
+		for each(var l:Listener in listeners.Raw)
+		{
+			if(l.type==e.type)
+			{
+				l.fun(e);
+			}
+		}
+		
+	}
+	
+	public function addEventListener(type:String,fun:Function)
+	{
+		
+		var l:Listener=new Listener();
+		l.fun=fun;
+		l.type=type;
+		
+		listeners.add(l);
+	}
+	
 	
    }
+	
+}
+import flash.events.Event;
+
+class Listener 
+{
+	public var type:String;
+	public var fun:Function
 	
 }

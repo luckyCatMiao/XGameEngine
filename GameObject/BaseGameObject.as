@@ -1,4 +1,4 @@
-﻿package XGameEngine.GameObject
+﻿package XGameEngine.GameObject 
 {
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.Constant.LayerNameV;
