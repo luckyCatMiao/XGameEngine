@@ -244,6 +244,12 @@
 			arr.splice(index, 1,value);
 			
 		}
+		
+		public function isEmpty():Boolean
+		{
+			// TODO Auto Generated method stub
+			return size==0;
+		}
 	}
 	
 }

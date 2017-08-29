@@ -6,7 +6,6 @@ package XGameEngine.BaseObject.BaseComponent
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
-	import script.Event.SoccerTeamEvent.ReadyEvent;
 
 	public class EventComponent
 	{
