@@ -3,8 +3,7 @@ package XGameEngine.Structure.Math
 	import flash.display.DisplayObject;
 	import flash.security.X500DistinguishedName;
 	
-	import script.GameObject.SoccerBall;
-	import script.GameObject.FieldPlayer;
+
 
 	/**
 	 *线段 由两个点组成 无方向

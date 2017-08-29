@@ -6,7 +6,7 @@ package XGameEngine.BaseObject.BaseComponent
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
-	import script.Event.TestEvent;
+	import script.Event.SoccerTeamEvent.ReadyEvent;
 
 	public class EventComponent
 	{
@@ -64,6 +64,18 @@ package XGameEngine.BaseObject.BaseComponent
 		
 			
 		}
+		
+		/**
+		 *单对单发送信息
+		 * @param e
+		 * 
+		 */		
+		public function sendEventTo(e:BaseGameObject):void
+		{
+			
+
+		}
+		
 		
 		/**
 		 *发送一个延时消息 

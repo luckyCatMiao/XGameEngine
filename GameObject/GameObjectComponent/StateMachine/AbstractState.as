@@ -91,7 +91,14 @@ import flash.utils.getQualifiedClassName;
 		
 	}
 	
-	public function addEventListener(type:String,fun:Function)
+	/**
+	 *添加监听器 过滤从host那里传过来的消息 
+	 * @param type
+	 * @param fun
+	 * @return 
+	 * 
+	 */	
+	protected function addEventListener(type:String,fun:Function)
 	{
 		
 		var l:Listener=new Listener();
@@ -101,6 +108,16 @@ import flash.utils.getQualifiedClassName;
 		listeners.add(l);
 	}
 	
+	/**
+	 *发送事件  
+	 * @param e
+	 * 
+	 */	
+	protected function dispatchEvent(e:Event):void
+	{
+		entity.dispatchEvent(e);
+		
+	}	
 	
    }
 	
