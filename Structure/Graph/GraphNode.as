@@ -11,13 +11,14 @@ package XGameEngine.Structure.Graph
 		
 		public function toString()
 		{
-			var s:String="";
-			for each(var n:GraphNode in linkedNodes.Raw)
-			{
-				s+=n.value+" ";
-			}
+//			var s:String="";
+//			for each(var n:GraphNode in linkedNodes.Raw)
+//			{
+//				s+=n.value+" ";
+//			}
+
 			
-			return s;
+			return value.toString();
 		}
 		
 		public function equals(obj:Object) {

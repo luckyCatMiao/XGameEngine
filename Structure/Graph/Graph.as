@@ -2,6 +2,8 @@ package XGameEngine.Structure.Graph
 {
 	import XGameEngine.Structure.Graph.GraphNode;
 	import XGameEngine.Structure.Graph.Search.BFSSearch;
+	import XGameEngine.Structure.Graph.Search.BaseSearch;
+	import XGameEngine.Structure.Graph.Search.DFSSearch;
 	import XGameEngine.Structure.List;
 
 	public class Graph
@@ -14,6 +16,13 @@ package XGameEngine.Structure.Graph
 		 * 保存所有节点
 		 */
 		private var list:List=new List();
+
+		public function get weightCalcuFun():Function
+		{
+			return _weightCalcuFun;
+		}
+
+		private var _weightCalcuFun:Function;
 		
 		
 		/**
@@ -29,14 +38,27 @@ package XGameEngine.Structure.Graph
 			var node1:GraphNode=CheckContainNode(value1);
 			var node2:GraphNode=CheckContainNode(value2);
 			
+			
 			node1.linkedNodes.add(node2);
 			if(twoDirection)
 			{
 				node2.linkedNodes.add(node1);
 			}
 			
-
 		}
+		
+		
+		/**
+		 *设置计算权值的方法 接受两个存放在node里的value变量 返回一个Number值 
+		 * @param f
+		 * @return 
+		 * 
+		 */		
+		public function set weightCalcuFun(f:Function)
+		{
+			this._weightCalcuFun=f;
+		}
+		
 		
 		/**
 		 *检查是否含有指定点 有的话返回 否则报错 
@@ -91,11 +113,28 @@ package XGameEngine.Structure.Graph
 			var node1:GraphNode=CheckContainNode(start);
 			var node2:GraphNode=CheckContainNode(end);
 			
+			
+			var s:BaseSearch
+			var path:Path;
+			
 			if(node1!=null&&node2!=null)
 			{
-				var s:BFSSearch=new BFSSearch(node1,node2,this);
-				var path:Path=s.getPath();
-				return path;
+				if(type==SearchType.BFS)
+				{
+					s=new BFSSearch(node1,node2,this);
+					path=s.getPath();
+					return path;
+				}
+				else if(type==SearchType.DFS)
+				{
+					s=new DFSSearch(node1,node2,this);
+					path=s.getPath();
+					return path;
+				}
+				else
+				{
+					throw new Error("未知搜索类型");
+				}
 				
 			}
 			else
@@ -110,7 +149,7 @@ package XGameEngine.Structure.Graph
 		public function getLinkedPoint(value:Object) {
 			CheckContainNode(value);
 			
-			
+		
 			for each(var node:GraphNode in list.Raw)
 			{
 				if(node.value==value)
