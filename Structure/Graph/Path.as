@@ -26,7 +26,7 @@ package XGameEngine.Structure.Graph
 			//如果没有设置权值方法 则默认的权值为1
 			if(g.weightCalcuFun==null)
 			{
-				//边数为点数-1
+				//花费直接设置为边的数量 边数为点数-1
 				_cost=list.size-1;
 			}
 			else
