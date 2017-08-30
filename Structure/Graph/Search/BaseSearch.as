@@ -42,7 +42,7 @@ package XGameEngine.Structure.Graph.Search
 			return result!=null;
 		}
 		
-		public function GetUnVisitedLinkPoint(node:GraphNode, hasVisited:Map) 
+		protected function GetUnVisitedLinkPoint(node:GraphNode, hasVisited:Map) 
 		{
 			//获取所有连接点
 			var linkPoints:List=node.linkedNodes;
@@ -58,6 +58,25 @@ package XGameEngine.Structure.Graph.Search
 			}
 			
 			return null;
+		}
+		
+		protected function GetUnVisitedLinkPoints(node:GraphNode, hasVisited:Map):List
+		{
+			var list:List=new List();
+			//获取所有连接点
+			var linkPoints:List=node.linkedNodes;
+			
+			
+			//添加所有没有访问过的点
+			for each(var value:GraphNode in linkPoints.Raw)
+			{
+				if(hasVisited.get(value)==null)
+				{
+					list.add(value);
+				}
+			}
+			
+			return list;
 		}
 		
 		

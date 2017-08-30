@@ -1,6 +1,7 @@
 package XGameEngine.Structure.Graph
 {
 	import XGameEngine.Structure.Graph.GraphNode;
+	import XGameEngine.Structure.Graph.Search.ASTARSearch;
 	import XGameEngine.Structure.Graph.Search.BFSSearch;
 	import XGameEngine.Structure.Graph.Search.BaseSearch;
 	import XGameEngine.Structure.Graph.Search.DFSSearch;
@@ -133,6 +134,10 @@ package XGameEngine.Structure.Graph
 				{
 					s=new DijkstraSearch(node1,node2,this);
 				}	
+				else if(type==SearchType.ASTAR)
+				{
+					s=new ASTARSearch(node1,node2,this);
+				}
 				else
 				{
 					throw new Error("未知搜索类型");

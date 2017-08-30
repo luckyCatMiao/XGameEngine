@@ -72,5 +72,10 @@ package XGameEngine.Structure
 		
 		
 		
+		public function removeAll(invalidPaths:List):void
+		{
+			list.removeAll(invalidPaths.Raw);
+			
+		}
 	}
 }

@@ -6,27 +6,19 @@ package XGameEngine.Structure.Graph.Search
 	import XGameEngine.Structure.List;
 	import XGameEngine.Structure.Map;
 	import XGameEngine.Structure.PriorityQuene;
-	import XGameEngine.Structure.Stack;
 	
-	/**
-	 *计算带权值的最短路径比较快  (同时会计算出从开始节点到所有已访问过的节点的最短路径)
-	 * @author Administrator
-	 * 
-	 */	
-	public class DijkstraSearch extends BaseSearch
+	public class ASTARSearch extends BaseSearch
 	{
-		public function DijkstraSearch(startNode:GraphNode, endNode:GraphNode, graph:Graph)
+		public function ASTARSearch(startNode:GraphNode, endNode:GraphNode, graph:Graph)
 		{
 			super(startNode, endNode, graph);
-			
 			startSearch();
 		}
 		
 		private function startSearch():void
 		{
-			//dijkstra和bfs唯一的区别是 dijkstra优先扩展权值低的边
-			//因为每次都选择从起点开始花费最少的边(不是当前节点花费最少的边 是总路径的)
-			//所以最后到达终点一定是花费最少的
+			//a*和dijkstra和bfs唯一的区别是使用了启发因子 下一个加入的拓展点不一定使
+			//路径花费最短 但是该路径的新节点距离目标最近
 			
 			
 			//保存已经访问过的节点
@@ -73,7 +65,9 @@ package XGameEngine.Structure.Graph.Search
 								
 								var v1:Object=nowNode.value;
 								var v2:Object=node.value;
-								var cost:Number=graph.weightCalcuFun(v1,v2);
+								//a*需要加上该节点到终点的花费计算 因此会离终点更近但是花费更高的点
+								//会比离终点更远但是花费更低的点先拓展
+								var cost:Number=graph.weightCalcuFun(v1,v2)+graph.weightCalcuFun(v2,endNode.value);
 								//最新节点到该节点的花费加上 之前路径的累积花费
 								cost+=nowPath.cost;
 								if(cost<minCost)
@@ -85,7 +79,7 @@ package XGameEngine.Structure.Graph.Search
 							}
 							
 						}
-						//否则移除该路径
+							//否则移除该路径
 						else
 						{
 							invalidPaths.add(nowPath);
@@ -128,8 +122,6 @@ package XGameEngine.Structure.Graph.Search
 			}
 			
 		}
-		
-	
 		
 		private function PathCostCompare(p1:Path,p2:Path):int
 		{
