@@ -7,6 +7,7 @@ package XGameEngine.Advanced.Box2DPlus
 	import Box2D.Dynamics.b2DebugDraw;
 	import Box2D.Dynamics.b2World;
 	
+	import XGameEngine.Advanced.Box2DPlus.Collision.CollisionListener;
 	import XGameEngine.Advanced.Box2DPlus.Rigidbody.Rigidbody;
 	import XGameEngine.Advanced.Box2DPlus.Util.CastTool;
 	import XGameEngine.Advanced.Interface.LoopAble;
@@ -56,6 +57,9 @@ package XGameEngine.Advanced.Box2DPlus
 		{
 			this.engine=engine;
 			world=new b2World(new b2Vec2(),true);
+			//添加自定义的侦听器 该侦听器会把碰撞事件分发给实际对象
+			world.SetContactListener(new CollisionListener(this));
+			
 			
 			engine.addLoopAble(this);
 			
@@ -110,7 +114,7 @@ package XGameEngine.Advanced.Box2DPlus
 			
 			for each(var r:Rigidbody in list.Raw)
 			{
-				r.loop();
+				r._loop();
 			}
 			
 			if(debugPlane!=null)
@@ -209,6 +213,19 @@ package XGameEngine.Advanced.Box2DPlus
 			r.setPackedBody(body);	
 			
 			
+		}
+		
+		public function getRigidbodyByB2Body(param0:b2Body):Rigidbody
+		{
+			for each(var r:Rigidbody in list.Raw)
+			{
+				if(r.getPackedBody()==param0)
+				{
+					return r;
+				}
+			}
+			
+			return null;
 		}
 	}
 }

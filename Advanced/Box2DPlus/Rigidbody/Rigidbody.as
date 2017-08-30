@@ -1,12 +1,14 @@
 package XGameEngine.Advanced.Box2DPlus.Rigidbody
 {
 	import Box2D.Collision.Shapes.b2MassData;
+	import Box2D.Collision.b2AABB;
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2Fixture;
 	import Box2D.Dynamics.b2FixtureDef;
 	
+	import XGameEngine.Advanced.Box2DPlus.Collision.Collision;
 	import XGameEngine.Advanced.Box2DPlus.PhysicsWorld;
 	import XGameEngine.Advanced.Box2DPlus.Util.CastTool;
 	import XGameEngine.Constant.Error.UnSupportMethodError;
@@ -86,9 +88,14 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		
 		
 		/**
-		 *保存所有的部件 
+		 *保存所有暂存中的部件 
 		 */		
-		private var parts:List=new List();
+		private var cacheParts:List=new List();
+		
+		/**
+		 *所有被实际添加的部件 
+		 */		
+		private var realPart:List=new List();
 		
 		
 		private var valueScale:Number;
@@ -367,18 +374,28 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		{
 			
 			this.body=body;
-		
+			SynchronizeDataTo();
 		}
 		
-	
+		public function getPackedBody():b2Body
+		{
+			
+			return this.body;
+		}
 		
-		public function loop()
+		public function _loop()
 		{
 		
 			SynchronizeDataFrom();
 			loopParts();
 			
+			loop();
+			
+		}
 		
+		public function loop():void
+		{
+			// TODO Auto Generated method stub
 			
 		}
 		
@@ -388,7 +405,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		 */		
 		private function loopParts():void
 		{
-			for each(var bean:RigidPartBean in parts.Raw)
+			for each(var bean:RigidPartBean in cacheParts.Raw)
 			{
 				if(bean.hasAdded)
 				{
@@ -445,7 +462,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		private function tryAddFixture():void
 		{
 			//添加上没有添加的fixture
-			for each(var bean:RigidPartBean in parts.Raw)
+			for each(var bean:RigidPartBean in cacheParts.Raw)
 			{
 				
 				if(bean.hasAdded==false)
@@ -472,7 +489,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 					//初始化属性，而是每次添加fixture时传递属性
 					SynchronizeDataTo();
 					
-					
+					realPart.add(bean.part);
 					
 				}
 				
@@ -502,13 +519,13 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 			//如果可以添加就直接添加了
 			if(body!=null)
 			{
-				this.parts.add(new RigidPartBean(part));
+				this.cacheParts.add(new RigidPartBean(part));
 				tryAddFixture();
 			}
 			//否则先放在暂存区中 等待body被设置进来的时候添加
 			else
 			{
-				this.parts.add(new RigidPartBean(part));
+				this.cacheParts.add(new RigidPartBean(part));
 			}
 			
 
@@ -605,7 +622,7 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		public function set localMassCenter(v:Vector2):void
 		{
 			
-			v.divide(valueScale);
+			v=v.divide(valueScale);
 			_localMassCenter=v;
 			
 		
@@ -666,13 +683,28 @@ package XGameEngine.Advanced.Box2DPlus.Rigidbody
 		
 		public function getAABB():Rect
 		{
-			//组合所有子fixture的aabb
+			var resultAabb:b2AABB=new b2AABB();
 			
-			return null;
+			//组合所有子fixture的aabb
+			for(var i:int=0;i<realPart.size;i++)
+			{
+				
+				var r:Rect=(realPart.get(i) as RigidPart).getAABB();
+				var aabb:b2AABB=CastTool.castRectToAABB(r);
+			
+				resultAabb=b2AABB.Combine(resultAabb,aabb);
+			}
+			
+			return CastTool.castAABBToRect(resultAabb);
 		}
 		
 		
 	
+		public function onCollisionEnter(c:Collision):void
+		{
+			// TODO Auto Generated method stub
+			
+		}
 	}
 	
 	
