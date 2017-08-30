@@ -10,9 +10,9 @@ package XGameEngine.Structure
 	public class Vector2List
 	{
 		private var list:List;
-		public function Vector2List()
+		public function Vector2List(flag_canNull:Boolean=false,flag_canSame:Boolean=false,comparefun:Function=null)
 		{
-			this.list=new List();
+			this.list=new List(flag_canNull,flag_canSame,comparefun);
 		}
 		
 		public function add(x:Number, y:Number):void
