@@ -96,7 +96,7 @@
 			//如果创建对象时没有传入名字，则创建默认名字
 			if (_xname == null)
 			{this._xname = "object" + GameEngine.getInstance().getGameObjectManager().size; }	
-			
+		
 			//注册到对象管理器中
 			GameEngine.getInstance().getGameObjectManager().register(this);
 			

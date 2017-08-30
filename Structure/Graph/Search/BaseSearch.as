@@ -10,7 +10,9 @@ package XGameEngine.Structure.Graph.Search
 
 	public class BaseSearch
 	{
-	
+		/**
+		 *搜索结果(如果没有这样一条路径就是null) 
+		 */		
 		protected var result:Path;
 
 		
@@ -61,7 +63,14 @@ package XGameEngine.Structure.Graph.Search
 		
 		protected function createPathByStack(nowPath:Stack):Path
 		{
-		return new Path(nowPath,graph);
+			var path:Path=new Path(graph);
+			var list:List=nowPath.toList();
+			for(var i:int=0;i<list.size;i++)
+			{
+				path.push(list.get(i) as GraphNode);
+			}
+				
+			return path;
 			
 		}		
 	}

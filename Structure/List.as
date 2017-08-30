@@ -40,7 +40,7 @@
 				throw new Error("the "+a+" is null!")
 			}
 			
-			if (contains(a)&&flag_canSame==false)
+			if (flag_canSame==false&&contains(a))
 			{
 				//不能重复 报错	
 				throw new Error("the "+a+" has Exist!")
@@ -50,6 +50,7 @@
 			{
 				
 				arr.push(a);
+				
 			}
 			
 			
@@ -69,6 +70,14 @@
 
 		}
 		
+		 public function set(index:int,v:Object)
+		 {
+			 
+			 checkIndex(index);
+				arr[index]=v;;
+		 }
+		 
+		 
 		
 		public function get(index:int):Object
 		{
@@ -177,7 +186,7 @@
 				else
 				{
 				//使用compareFun比较
-					return comparefun(q, o);
+					return comparefun(q, o)==0;
 				}
 			}
 			
@@ -231,6 +240,60 @@
 			
 		}
 		
+		
+		/**
+		 *排序 使用插入排序 
+		 * 
+		 */		
+		public function sort():void
+		{
+			if(comparefun==null)
+			{
+				throw new Error("无法排序");
+			}
+			else
+			{
+				//为每个数排序
+				for(var i:int=1;i<size;i++)
+				{
+					var nowValue:Object=get(i);
+					//为该数寻找合适的位置 左边是已经排好的
+					for(var a:int=0;a<i;a++)
+					{
+						var loopValue:Object=get(a);
+						//如果小于左边的数 则插入在该位置
+						if(comparefun(nowValue, loopValue)<0)
+						{
+							var cache:Object=nowValue;
+							removeAt(i);
+							addAt(a,cache);
+							
+							
+							break;
+						}
+						
+						
+					}
+				}
+				
+				
+			
+			}
+			
+		}
+		
+		private function removeAt(index:int):void
+		{
+			arr.splice(index,1);
+			
+		}
+		
+		private function addAt(index:int, o:Object):void
+		{
+			checkIndex(index);
+			arr.splice(index,0,o);
+			
+		}
 		
 		/**
 		 *在索引处替换

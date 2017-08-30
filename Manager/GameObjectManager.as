@@ -36,9 +36,9 @@
 		public function GameObjectManager()
 		{
 			//设置比较方法为名字
-			var fun:Function = function(o1:Object, o2:Object):Boolean
+			var fun:Function = function(o1:Object, o2:Object):int
 			{
-				return o1.xname == o2.xname;
+				return o1.xname == o2.xname?0:-1;
 			}
 			gobjects=new List(false,false,fun);
 		}

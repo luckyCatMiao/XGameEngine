@@ -7,43 +7,48 @@ package XGameEngine.Structure.Graph
 	{
 	
 		private var list:List;
-		private var _cost:Number;
+		private var _cost:Number=0;
 		/**
 		 *所从属的图 
 		 */		
 		private var g:Graph;
 		
-		public function Path(s:Stack,g:Graph)
+		public function Path(g:Graph)
 		{
-			this.list=s.toList();
+			list=new List();
 			this.g=g;
-			calcuCost();
-		}
-		
-		private function calcuCost():void
-		{
-			//计算花费
-			//如果没有设置权值方法 则默认的权值为1
-			if(g.weightCalcuFun==null)
-			{
-				//花费直接设置为边的数量 边数为点数-1
-				_cost=list.size-1;
-			}
-			else
-			{
-				var allCost:Number=0;
-				for(var i:int=0;i<list.size-1;i++)
-				{
-					var v1:Object=(list.get(i) as GraphNode).value;
-					var v2:Object=(list.get(i+1) as GraphNode).value;
-					
-					allCost+=g.weightCalcuFun(v1,v2);
-				}
-				_cost=allCost;
-				
-			}
 			
 		}
+		
+		public function push(node:GraphNode):Path
+		{
+			
+			//每次添加节点都会增量计算花费
+			list.add(node);
+			if(list.size>1)
+			{
+				var cost:Number;
+				//如果没有设置权值方法 则默认的权值为1
+				if(g.weightCalcuFun==null)
+				{
+					cost=1;
+				}
+				else
+				{
+					var v1:Object=(list.get(list.size-1) as GraphNode).value;
+					var v2:Object=(list.get(list.size-2) as GraphNode).value;
+					cost=g.weightCalcuFun(v1,v2);
+					
+				}
+			
+				_cost+=cost;
+			}
+			
+			return this;
+		}
+		
+		
+		
 		
 		public function toString():String
 		{
@@ -66,8 +71,27 @@ package XGameEngine.Structure.Graph
 		public function get cost()
 		{
 			return _cost;
+			
 		}
 		
+		
+		public function shallowClone():Path 
+		{
+			var path:Path=new Path(g);
+		
+			for(var i=0;i<list.size;i++)
+			{
+				path.push(list.get(i) as GraphNode);
+			}
+			
+			return path;
+		}
+		
+		
+		public function peak():GraphNode
+		{
+			return list.get(list.size-1) as GraphNode;
+		}
 		
 	}
 }

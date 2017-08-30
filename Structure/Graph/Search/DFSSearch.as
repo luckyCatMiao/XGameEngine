@@ -7,7 +7,7 @@ package XGameEngine.Structure.Graph.Search
 	import XGameEngine.Structure.Stack;
 	
 	/**
-	 *深度优先搜索 
+	 *深度优先搜索 (权值对dfs没什么用 因为反正也不是返回最短路径)
 	 * @author Administrator
 	 * 
 	 */	

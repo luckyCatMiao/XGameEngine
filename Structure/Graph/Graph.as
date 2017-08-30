@@ -4,6 +4,7 @@ package XGameEngine.Structure.Graph
 	import XGameEngine.Structure.Graph.Search.BFSSearch;
 	import XGameEngine.Structure.Graph.Search.BaseSearch;
 	import XGameEngine.Structure.Graph.Search.DFSSearch;
+	import XGameEngine.Structure.Graph.Search.DijkstraSearch;
 	import XGameEngine.Structure.List;
 
 	public class Graph
@@ -122,19 +123,24 @@ package XGameEngine.Structure.Graph
 				if(type==SearchType.BFS)
 				{
 					s=new BFSSearch(node1,node2,this);
-					path=s.getPath();
-					return path;
-				}
+				}	
 				else if(type==SearchType.DFS)
 				{
 					s=new DFSSearch(node1,node2,this);
-					path=s.getPath();
-					return path;
+					
 				}
+				else if(type==SearchType.DIJKSTRA)
+				{
+					s=new DijkstraSearch(node1,node2,this);
+				}	
 				else
 				{
 					throw new Error("未知搜索类型");
 				}
+				
+				path=s.getPath();
+				return path;
+				
 				
 			}
 			else

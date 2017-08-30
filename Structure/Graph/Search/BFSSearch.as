@@ -8,15 +8,13 @@ package XGameEngine.Structure.Graph.Search
 	import XGameEngine.Structure.Stack;
 	
 	/**
-	 *广度优先搜索 
+	 *广度优先搜索 (带权值的搜索如果图很大可能会很慢)
 	 * @author Administrator
 	 * 
 	 */	
 	public class BFSSearch extends BaseSearch
 	{
-		/**
-		 *搜索结果(如果没有这样一条路径就是null) 
-		 */		
+		
 	
 		
 		public function BFSSearch(startNode:GraphNode,endNode:GraphNode,graph:Graph)
