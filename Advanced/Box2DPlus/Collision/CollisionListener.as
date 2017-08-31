@@ -52,6 +52,7 @@ package XGameEngine.Advanced.Box2DPlus.Collision
 				list.addVector2(CastTool.castB2Vec2ToVector2(p).multiply(PhysicsWorld.valueScale));
 			}
 			
+			
 			c.points=list;
 			
 			c.isTouch=contact.IsTouching();
@@ -76,6 +77,8 @@ package XGameEngine.Advanced.Box2DPlus.Collision
 			// TODO Auto Generated method stub
 			super.PreSolve(contact, oldManifold);
 		}
+		
+		
 		
 		
 		

@@ -212,5 +212,10 @@ package XGameEngine.BaseObject.BaseComponent.Render
 		}
 		
 		
+		public function clearDraw():void
+		{
+			host.graphics.clear();
+			
+		}
 	}
 }

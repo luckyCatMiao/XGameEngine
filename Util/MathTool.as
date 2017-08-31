@@ -1,5 +1,6 @@
 ﻿package XGameEngine.Util
 {
+	import XGameEngine.Constant.Error.ParamaterError;
 	import XGameEngine.Structure.Math.Vector2;
 	
 	import flash.geom.Point;
@@ -203,6 +204,31 @@
 		{
 		
 			return Math.random()*(max-min)+min;
+		}
+		
+		
+		/**
+		 *保留小数 
+		 * @param value 数
+		 * @param floatAmount 保留小数的位数
+		 * @return 
+		 * 
+		 */		
+		public static function keepFloat(value:Number, floatAmount:int):Number
+		{
+			if(value<0)
+			{
+				throw new ParamaterError()
+			}
+			else
+			{
+				var a:int=Math.pow(10,floatAmount);
+				var v:int=value*a;
+				
+				return v/a;
+			}
+			
+			
 		}
 	}
 	

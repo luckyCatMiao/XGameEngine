@@ -4,6 +4,11 @@ package XGameEngine.Structure.Graph
 
 	public class GraphNode
 	{
+		/**
+		 *导入导出的时候作为辅助值..不然xml很难写 
+		 */		
+		public var id:int;
+		
 		public var value:Object;
 		
 		public var linkedNodes:List=new List();

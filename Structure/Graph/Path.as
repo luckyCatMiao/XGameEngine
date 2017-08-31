@@ -87,6 +87,10 @@ package XGameEngine.Structure.Graph
 			return path;
 		}
 		
+		public function toList():List 
+		{
+			return list;
+		}
 		
 		public function peak():GraphNode
 		{

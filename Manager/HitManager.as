@@ -967,6 +967,61 @@
 			
 			return list;
 		}
+		
+		/**
+		 *检测与list里的对象有没有碰撞(对象最低可以是displayobject而不用是basegameobject) 
+		 * @param line 线段
+		 * @param list 需要检测的组
+		 * @param first 是否检测到第一个就返回
+		 * @return 
+		 * 
+		 */		
+		public function rayCast2(line:Line, list:List,first:Boolean=false):List
+		{
+			var result:List=new List();
+			var objects:List =list;
+			
+			//因为要求直线和任意形状函数的交点很困难。。所以我们这里退而求次
+			//采取在线段上从起点到终点连续取点再调用as3原生的碰撞检测的方法
+			//大部分时候都是精确的 除非有特别小的碰撞区(一般不会有)
+			var l:LinearFunction=LinearFunction.createByLine(line);
+			//定义域每隔十个像素检测一个点
+			var start:Number=l.DYRange.v1;
+			var end:Number=l.DYRange.v2;
+			
+			var point:Vector2;
+			
+			for(var i:Number=start;i<end;i+=10)
+			{
+				//当前的检测点
+				point=new Vector2(i,l.getY(i));
+				//依次与所有对象进行碰撞检测
+				for each(var o:DisplayObject in objects.Raw)
+				{
+					
+					if(o.hitTestPoint(point.x,point.y,true))
+					{
+						if(!result.contains(o))
+						{	
+							result.add(o);
+							//如果只需要返回第一个对象 则直接返回
+							if(first==true)
+							{
+								return list;
+							}
+						}
+					}
+					
+					
+					
+				}
+				
+			}
+			
+			
+			
+			return result;
+		}
 	}
 
 	

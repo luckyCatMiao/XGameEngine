@@ -131,12 +131,28 @@ package XGameEngine.Structure
 			
 		}
 		
-		public function get(x:int,y:int):Object
+		public function get(x:int,y:int,throwError:Boolean=true):Object
 		{
-			checkIndex(x,0,_column);
-			checkIndex(y,0,_row);
+			//如果不报错的话只是返回null值
+			if(throwError==true)
+			{
+				checkIndex(x,0,_column);
+				checkIndex(y,0,_row);
+				return array[y][x];
+			}
+			else
+			{
+				try
+				{
+					return array[y][x];
+				} 
+				catch(error:Error) 
+				{
+					
+				}
+				return null;
+			}
 			
-			return array[y][x];
 		}
 		
 		public function clear()

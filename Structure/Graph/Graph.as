@@ -7,17 +7,33 @@ package XGameEngine.Structure.Graph
 	import XGameEngine.Structure.Graph.Search.DFSSearch;
 	import XGameEngine.Structure.Graph.Search.DijkstraSearch;
 	import XGameEngine.Structure.List;
+	import XGameEngine.Structure.Map;
 
 	public class Graph
 	{
+		
+		
 		public function Graph()
 		{
+			
+			
 		}
 		
 		/**
 		 * 保存所有节点
 		 */
-		private var list:List=new List();
+		protected var list:List=new List();
+		/**
+		 *保存id对应关系(和上面那一份存的数据是一样的 删节点的时候也要删两个)
+		 *(为什么不只用map存是因为...之前已经写了很多代码用list 不想改了) 
+		 */		
+		protected var map:Map=new Map();
+		
+		
+		/**
+		 *给节点分配的ID 
+		 */		
+		private var nowId:int=0
 
 		public function get weightCalcuFun():Function
 		{
@@ -34,13 +50,19 @@ package XGameEngine.Structure.Graph
 		 * @param twoDirection
 		 * @return
 		 */
-		public function linkNode(value1:Object,value2:Object,twoDirection:Boolean=true)
+		public function linkNodeByValue(value1:Object,value2:Object,twoDirection:Boolean=true)
 		{
 			
 			var node1:GraphNode=CheckContainNode(value1);
 			var node2:GraphNode=CheckContainNode(value2);
 			
 			
+			_linkNode(node1,node2,twoDirection);
+			
+		}
+		
+		private function _linkNode(node1:GraphNode, node2:GraphNode,twoDirection:Boolean):void
+		{
 			node1.linkedNodes.add(node2);
 			if(twoDirection)
 			{
@@ -49,6 +71,10 @@ package XGameEngine.Structure.Graph
 			
 		}
 		
+		public function get raw():Array
+		{
+			return list.Raw;
+		}
 		
 		/**
 		 *设置计算权值的方法 接受两个存放在node里的value变量 返回一个Number值 
@@ -89,17 +115,32 @@ package XGameEngine.Structure.Graph
 		}
 		
 		
+		
 		/**
-		 *添加一个节点 
+		 *添加一个节点  
 		 * @param value
+		 * @param id 如果由外部设置id 必须由外部保证id值唯一
 		 * @return 
 		 * 
 		 */		
-		public function addNode(value:Object)
+		public function addNode(value:Object,id:int=-1):int
 		{
+			
 			var node:GraphNode=new GraphNode();
 			node.value=value;
 			list.add(node);
+			if(id==-1)
+			{
+				node.id=++nowId;
+				map.put(node.id,node);
+				return nowId;
+			}
+			else
+			{
+				node.id=id;
+				map.put(node.id,node);
+				return id;
+			}
 			
 		}
 		
@@ -170,6 +211,27 @@ package XGameEngine.Structure.Graph
 			}
 			
 			return null;
+		}
+		
+		public function linkNodeByID(id1:int, id2:int,twoDirection:Boolean=true):void
+		{
+			var node1:GraphNode=getNodeByID(id1);
+			var node2:GraphNode=getNodeByID(id2);
+			
+			if(node1!=null&&node2!=null)
+			{
+				_linkNode(node1,node2,twoDirection);
+			}
+			
+		}
+		
+		private function getNodeByID(id:int):GraphNode
+		{
+			//如果由外部提供id点 但是id又不唯一 就会出现逻辑bug(为了效率起见没有在添加的时候检查id是否已经存在)
+			
+			
+			
+			return map.get(id) as GraphNode;
 		}
 	}
 }
