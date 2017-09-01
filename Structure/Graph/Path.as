@@ -12,14 +12,27 @@ package XGameEngine.Structure.Graph
 		 *所从属的图 
 		 */		
 		private var g:Graph;
+	
 		
 		public function Path(g:Graph)
 		{
-			list=new List();
+			list=new List(false,true);
 			this.g=g;
 			
 		}
 		
+		public function get startNode():GraphNode
+		{
+			if(list.size>0)
+			{
+				return list.get(0) as GraphNode;	
+			}
+			else
+			{
+				throw new Error("no startNode");
+			}
+		}
+
 		public function push(node:GraphNode):Path
 		{
 			
@@ -101,6 +114,18 @@ package XGameEngine.Structure.Graph
 		{
 			// TODO Auto Generated method stub
 			return list.size==0;
+		}
+		
+		public function reverse():Path
+		{
+			
+			var path:Path=new Path(g);
+			for(var i:int=list.size-1;i>=0;i--)
+			{
+				path.push(list.get(i) as GraphNode);
+			}
+				
+			return path;
 		}
 	}
 }

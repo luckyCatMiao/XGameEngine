@@ -79,10 +79,13 @@
 		 
 		 
 		
-		public function get(index:int):Object
+		public function get(index:int,needCheckIndex:Boolean=true):*
 		{
+			if(needCheckIndex)
+			{
+				checkIndex(index);
+			}
 			
-			checkIndex(index);
 			return arr[index];
 		}
 		

@@ -11,7 +11,7 @@ package XGameEngine.Structure.Graph
 		
 		public var value:Object;
 		
-		public var linkedNodes:List=new List();
+		public var linkedNodes:List=new List(false,true);
 		
 		
 		public function toString()
