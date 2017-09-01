@@ -1,6 +1,8 @@
 ﻿package XGameEngine.Structure.Math
 {
 	
+	import XGameEngine.Util.MathTool;
+	
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.geom.Point;
@@ -54,8 +56,7 @@
 		public function multiply(i:Number):Vector2
 		{
 			
-			
-			return new Vector2(x *i, y *i);
+			return new Vector2(x*i,y*i);
 		}
 		
 		
@@ -82,7 +83,7 @@
 		 * @param param0
 		 * 
 		 */		
-		public static function getDirectionVector2(angle:Number):Vector2
+		public static function getRotationVector2(angle:Number):Vector2
 		{
 			
 			//先转换为弧度
@@ -128,11 +129,10 @@
 		}
 		
 		
-		public function divide(param0:Number):void
+		public function divide(i:Number):Vector2
 		{
-			
-			this.x/=param0;
-			this.y/=param0;
+		
+			return new Vector2(x/i,y/i);
 		}
 		
 		
@@ -146,6 +146,176 @@
 		{
 		
 			return new Vector2(o.mouseX,o.mouseY);
+		}
+		
+		/**
+		 *减去一个向量 
+		 * @param v
+		 * @return 
+		 * 
+		 */		
+		public function reduce(v:Vector2):Vector2
+		{
+			
+			return new Vector2(x-v.x,y-v.y);
+
+		}
+		
+		/**
+		 *加上一个向量 
+		 * @param v
+		 * @return 
+		 * 
+		 */		
+		public function add(v:Vector2):Vector2
+		{
+		
+			
+			return new Vector2(x+v.x,y+v.y);
+
+		}
+		
+		/**
+		 *向量标准化(转化为单位向量) 
+		 * 
+		 */		
+		public function normalize():Vector2
+		{
+			var s:Number=size;
+			
+			var newX:Number=0;
+			var newY:Number=0;
+			
+			if(s==0)
+			{
+				//避免除0错
+				newX=0;
+				newY=0;
+			}
+			else
+			{
+				newX=x/s;
+				newY=y/s;
+				
+			}
+			
+			return new Vector2(newX,newY);
+		}
+		
+		
+		/**
+		 *返回向量的大小 
+		 * @return 
+		 * 
+		 */		
+		public function get size():Number
+		{
+			return Math.sqrt(x*x+y*y);
+		}
+		
+		/**
+		 *返回向量是否相等 
+		 * @param v
+		 * @return 
+		 * 
+		 */		
+		public function equal(v:Vector2):Boolean
+		{
+			return x==v.x&&y==v.y;
+		}
+		
+		public function toRotation():Number
+		{
+			var v:Vector2=this.normalize();
+		
+			return Math.atan2(v.y,v.x)*180/Math.PI;
+		}
+		
+		/**
+		 *翻转向量 
+		 * @return 
+		 * 
+		 */		
+		public function reverse():Vector2
+		{
+			return new Vector2(-x,-y);
+		}
+		
+		/**
+		 *返回一个随机朝向的单位向量 
+		 * @return 
+		 * 
+		 */		
+		public static function getRandomNormalizeVector2():Vector2
+		{
+			
+			return Vector2.getRotationVector2(MathTool.random(0,180));
+		}
+		
+		/**
+		 *返回两个向量的夹角(角度) 
+		 * @param distance
+		 * @param param1
+		 * @return 
+		 * 
+		 */		
+		public static function getTwoVector2Rotation(v1:Vector2, v2:Vector2):Number
+		{
+			
+			var v1N:Vector2=v1.normalize();
+			var v2N:Vector2=v2.normalize();
+			
+			
+		
+			return Math.acos(v1N.dot(v2N))*180/Math.PI;
+		}
+		
+		/**
+		 *求向量点积 
+		 * @param v2N
+		 * @return 
+		 * 
+		 */		
+		public function dot(v:Vector2):Number
+		{
+		
+			return x*v.x+y*v.y;
+		}
+		
+		public function getDistance(target2:Vector2):Number
+		{
+			// TODO Auto Generated method stub
+			return Vector2.getDistance(this,target2);
+		}
+		
+		
+		/**
+		 *返回当前向量的垂直标准化向量 
+		 * @param referencePoint
+		 * @return 
+		 * 
+		 */		
+		public function getVerticalNormalizeVector2():Vector2
+		{
+			var r:Number;
+			//计算过程是返回当前角度 随机加减90度 再转化为向量
+		
+			r=this.toRotation()+MathTool.randomZF()*90;	
+
+			
+			return Vector2.getRotationVector2(r);;
+		}
+		
+		/**
+		 *返回和另一向量的夹角 
+		 * @param param0
+		 * @return 
+		 * 
+		 */		
+		public function getAngleBetween(param0:Vector2):Number
+		{
+			
+			return Vector2.getTwoVector2Rotation(this,param0);
 		}
 	}
 	

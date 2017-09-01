@@ -130,9 +130,9 @@
 				for each(var object:DisplayObject in list.Raw)
 				{
 					//如果是BaseGameObject直接destroy
-					if(object is BaseGameObject)
+					if(object is BaseDisplayObject)
 					{
-						(object as BaseGameObject).destroy();
+						(object as BaseDisplayObject).destroy();
 					}
 						//这里有一种情况是子级是普通object 但是子级的子级包括BaseGameObject
 						//所以不能简单的略过普通object

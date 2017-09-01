@@ -1,5 +1,6 @@
 ﻿package XGameEngine.Util
 {
+	import XGameEngine.Constant.Error.ParamaterError;
 	import XGameEngine.Structure.Math.Vector2;
 	
 	import flash.geom.Point;
@@ -158,6 +159,76 @@
 		{
 			
 			return Math.random()>=0.5?1:-1;
+		}
+		
+		
+		
+		/**
+		 *在一个范围内循环一个数 可以在一个loop循环中快速模拟常见的
+		 * i++
+		 * if(i>=4)
+		 * {i=0}
+		 * @param i 当前的值
+		 * @param min 最小值
+		 * @param max 最大值
+		 * @param add 增加或者减去的值(可以是负值)
+		 * @return 
+		 * 
+		 */		
+		public static function loopValue(i:Number, min:Number, max:Number, add:Number):Number
+		{
+			var result:int=i;
+			if(add>=0)
+			{
+				result+=add;
+				if(result>max)
+				{
+					result=min+(result-max)-1;
+				}
+				
+			}
+			else
+			{
+				result+=add;
+				if(result<0)
+				{
+					result=max-(min-result)+1;
+				}
+				
+			}
+			
+			return result;
+		}
+		
+		public static function random(min:Number, max:Number):Number
+		{
+		
+			return Math.random()*(max-min)+min;
+		}
+		
+		
+		/**
+		 *保留小数 
+		 * @param value 数
+		 * @param floatAmount 保留小数的位数
+		 * @return 
+		 * 
+		 */		
+		public static function keepFloat(value:Number, floatAmount:int):Number
+		{
+			if(value<0)
+			{
+				throw new ParamaterError()
+			}
+			else
+			{
+				var a:int=Math.pow(10,floatAmount);
+				var v:int=value*a;
+				
+				return v/a;
+			}
+			
+			
 		}
 	}
 	

@@ -1,6 +1,7 @@
 ﻿package XGameEngine.Manager
 {
 	import XGameEngine.GameObject.BaseGameObject;
+	import XGameEngine.GameObject.GameObjectComponent.Collider.CollideComponent;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.CircleCollider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.Collider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.MeshCollider;
@@ -8,7 +9,10 @@
 	import XGameEngine.Manager.LayerManager;
 	import XGameEngine.Structure.List;
 	import XGameEngine.Structure.Map;
+	import XGameEngine.Structure.Math.Function.LinearFunction;
+	import XGameEngine.Structure.Math.Line;
 	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.Structure.Math.Vector2;
 	
 	import fl.transitions.Fade;
 	
@@ -67,6 +71,12 @@
 		 * while级别的测试
 		 */
 		private var whileTest:List = new List();
+		/**
+		 *是否开启空间分割  可能会带来不精确 但是在检测大量物体碰撞时能大幅度提高性能
+		 * (少量物体的时候没什么效果 不建议开启)
+		 */		
+		public var useSpaceDivision:Boolean=false;
+		public var useSpaceDivision9Part:Boolean=true;
 		
 		public function HitManager()
 		{
@@ -307,6 +317,17 @@
 			
 			for each(var f:Filter in filtters.Raw)
 			{
+				//因为我想让空间分割和层级分割并行运行 如果简单的对所有物体使用空间分割
+				//所以只能是递进调用  但是空间分割后再使用层级分割明显不好 因为空间数太多 这样分效率不高
+				//所以采用层级分割后再进行空间分割  而且空间分割作用最大的时候是在多对多物体碰撞检测的时候
+				//一对多并没有多少效率提升甚至可能下降  所以空间分割的触发条件为两个层都有超过10个以上物体的时候
+				//简而言之就是可能对每个layer1 layaer调用分割 但是因为多对多的碰撞基本上只存在某两个层中
+				//(或者10个以上物体的层内碰撞)
+				//还有一个原因是多边形碰撞体基本上很大 没办法分 但是多边形碰撞基本上不会出现10个 所以这里也区分开来了
+				//所以空间分割基本上只会出现一两次吧 没办法 为了使层级分割也有作用 只能折中一下了
+				//(如果在物体大小差异过大的情况下 空间分割精确度可能会很差)
+				
+				
 				var layer1:String=f.layerName1;
 				var layer2:String=f.layerName2;
 				//查找list进行测试
@@ -314,19 +335,73 @@
 				var list1:List=map.get(layer1) as List;
 				var list2:List=map.get(layer2) as List;
 				
-				//这里有可能list为空 因为虽然注册了过滤器 但是该层里是空的 所以有list为空也不需要报错
 				if(list1!=null&&list2!=null)
 				{
-					//进行依次检测
-					for (var out:int = 0;out < list1.size;out++)
+				if(list1.size>10&&list2.size>10&&useSpaceDivision==true)
+				{
+					//先循环一遍 算出合适的分割盒长宽
+					var maxWidth:Number=0;
+					var maxHeight:Number=0;
+					for each(var o1:BaseGameObject in list1.Raw)
+					{
+						if(o1.getCollideComponent().collider.width>maxWidth)
 						{
-							for (var ins:int =0; ins < list2.size; ins++)
-								{
-									TryCheckTwobjectHit(list1.get(out) as BaseGameObject, list2.get(ins) as BaseGameObject);
-								}
+							maxWidth=o1.getCollideComponent().collider.width;
 						}
+						if(o1.getCollideComponent().collider.height>maxHeight)
+						{
+							maxHeight=o1.getCollideComponent().collider.height;
+						}
+					}
+					
+					for each(var o2:BaseGameObject in list2.Raw)
+					{
+						if(o2.getCollideComponent().collider.width>maxWidth)
+						{
+							maxWidth=o2.getCollideComponent().collider.width;
+						}
+						if(o2.getCollideComponent().collider.height>maxHeight)
+						{
+							maxHeight=o2.getCollideComponent().collider.height;
+						}
+					}
+					
+					//分割盒的高度为最大的碰撞器的长宽*2
+					maxWidth*=2;
+					maxHeight*=2;
+					
+					var divdieSpace1:DivdieSpace=new DivdieSpace(maxWidth,maxHeight,list1);
+					var divdieSpace2:DivdieSpace=new DivdieSpace(maxWidth,maxHeight,list2);
+					
+					for each(var qqq:BaseGameObject in list1.Raw)
+					{
+						//获取该对象需要检测的其他对象
+						var needCheckList:List=divdieSpace2.getNeedCheckSpace(qqq);
+						//只检测需要检测的对象
+						for (var bbb:int =0; bbb < needCheckList.size; bbb++)
+						{
+							TryCheckTwobjectHit(qqq, needCheckList.get(bbb) as BaseGameObject);
+						}
+					}
+					
 					
 				}
+				else
+				{
+					//这里有可能list为空 因为虽然注册了过滤器 但是该层里是空的 所以有list为空也不需要报错
+					
+						//进行依次检测
+						for (var out:int = 0;out < list1.size;out++)
+						{
+							for (var ins:int =0; ins < list2.size; ins++)
+							{
+								TryCheckTwobjectHit(list1.get(out) as BaseGameObject, list2.get(ins) as BaseGameObject);
+							}
+						}
+						
+				    }
+				}
+				
 				
 			}
 			
@@ -699,7 +774,7 @@
 					if(o.layerName==layerName)
 					{
 						
-						if(o.getCollideComponent().collider.hitTestObject(object))
+						if(o.getCollideComponent().collider.hitTestObject(object)&&o!=object)
 						{
 							hits.add(o);
 						}
@@ -707,7 +782,7 @@
 				}
 				else
 				{
-					if(o.getCollideComponent().collider.hitTestObject(object))
+					if(o.getCollideComponent().collider.hitTestObject(object)&&o!=object)
 					{
 						hits.add(o);
 					}
@@ -719,6 +794,8 @@
 			
 			return hits;
 		}
+	
+		
 		
 		
 		/**
@@ -832,12 +909,131 @@
 		}
 		
 
-	}
+		/**
+		 * 进行射线碰撞检测 返回的碰撞对象按距离升序
+		 * @param line 射线向量
+		 * @param list 忽略的对象
+		 * @param first 是否只返回第一个对象
+		 * @return 
+		 * 
+		 */		
+		public function rayCast(line:Line, list:List=null,first:Boolean=false):List
+		{
+			var list:List=new List();
+			var objects:List =filterAllhasCollider();
+			if(list!=null)
+			{
+				objects.removeAll(list.Raw);
+			}
+			
+			//因为要求直线和任意形状函数的交点很困难。。所以我们这里退而求次
+			//采取在线段上从起点到终点连续取点再调用as3原生的碰撞检测的方法
+			//大部分时候都是精确的 除非有特别小的碰撞区(一般不会有)
+			var l:LinearFunction=LinearFunction.createByLine(line);
+			//定义域每隔十个像素检测一个点
+			var start:Number=l.DYRange.v1;
+			var end:Number=l.DYRange.v2;
+			
+			var point:Vector2;
+			
+			for(var i:Number=start;i<end;i+=10)
+			{
+				//当前的检测点
+				point=new Vector2(i,l.getY(i));
+				//依次与所有对象进行碰撞检测
+				for each(var o:BaseGameObject in objects.Raw)
+				{
+					
+					if(o.getCollideComponent().collider.hitTestPoint(point.x,point.y,true))
+					{
+						if(!list.contains(o))
+						{
+							list.add(o);
+							//如果只需要返回第一个对象 则直接返回
+							if(first==true)
+							{
+								return list;
+							}
+						}
+					}
+					
+					
+					
+				}
+				
+			}
+			
+			
+			
+			return list;
+		}
+		
+		/**
+		 *检测与list里的对象有没有碰撞(对象最低可以是displayobject而不用是basegameobject) 
+		 * @param line 线段
+		 * @param list 需要检测的组
+		 * @param first 是否检测到第一个就返回
+		 * @return 
+		 * 
+		 */		
+		public function rayCast2(line:Line, list:List,first:Boolean=false):List
+		{
+			var result:List=new List();
+			var objects:List =list;
+			
+			//因为要求直线和任意形状函数的交点很困难。。所以我们这里退而求次
+			//采取在线段上从起点到终点连续取点再调用as3原生的碰撞检测的方法
+			//大部分时候都是精确的 除非有特别小的碰撞区(一般不会有)
+			var l:LinearFunction=LinearFunction.createByLine(line);
+			//定义域每隔十个像素检测一个点
+			var start:Number=l.DYRange.v1;
+			var end:Number=l.DYRange.v2;
+			
+			var point:Vector2;
+			
+			for(var i:Number=start;i<end;i+=10)
+			{
+				//当前的检测点
+				point=new Vector2(i,l.getY(i));
+				//依次与所有对象进行碰撞检测
+				for each(var o:DisplayObject in objects.Raw)
+				{
+					
+					if(o.hitTestPoint(point.x,point.y,true))
+					{
+						if(!result.contains(o))
+						{	
+							result.add(o);
+							//如果只需要返回第一个对象 则直接返回
+							if(first==true)
+							{
+								return list;
+							}
+						}
+					}
+					
+					
+					
+				}
+				
+			}
+			
+			
+			
+			return result;
+		}
+	}
+
 	
 }
-import flash.geom.Point;
 import XGameEngine.GameObject.BaseGameObject;
+import XGameEngine.Manager.HitManager;
 import XGameEngine.Structure.List;
+import XGameEngine.Structure.Map;
+import XGameEngine.Structure.Math.Number2;
+import XGameEngine.Structure.Math.Vector2;
+
+import flash.geom.Point;
 
 /**
  * 保存暂时的碰撞记录
@@ -884,4 +1080,87 @@ class WhileTest
 		{
 			return "[Filter layerName1=" + layerName1 + " layerName2=" + layerName2 + "]";
 		}
+}
+class DivdieSpace
+{
+	private var maxWidth:Number;
+	private var maxHeight:Number;
+	private var map:Map;
+	private var objectToSpace:Map;
+	public function DivdieSpace(maxWidth:Number,maxHeight:Number,list:List)
+	{
+		this.maxWidth=maxWidth;
+		this.maxHeight=maxHeight;
+		this.map=new Map();
+		this.objectToSpace=new Map();
+		//进行分割 
+		for each(var o:BaseGameObject in list.Raw)
+		{
+			var key:Number2=calculateSpaceKey(o);
+			objectToSpace.put(o,key);
+			
+			//因为后面需要取到9个空间 所以需要一个映射
+			var key2:String=getNumberString(key.v1,key.v2);
+			var list:List=map.get(key2) as List;
+			if(list==null)
+			{
+				list=new List();
+				map.put(key2,list);
+			}
+			list.add(o);
+			
+		}
+		
+	}
+	
+	private function getNumberString(v1:Number, v2:Number):String
+	{
+		
+		return v1+","+v2;
+	}	
+
+
+	
+	
+	public function getNeedCheckSpace(qqq:BaseGameObject):List
+	{
+		var list:List=new List();
+		//获得该对象所在的空间
+		var n:Number2=objectToSpace.get(qqq) as Number2;
+		
+		//添加该对象周围(包括自己)的9个空间到List中
+		//(为什么是9个而不是1个是因为精确性 有时候一个对象可能正在穿越到其他space 但是还是属于当前space)
+		//(如果其他space的物体碰撞了 却不会被检测到 而使用9个虽然效率稍微低了一些 但是保证了精确度)
+		
+		if(HitManager.getInstance().useSpaceDivision9Part==true)
+		{
+			list.addAllList(map.get(getNumberString(n.v1-1,n.v2-1))as List);
+			list.addAllList(map.get(getNumberString(n.v1-0,n.v2-1))as List);
+			list.addAllList(map.get(getNumberString(n.v1+1,n.v2-1))as List);
+			list.addAllList(map.get(getNumberString(n.v1-1,n.v2-0))as List);
+			list.addAllList(map.get(getNumberString(n.v1-0,n.v2-0))as List);
+			list.addAllList(map.get(getNumberString(n.v1+1,n.v2-0))as List);
+			list.addAllList(map.get(getNumberString(n.v1-1,n.v2+1))as List);
+			list.addAllList(map.get(getNumberString(n.v1-0,n.v2+1))as List);
+			list.addAllList(map.get(getNumberString(n.v1+1,n.v2+1))as List);
+		}
+		//舍弃精确性 只添加一个区域
+		else
+		{
+			list.addAllList(map.get(getNumberString(n.v1-0,n.v2-0))as List);
+		}
+	
+		
+		return list;
+	}
+	
+	private function calculateSpaceKey(o:BaseGameObject):Number2
+	{
+		var position:Vector2=o.globalPosition;
+		var x:int=position.x/maxWidth;
+		var y:int=position.y/maxHeight;
+		
+		
+		return new Number2(x,y);
+	}
 }

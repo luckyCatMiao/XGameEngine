@@ -48,5 +48,16 @@ package XGameEngine.Advanced.Box2DPlus.Util
 			
 			return new Rect(x,y,width,height);
 		}
+		
+		
+		public static function castRectToAABB(r:Rect):b2AABB
+		{
+			var a:b2AABB=new b2AABB();
+			a.lowerBound=new b2Vec2(r.x,r.y);
+			a.upperBound=new b2Vec2(r.getRightBottomPoint().x,r.getRightBottomPoint().y);
+			
+			
+			return a;
+		}
 	}
 }

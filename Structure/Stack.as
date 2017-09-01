@@ -1,5 +1,7 @@
 package XGameEngine.Structure
 {
+	import XGameEngine.Structure.Graph.GraphNode;
+
 	public class Stack extends AbstractCollection
 	{
 		//内部使用数组存储数据
@@ -75,6 +77,17 @@ package XGameEngine.Structure
 		 {
 			 // TODO Auto Generated method stub
 			 return size()==0;
+		 }
+		 
+		 public function contains(o:Object):Boolean
+		 {
+			 return list.contains(o);
+		 }
+		 
+		 public function toList():List
+		 {
+			 // TODO Auto Generated method stub
+			 return list;
 		 }
 	}
 }

@@ -1,14 +1,18 @@
 ﻿package XGameEngine.Structure
 {
 	
+	import XGameEngine.Structure.Graph.GraphNode;
 	import XGameEngine.Util.*;
+	
+	import flash.utils.Dictionary;
+
 	/**
 	 * 
 	 * @author o
 	 */
 	public class Map 
 	{
-		private var map:Object = new Object();
+		private var map:Dictionary = new Dictionary();
 		
 		public function put(key:Object, value:Object)
 		{
@@ -59,9 +63,10 @@
 		public function get Keys():Array
 		{
 			var arr = [];
-			for (var name:String in map)
+			for (var key:Object in map)
 			{
-			arr.push(name);	
+				
+			arr.push(key);	
 			}
 			
 			
@@ -72,6 +77,12 @@
 		public function toString():String 
 		{
 			return  StringUtil.formatMap(map);
+		}
+		
+		public function removeKey(key:Object):void
+		{
+			delete map[key];
+			
 		}
 	}
 	

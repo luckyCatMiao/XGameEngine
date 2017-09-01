@@ -13,6 +13,7 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.media.Sound;
+	import flash.net.FileReference;
 	import flash.utils.getDefinitionByName;
 
 	/**
@@ -62,6 +63,20 @@
 			
 			
 			return bitmap;
+		}
+		
+		
+		/**
+		 *弹出保存文件对话框 
+		 * @param data
+		 * @param fileName
+		 * 
+		 */		
+		public static function popUpSaveDialog(data:*, fileName:String):void
+		{
+			var file:FileReference = new FileReference();
+			file.save(data, fileName);
+			
 		}
 	}
 	

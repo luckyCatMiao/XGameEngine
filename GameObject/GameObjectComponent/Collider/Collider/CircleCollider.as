@@ -21,10 +21,13 @@
 			this.color=color;
 			
 			
+			
 			this.shape.graphics.beginFill(color,0.4);
 			this.shape.graphics.drawCircle(0, 0, radius);
 			this.shape.graphics.endFill();
 		
+			this.shape.getRenderComponent().drawCircle(0,0,4);
+			
 			
 		}
 		

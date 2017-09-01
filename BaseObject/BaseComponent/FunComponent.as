@@ -9,7 +9,7 @@
 	 * ...
 	 * @author o
 	 */
-	public class FunComponent extends EventDispatcher
+	public class FunComponent
 	{
 		private var _autoIncrementName:Number=999;
 		

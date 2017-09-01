@@ -10,5 +10,6 @@ package XGameEngine.Constant
 		public static var BULLET:String="LAYER_BULLET";
 		public static var BULLET_PLAYER:String="LAYER_BULLET_PLAYER";
 		public static var BULLET_ENEMY:String="LAYER_BULLET_ENEMY";
+		public static var DEFAULT:String = "LAYER_DEFAULTLAYER";
 	}
 }

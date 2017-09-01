@@ -53,7 +53,7 @@ package XGameEngine.Manager
 			return value;
 		}
 		
-		private function getClassByName(name:String):Class
+		public function getClassByName(name:String):Class
 		{
 			//优先从本swf里取 这样方便测试 可以先把要多次测试的剪辑先放在主swf里面调整 调整差不多后再放到资源swf里
 			var cls1:Class
@@ -147,6 +147,28 @@ package XGameEngine.Manager
 			
 			
 			return new Bitmap(value);
+		}
+		
+		
+		/**
+		 *加载bitmapData
+		 * @param name
+		 * @return 
+		 * 
+		 */		
+		public function LoadBitmapDataByName(name:String): BitmapData
+		{
+			var cls:Class=getClassByName(name);
+			
+			var value:BitmapData=new cls() as BitmapData;
+			if(value==null)
+			{
+				throw new Error("load BitmapData "+name+" failed");
+			}
+			
+			
+			
+			return value;
 		}
 		
 		

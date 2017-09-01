@@ -1,6 +1,7 @@
-﻿package XGameEngine.GameObject
+﻿package XGameEngine.GameObject 
 {
 	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.Constant.LayerNameV;
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.GameObjectComponent.*;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.AnimeComponent;
@@ -48,6 +49,7 @@
 		
 		private var _globalX:Number;
 		private var _globalY:Number;
+		private var _globalPosition:Vector2;
 	
 
 		public function BaseGameObject(_name:String=null)
@@ -60,6 +62,11 @@
 			
 		}
 		
+		public function get globalPosition():Vector2
+		{
+			return new Vector2(globalX,globalY);
+		}
+
 		public function get globalY():Number
 		{
 			var point:Point=this.localToGlobal(Vector2.VEC2_ZERO.toPoint());
@@ -89,14 +96,14 @@
 			//如果创建对象时没有传入名字，则创建默认名字
 			if (_xname == null)
 			{this._xname = "object" + GameEngine.getInstance().getGameObjectManager().size; }	
-			
+		
 			//注册到对象管理器中
 			GameEngine.getInstance().getGameObjectManager().register(this);
 			
 			//添加默认标签
 			tag = TagManager.TAG_DEFAULT;
 			//添加到默认层中
-			layerName = LayerManager.LAYER_DEFAULT;	
+			layerName = LayerNameV.DEFAULT;	
 			
 		}
 		

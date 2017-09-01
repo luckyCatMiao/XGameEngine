@@ -22,7 +22,7 @@ package XGameEngine.BaseObject.BaseComponent.Render.Filtters
 				[0,0,1,0,0],
 				[0,0,0,1,0]
 			]
-			var arr:TwoDArray=TwoDArray.createByArray(matrix);
+			var arr:TwoDArray=TwoDArray.createByTwoDArray(matrix);
 			var f:ColorMatrixFilterX=new ColorMatrixFilterX(arr);
 			
 			return f;
@@ -41,7 +41,7 @@ package XGameEngine.BaseObject.BaseComponent.Render.Filtters
 				[0.3,0.59,0.11,0,0],
 				[0,0,0,1,0]
 			]
-			var arr:TwoDArray=TwoDArray.createByArray(matrix);
+			var arr:TwoDArray=TwoDArray.createByTwoDArray(matrix);
 			var f:ColorMatrixFilterX=new ColorMatrixFilterX(arr);
 			
 			return f;
@@ -68,7 +68,7 @@ package XGameEngine.BaseObject.BaseComponent.Render.Filtters
 				[b/255,0.59,0.11,0,0],
 				[0,0,0,1,0]
 			]
-			var arr:TwoDArray=TwoDArray.createByArray(matrix);
+			var arr:TwoDArray=TwoDArray.createByTwoDArray(matrix);
 			var f:ColorMatrixFilterX=new ColorMatrixFilterX(arr);
 			
 			return f;
