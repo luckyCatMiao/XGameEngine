@@ -9,10 +9,13 @@ package XGameEngine.Structure.Graph.Search
 	
 	public class ASTARSearch extends BaseSearch
 	{
-		public function ASTARSearch(startNode:GraphNode, endNode:GraphNode, graph:Graph)
+		private var fun:Function;
+		public function ASTARSearch(startNode:GraphNode, endNode:GraphNode, graph:Graph,fun:Function)
 		{
 			super(startNode, endNode, graph);
+			this.fun=fun;
 			startSearch();
+			
 		}
 		
 		private function startSearch():void
@@ -67,7 +70,15 @@ package XGameEngine.Structure.Graph.Search
 								var v2:Object=node.value;
 								//a*需要加上该节点到终点的花费计算 因此会离终点更近但是花费更高的点
 								//会比离终点更远但是花费更低的点先拓展
-								var cost:Number=graph.weightCalcuFun(v1,v2)+graph.weightCalcuFun(v2,endNode.value);
+								var cost:Number;
+								if(graph.weightCalcuFun!=null)
+								{
+									cost=graph.weightCalcuFun(v1,v2)+fun(v2,endNode.value);
+								}
+								else
+								{
+									cost=1+fun(v2,endNode.value);
+								}
 								//最新节点到该节点的花费加上 之前路径的累积花费
 								cost+=nowPath.cost;
 								if(cost<minCost)
@@ -98,6 +109,8 @@ package XGameEngine.Structure.Graph.Search
 						if(minCostNode==endNode)
 						{
 							result=nowPath.push(minCostNode);
+							
+							
 							return;
 						}
 						//此时扩展该节点并加入路径组

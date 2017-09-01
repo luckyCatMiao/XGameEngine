@@ -73,7 +73,15 @@ package XGameEngine.Structure.Graph.Search
 								
 								var v1:Object=nowNode.value;
 								var v2:Object=node.value;
-								var cost:Number=graph.weightCalcuFun(v1,v2);
+								var cost:Number;
+								if(graph.weightCalcuFun!=null)
+								{
+									cost=graph.weightCalcuFun(v1,v2);
+								}
+								else
+								{
+									cost=1;
+								}
 								//最新节点到该节点的花费加上 之前路径的累积花费
 								cost+=nowPath.cost;
 								if(cost<minCost)
@@ -85,7 +93,7 @@ package XGameEngine.Structure.Graph.Search
 							}
 							
 						}
-						//否则移除该路径
+							//否则移除该路径
 						else
 						{
 							invalidPaths.add(nowPath);
@@ -95,6 +103,7 @@ package XGameEngine.Structure.Graph.Search
 					
 					//删除废弃路径
 					nowPaths.removeAll(invalidPaths);
+					trace(nowPaths);
 					invalidPaths.clear();
 					
 					//如果最小节点非空
@@ -106,8 +115,10 @@ package XGameEngine.Structure.Graph.Search
 							result=nowPath.push(minCostNode);
 							return;
 						}
+						var newPath:Path=minCostPath.shallowClone().push(minCostNode);
 						//此时扩展该节点并加入路径组
-						nowPaths.add(minCostPath.shallowClone().push(minCostNode));
+						nowPaths.add(newPath);
+						
 						
 						
 						//设置为已访问
@@ -129,7 +140,7 @@ package XGameEngine.Structure.Graph.Search
 			
 		}
 		
-	
+		
 		
 		private function PathCostCompare(p1:Path,p2:Path):int
 		{

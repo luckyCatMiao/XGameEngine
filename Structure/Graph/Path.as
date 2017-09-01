@@ -97,5 +97,10 @@ package XGameEngine.Structure.Graph
 			return list.get(list.size-1) as GraphNode;
 		}
 		
+		public function empty():Boolean
+		{
+			// TODO Auto Generated method stub
+			return list.size==0;
+		}
 	}
 }

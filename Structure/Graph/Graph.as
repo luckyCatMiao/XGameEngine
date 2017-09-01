@@ -1,5 +1,6 @@
 package XGameEngine.Structure.Graph
 {
+	import XGameEngine.Constant.Error.ParamaterError;
 	import XGameEngine.Structure.Graph.GraphNode;
 	import XGameEngine.Structure.Graph.Search.ASTARSearch;
 	import XGameEngine.Structure.Graph.Search.BFSSearch;
@@ -151,7 +152,7 @@ package XGameEngine.Structure.Graph
 		 * @param type
 		 * 
 		 */		
-		public function search(start:Object, end:Object,type:String=null):Path
+		public function search(start:Object, end:Object,type:String=null,aStarFun:Function=null):Path
 		{
 			var node1:GraphNode=CheckContainNode(start);
 			var node2:GraphNode=CheckContainNode(end);
@@ -177,7 +178,11 @@ package XGameEngine.Structure.Graph
 				}	
 				else if(type==SearchType.ASTAR)
 				{
-					s=new ASTARSearch(node1,node2,this);
+					if(aStarFun==null)
+					{
+						throw new ParamaterError();
+					}
+					s=new ASTARSearch(node1,node2,this,aStarFun);
 				}
 				else
 				{

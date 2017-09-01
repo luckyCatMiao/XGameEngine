@@ -282,9 +282,9 @@
 			
 		}
 		
-		private function removeAt(index:int):void
+		public function removeAt(index:int):Object
 		{
-			arr.splice(index,1);
+			return arr.splice(index,1)[0];
 			
 		}
 		
@@ -309,6 +309,12 @@
 		}
 		
 		public function isEmpty():Boolean
+		{
+			// TODO Auto Generated method stub
+			return size==0;
+		}
+		
+		public function empty():Boolean
 		{
 			// TODO Auto Generated method stub
 			return size==0;
