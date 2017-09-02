@@ -37,14 +37,7 @@
 		public function LayerManager()
 		{
 			
-		
-			registerLayer(LayerNameV.BULLET);
-			registerLayer(LayerNameV.BULLET_ENEMY);
-			registerLayer(LayerNameV.BULLET_PLAYER);
-			registerLayer(LayerNameV.ENEMY);
-			registerLayer(LayerNameV.ITEM);
-			registerLayer(LayerNameV.MAP);
-			registerLayer(LayerNameV.PLAYER);
+			//注册一个默认层
 			registerLayer(LayerNameV.DEFAULT);
 		}
 		

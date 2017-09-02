@@ -1,6 +1,9 @@
 ﻿
 package XGameEngine.Manager
 {
+	import XGameEngine.Constant.Error.ParamaterError;
+	import XGameEngine.Structure.Map;
+	
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -35,6 +38,7 @@ package XGameEngine.Manager
 		static private var sta:Stage;
 		
 		//初始化
+		private static var keyMaps:Map=new Map();
 		public static function Init(sta:Stage):void
 		{
 			sta.addEventListener(KeyboardEvent.KEY_DOWN,keyDown);
@@ -47,6 +51,18 @@ package XGameEngine.Manager
 			Input.sta = sta;
 		}
 		
+		/**
+		 *进行按键映射  之后就可以根据name进行查询 多个键可以映射到同一个键
+		 * (使用例子:可以快速实现wasd 上下左右 两套控制键)
+		 * @param name
+		 * @param keys
+		 * @return 
+		 * 
+		 */		
+		public static function define(name:String,keys:Array)
+		{
+			keyMaps.put(name,keys);
+		}
 		
 		//与键盘按键同一方式设置
 		private static function mouseDown(e:MouseEvent)
@@ -362,6 +378,111 @@ package XGameEngine.Manager
 			
 			return false;
 		}
+		
+		/**
+		 *是否按键名字对应映射的按键Uping
+		 * @param param0
+		 * @return 
+		 * 
+		 */		
+		public static function isNameKeyUping(name:String):Boolean
+		{
+			return checkNameToKey("isKeyUping",name);
+			
+		}
+		
+		/**
+		 *是否按键名字对应映射的按键KeyUp
+		 * @param param0
+		 * @return 
+		 * 
+		 */		
+		public static function isNameKeyUp(name:String):Boolean
+		{
+			return checkNameToKey("isKeyUp",name);
+			
+		}
+		/**
+		 *是否按键名字对应映射的按键KeyDown
+		 * @param param0
+		 * @return 
+		 * 
+		 */		
+		public static function isNameKeyDown(name:String):Boolean
+		{
+			return checkNameToKey("isKeyDown",name);
+			
+		}
+		/**
+		 *是否按键名字对应映射的按键Downing
+		 * @param param0
+		 * @return 
+		 * 
+		 */		
+		public static function isNameKeyDowning(name:String):Boolean
+		{
+			return checkNameToKey("isKeyDowning",name);
+			
+		}
+		
+		/**
+		 *检查映射 
+		 * @param type
+		 * 
+		 */		
+		private static function checkNameToKey(type:String,name:String):Boolean
+		{
+			if(keyMaps.get(name)==null)
+			{
+				throw new Error(name+"对应的映射按键不存在!");
+			}
+			else
+			{
+				//依次检查
+				var arr:Array=keyMaps.get(name);
+				for each(var key:int in arr)
+				{
+					if(type=="isKeyDowning")
+					{
+						if(isKeyDowning(key)==true)
+						{
+							return true;
+						}
+					}
+					else if(type=="isKeyDown")
+					{
+						if(isKeyDown(key)==true)
+						{
+							return true;
+						}
+					}
+					else if(type=="isKeyUp")
+					{
+						if(isKeyUp(key)==true)
+						{
+							return true;
+						}
+					}
+					else if(type=="isKeyUping")
+					{
+						if(isKeyUping(key)==true)
+						{
+							return true;
+						}
+					}
+					
+					else
+					{
+						throw new ParamaterError();
+					}
+					
+				}
+				
+				return false;
+			}
+			
+		}		
+		
 	}
 	
 }

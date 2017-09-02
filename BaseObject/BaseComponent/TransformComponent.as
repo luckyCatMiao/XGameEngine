@@ -1,6 +1,7 @@
-﻿package XGameEngine.GameObject.GameObjectComponent
+﻿package XGameEngine.BaseObject.BaseComponent
 {
-	import XGameEngine.BaseObject.BaseComponent.BaseComponent;
+	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.Constant.Error.ParamaterError;
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
@@ -22,7 +23,7 @@
 	 * 变换组件
 	 * @author o
 	 */
-	public class TransformComponent extends BaseGameObjectComponent
+	public class TransformComponent extends BaseComponent
 	{
 		
 		/**
@@ -45,12 +46,13 @@
 		
 		private var posTextfield:XTextField;
 		public var debugPosition:Boolean=false;
+		private var host:BaseDisplayObject;
 		
 		
 		
-		public function TransformComponent(o:BaseGameObject)
+		public function TransformComponent(o:BaseDisplayObject)
 		{
-			super(o);
+			this.host=o;
 			
 			
 		}
@@ -245,9 +247,9 @@
 				}
 				
 				//设置位置
-				posTextfield.text = "X:" + host.centerGlobalPoint.x + "Y:" + host.centerGlobalPoint.y;
-				posTextfield.x = host.centerGlobalPoint.x-posTextfield.textWidth/2;
-				posTextfield.y = host.leftTopGlobalPoint.y - 30;
+				posTextfield.text = "X:" + host.globalPosition.x + "Y:" + host.globalPosition.y;
+				posTextfield.x = host.globalPosition.x-posTextfield.textWidth/2;
+				posTextfield.y = host.globalPosition.y - 30;
 				
 			}
 				//不需要debug
@@ -354,6 +356,43 @@
 			
 			
 			return Vector2.getDistance(Vector2.pointToV2(point1),Vector2.pointToV2(point2));
+		}
+		
+		/**
+		 *设置在父级的中心位置 
+		 * @param rectDecide 可以使用该对象求rect而不是用整个该对象
+		 * (例如 对话框可能右侧有一个大大的人物头像 此时用对话框的背景框体用来居中而不是整个居中)
+		 * 
+		 */		
+		public function setInParentCenter(rectDecide:DisplayObject=null,offest:Vector2=null):void
+		{
+			if(host.parent==null)
+			{
+				throw new ParamaterError();
+			}
+			
+		
+			
+			var rect:Rectangle;
+			if(rectDecide!=null)
+			{
+				rect=rectDecide.getRect(host.parent);
+			}
+			else
+			{
+				rect=host.getRect(host.parent);
+			}
+			
+			var p:Vector2=new Vector2((host.parent.width-rect.width)/2,(host.parent.height-rect.height)/2);
+			if(offest!=null)
+			{
+				p=p.add(offest);
+			}
+			
+			host.x=p.x;
+			host.y=p.y;
+			
+			
 		}
 	}
 	

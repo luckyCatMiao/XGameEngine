@@ -9,7 +9,7 @@ package XGameEngine.Structure.Graph
 		 */		
 		public var id:int;
 		
-		public var value:Object;
+		public var value:*;
 		
 		public var linkedNodes:List=new List(false,true);
 		

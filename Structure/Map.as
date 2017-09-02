@@ -21,7 +21,7 @@
 		}
 		
 		
-		public function get(key:Object):Object
+		public function get(key:Object):*
 		{
 			
 			var value:Object = map[key];
@@ -43,7 +43,7 @@
 		
 		public function get size():int
 		{
-			return Keys.length;
+			return keys.length;
 		}
 		
 		
@@ -60,13 +60,26 @@
 		}
 		
 		
-		public function get Keys():Array
+		public function get keys():Array
 		{
 			var arr = [];
 			for (var key:Object in map)
 			{
 				
 			arr.push(key);	
+			}
+			
+			
+			return arr;
+		}
+		
+		public function get values():Array
+		{
+			var arr = [];
+			for (var key:Object in map)
+			{
+				
+				arr.push(get(key));	
 			}
 			
 			

@@ -1,10 +1,12 @@
 ﻿package XGameEngine.Manager
 {
+	import XGameEngine.Structure.Map;
+	import XGameEngine.Util.GameUtil;
+	
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.media.SoundTransform;
-	
-	import XGameEngine.Util.GameUtil;
+
 	/**
 	 * ...
 	 * 音频管理器
@@ -13,6 +15,7 @@
 	{
 		
 		static private var _instance:SoundManager;
+		private var map:Map=new Map();
 		
 		static public function getInstance():SoundManager
 		{
@@ -23,20 +26,7 @@
 				return _instance;
 		}
 		
-//以后都强制性用外部库的声音了 不然每次编译声音文件都要编译导致很慢	
-//		/**
-//		 * 加载库里的声音对象并播放
-//		 * @param	className
-//		 * @param	loopTimes 循环次数 -1为一直循环
-//		 */
-//		public function StartPlaySoundByName(className:String, loopTimes:Number = -1, volume:Number=1):void 
-//		{
-//			var s:Sound = GameUtil.LoadSoundByName(className);
-//			
-//			
-//			StartPlaySound(s,loopTimes,volume);
-//		}
-//		
+	
 		
 		/**
 		 * 播放音乐 
@@ -45,7 +35,7 @@
 		 * @param volume 音量
 		 * 
 		 */		
-		public function StartPlaySound(s:Sound, loopTimes:Number = -1, volume:Number=1):void 
+		public function startPlaySound(s:Sound, loopTimes:Number = -1, volume:Number=1):SoundChannel
 		{
 			//9999次差不多算是无限次了 因为这个flash这个类本身没有提供无限次的写法 只能这么写了
 			
@@ -53,6 +43,9 @@
 			var transform:SoundTransform = c.soundTransform;
 			transform.volume = volume;
 			c.soundTransform = transform;
+			
+			
+			return c;
 		}
 		
 		
@@ -63,12 +56,29 @@
 		 * @param volume 音量
 		 * 
 		 */		
-		public function StartPlaySoundByName(name:String, loopTimes:Number = -1, volume:Number=1):void
+		public function startPlaySoundByName(name:String, loopTimes:Number = -1, volume:Number=1):void
 		{
 			var sound:Sound=ResourceManager.getInstance().LoadSoundByName(name);
+	
+			var c:SoundChannel=startPlaySound(sound,loopTimes,volume);
 			
 			
-			StartPlaySound(sound,loopTimes,volume);
+			map.put(name,c);
+			
+		}
+		
+		/**
+		 *停止播放声音 
+		 * @param name
+		 * 
+		 */		
+		public function stopPlaySoundByName(name:String):void
+		{
+			if(map.get(name)!=null)
+			{
+				var c:SoundChannel=map.get(name);
+				c.stop();	
+			}
 		}
 	}
 	

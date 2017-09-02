@@ -5,6 +5,7 @@ package XGameEngine.BaseObject
 	import XGameEngine.BaseObject.BaseComponent.FunComponent;
 	import XGameEngine.BaseObject.BaseComponent.GameObjectComponent;
 	import XGameEngine.BaseObject.BaseComponent.Render.RenderComponent;
+	import XGameEngine.BaseObject.BaseComponent.TransformComponent;
 	import XGameEngine.BaseObject.BaseComponent.TweenComponent;
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameEngine;
@@ -52,7 +53,7 @@ package XGameEngine.BaseObject
 		protected var tween_com:TweenComponent;
 		protected var render_com:RenderComponent;
 		protected var event_com:EventComponent;
-		
+		protected var transform_com:TransformComponent;
 		
 		protected var engine:GameEngine;
 		protected var gamePlane:BaseGameObject;			
@@ -86,7 +87,29 @@ package XGameEngine.BaseObject
 			
 		}
 		
-	
+		public function get globalPosition():Vector2
+		{
+			return new Vector2(globalX,globalY);
+		}
+		
+		public function get globalY():Number
+		{
+			var point:Point=this.localToGlobal(Vector2.VEC2_ZERO.toPoint());
+			
+			
+			return point.y;
+		}
+		
+		
+		
+		public function get globalX():Number
+		{
+			var point:Point=this.localToGlobal(Vector2.VEC2_ZERO.toPoint());
+			
+			
+			return point.x;
+		}
+
 		
 		protected function InitComponent():void
 		{
@@ -96,7 +119,7 @@ package XGameEngine.BaseObject
 			tween_com=new TweenComponent(this);
 			render_com=new RenderComponent(this);
 			event_com=new EventComponent(this);
-			
+			transform_com = new TransformComponent(this);
 		}
 		
 		
@@ -112,6 +135,7 @@ package XGameEngine.BaseObject
 		protected function _loop(event:Event):void
 		{
 			fun_com.loop();
+			transform_com.loop();
 			loop();
 			
 		}
@@ -146,7 +170,14 @@ package XGameEngine.BaseObject
 		{
 			return common_com;
 		}
-		
+		/**
+		 * 返回变换组件(便捷的旋转,缩放..)
+		 * @return
+		 */
+		public function getTransformComponent():TransformComponent 
+		{
+			return transform_com;
+		}
 		/**
 		 * 返回对象管理器组件
 		 * @return
@@ -241,7 +272,42 @@ package XGameEngine.BaseObject
 		
 		
 		
-
+		/**
+		 * 转换当前坐标系内某点到另一个对象坐标系的中 
+		 * @param point 当前坐标系中的某点
+		 * @param other 另一个对象
+		 * @return 
+		 * 
+		 */		
+		public function localToOtherLocal(point:Point,other:DisplayObject):Vector2
+		{
+			return GameUtil.localToOtherLocal(point,this,other);
+			
+		}
+		
+		
+		/**
+		 * 转换另一个坐标系内某点到当前坐标系的中 
+		 * @param point 另一个坐标系中的某点
+		 * @param other 另一个对象
+		 * @return 
+		 * 
+		 */		
+		public function otherLocalToMyLocal(point:Point,other:DisplayObject):Vector2
+		{
+			return GameUtil.localToOtherLocal(point,other,this);
+		}
+		
+		
+		/**
+		 *只销毁所有子级(递归) ,不销毁本身
+		 * @return 
+		 * 
+		 */		
+		public function destroyAllChild()
+		{
+			getGameObjectComponent().destroyAllChilds();
+		}
 		
 	}
 }

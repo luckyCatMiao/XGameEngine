@@ -1,5 +1,6 @@
 ﻿package XGameEngine.BaseObject.BaseComponent
 {
+	import XGameEngine.Advanced.Camera.Camera;
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameObject.AutoDestroyObject;
 	import XGameEngine.GameObject.BaseGameObject;
@@ -243,7 +244,7 @@
 			 * @return 
 			 * 
 			 */			
-			public function searchChildByName(name:String):DisplayObject
+			public function searchChildByName(name:String,cls:Class=null):*
 			{
 				var o:DisplayObject=host.getChildByName(name);
 				
@@ -251,6 +252,8 @@
 				{
 					throw new Error(name+"子级不存在");
 				}
+				
+				
 				
 				return o;
 			}

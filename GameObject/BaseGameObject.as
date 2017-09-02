@@ -38,8 +38,7 @@
 		
 		protected var anime_com:AnimeComponent;
 		protected var collide_com:CollideComponent;
-		protected var physics_com:PhysicsComponent;
-		protected var transform_com:TransformComponent;
+		protected var physics_com:PhysicsComponent;		
 		protected var state_com:StateComponent;
 
 		
@@ -47,9 +46,7 @@
 		protected var _tag:String;
 		protected var _layerName:String;
 		
-		private var _globalX:Number;
-		private var _globalY:Number;
-		private var _globalPosition:Vector2;
+
 	
 
 		public function BaseGameObject(_name:String=null)
@@ -62,29 +59,7 @@
 			
 		}
 		
-		public function get globalPosition():Vector2
-		{
-			return new Vector2(globalX,globalY);
-		}
-
-		public function get globalY():Number
-		{
-			var point:Point=this.localToGlobal(Vector2.VEC2_ZERO.toPoint());
-			
-			
-			return point.y;
-		}
-
 	
-
-		public function get globalX():Number
-		{
-			var point:Point=this.localToGlobal(Vector2.VEC2_ZERO.toPoint());
-			
-			
-			return point.x;
-		}
-
 	
 
 		/**
@@ -121,7 +96,7 @@
 			collide_com = new CollideComponent(this);
 			physics_com = new PhysicsComponent(this);
 			state_com = new StateComponent(this);
-			transform_com = new TransformComponent(this);
+			
 			
 		}
 		
@@ -225,14 +200,6 @@
 		public function getPhysicsComponent():PhysicsComponent 
 		{
 			return physics_com;
-		}
-		/**
-		 * 返回变换组件(便捷的旋转,缩放..)
-		 * @return
-		 */
-		public function getTransformComponent():TransformComponent 
-		{
-			return transform_com;
 		}
 		/**
 		 * 返回状态机组件
@@ -424,42 +391,7 @@
 			return this.parent as BaseGameObject;
 		}
 		
-		/**
-		 * 转换当前坐标系内某点到另一个对象坐标系的中 
-		 * @param point 当前坐标系中的某点
-		 * @param other 另一个对象
-		 * @return 
-		 * 
-		 */		
-		public function localToOtherLocal(point:Point,other:DisplayObject):Vector2
-		{
-			return GameUtil.localToOtherLocal(point,this,other);
-
-		}
 		
-		
-		/**
-		 * 转换另一个坐标系内某点到当前坐标系的中 
-		 * @param point 另一个坐标系中的某点
-		 * @param other 另一个对象
-		 * @return 
-		 * 
-		 */		
-		public function otherLocalToMyLocal(point:Point,other:DisplayObject):Vector2
-		{
-			return GameUtil.localToOtherLocal(point,other,this);
-		}
-		
-		
-		/**
-		 *只销毁所有子级(递归) ,不销毁本身
-		 * @return 
-		 * 
-		 */		
-		public function destroyAllChild()
-		{
-			getGameObjectComponent().destroyAllChilds();
-		}
 		
 	}
 	

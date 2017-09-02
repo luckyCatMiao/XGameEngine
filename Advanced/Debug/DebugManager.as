@@ -58,6 +58,7 @@
 		private var map:Map = new Map();
 		
 		private var debugValuePlane:BaseGameObject = new BaseGameObject("debug Plane");
+		private var fps:Object;
 		
 		public function DebugManager()
 		{
@@ -139,7 +140,7 @@
 			debugValuePlane.addChild(bitmap);
 			
 			var _y:int = 0;
-			for each(var name:String in map.Keys)
+			for each(var name:String in map.keys)
 			{
 				var bean:DataBean = map.get(name) as DataBean;
 				var listener:Function = bean.listener;
@@ -257,6 +258,18 @@
 		}
 		
 		
+		public function createFps():void
+		{
+			if(this.fps!=null)
+			{
+				throw new Error("fps已经存在");
+			}
+			else
+			{
+				var fps:Fps = new Fps();
+				GameEngine.getInstance().debugPlane.addChild(fps);
+			}
+		}
 	}
 
 	
