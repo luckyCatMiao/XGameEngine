@@ -14,7 +14,7 @@ package XGameEngine.Structure.Tree.DecisionTree
 		 * 
 		 */		
 		public var question:*;
-		private var map:Map=new Map();
+		public var answerMap:Map=new Map();
 		
 		public function DecisionNode()
 		{
@@ -32,15 +32,15 @@ package XGameEngine.Structure.Tree.DecisionTree
 		{
 			if(childNodeID==-1)
 			{
-				childNodeID=map.size;
+				childNodeID=answerMap.size;
 			}
-			map.put(s,childNodeID);
+			answerMap.put(s,childNodeID);
 		}
 		
 		public function toString():String
 		{
 			
-			return "question:"+question+"  answer:"+map.keys.toString();
+			return "question:"+question+"  answer:"+answerMap.keys.toString();
 		}
 		
 		
@@ -52,9 +52,9 @@ package XGameEngine.Structure.Tree.DecisionTree
 		 */		
 		public function checkAnswer(answer:Object):int
 		{
-			if(map.get(answer)!=null)
+			if(answerMap.get(answer)!=null)
 			{
-				return map.get(answer);
+				return answerMap.get(answer);
 			}
 			else
 			{

@@ -9,7 +9,7 @@ package XGameEngine.UI.AdapterView
 	import flash.events.MouseEvent;
 	import flash.geom.Orientation3D;
 	
-	import script.TestAdapter;
+	
 
 	/**
 	 * 单排显示的列表 可以横着或者竖着

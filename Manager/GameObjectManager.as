@@ -88,6 +88,7 @@
 		 */
 		public function findGameObjectByName(name:String):BaseGameObject
 		{
+
 			return gobjects.find(name, "xname")as BaseGameObject;
 
 		}

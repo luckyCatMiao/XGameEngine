@@ -66,10 +66,10 @@
 			
 			
 			//设置比较方法为MapLayer的名字
-			var fun:Function = function(o1:Object, o2:Object):Boolean
+			var fun:Function = function(o1:Object, o2:Object):int
 			{
 				
-				return (o1 as MapLayer).name == (o2 as MapLayer).name;
+				return (o1 as MapLayer).name == (o2 as MapLayer).name?0:-1;
 			}
 			otherMaps=new List(false,false,fun);
 			
@@ -183,6 +183,7 @@
 			
 			addChild(layer.map);
 			
+		
 			otherMaps.add(layer);
 		}
 		

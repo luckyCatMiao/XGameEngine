@@ -3,7 +3,6 @@ package XGameEngine.Structure.Tree.DecisionTree
 	import XGameEngine.Structure.Graph.GraphNode;
 	import XGameEngine.Structure.List;
 	import XGameEngine.Structure.Tree.Tree;
-	import XGameEngine.Structure.Tree.TreeNode;
 
 	/**
 	 *对话树 用来完成分支对话之类的效果 

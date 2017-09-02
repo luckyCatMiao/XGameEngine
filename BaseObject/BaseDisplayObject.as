@@ -60,6 +60,7 @@ package XGameEngine.BaseObject
 		protected var UIPlane:BaseGameObject;	
 		protected var UIPlane2:BaseGameObject;	
 		protected var debugPlane:BaseGameObject;
+	
 		
 		
 	
@@ -87,6 +88,17 @@ package XGameEngine.BaseObject
 			
 		}
 		
+		
+		/**
+		 *本地坐标 
+		 * @return 
+		 * 
+		 */		
+		public function get localPosition():Vector2
+		{
+			return new Vector2(x,y);
+		}
+
 		public function get globalPosition():Vector2
 		{
 			return new Vector2(globalX,globalY);

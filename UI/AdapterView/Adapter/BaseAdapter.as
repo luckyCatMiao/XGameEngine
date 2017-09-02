@@ -31,7 +31,7 @@ package XGameEngine.UI.AdapterView.Adapter
 		
 		
 	
-		public function getView(position:int):Sprite
+		public function getView(position:int):DisplayObject
 		{
 			
 			throw new Error("抽象方法");
