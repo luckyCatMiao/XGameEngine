@@ -34,9 +34,15 @@ package XGameEngine.Advanced.Movie
 			GameEngine.getInstance().getStage().addEventListener(Event.ENTER_FRAME,loop);
 			
 			
-			
+			beforeMovieStart();
 			//执行第一条命令 因为初始索引是-1
 			nextCommond();
+		}
+		
+		public function beforeMovieStart():void
+		{
+			// TODO Auto Generated method stub
+			
 		}
 		
 		/**
@@ -72,6 +78,17 @@ package XGameEngine.Advanced.Movie
 		private function over():void
 		{
 			GameEngine.getInstance().getStage().removeEventListener(Event.ENTER_FRAME,loop);
+			if(listener!=null)
+			{
+				listener();
+			}
+			movieEnd();
+			
+		}
+		
+		public function movieEnd():void
+		{
+			// TODO Auto Generated method stub
 			
 		}
 		

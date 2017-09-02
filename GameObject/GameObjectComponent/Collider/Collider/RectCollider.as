@@ -143,7 +143,8 @@
 		}
 		else
 		{
-			throw new Error("no point find!");
+			//throw new Error("no point find!");
+			return null
 		}
 	}
 	
@@ -158,7 +159,12 @@
 		var arr:List=new List();
 		for each(var p:Point in pointArray.Raw)
 		{
-			arr.add(getHitPointName(p));
+			var q:String;
+			if((q=getHitPointName(p))!=null)
+			{
+				arr.add(q);
+			}
+			
 		}
 		
 		
