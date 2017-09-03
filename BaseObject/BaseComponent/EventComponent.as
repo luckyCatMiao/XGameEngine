@@ -58,6 +58,10 @@ package XGameEngine.BaseObject.BaseComponent
 				{
 					o.state.receiveEvent(e);
 				}
+				if(o.getStateComponent().globalState!=null)
+				{
+					o.getStateComponent().globalState.receiveEvent(e);
+				}
 			}
 			
 		

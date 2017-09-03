@@ -15,6 +15,7 @@
 		public static var DEAD:String="dead";
 		public static var ATTACK:String="attack";
 		public static var RUN:String="run";
+		public static var REPAL:String="repal";
 	}
 	
 }
