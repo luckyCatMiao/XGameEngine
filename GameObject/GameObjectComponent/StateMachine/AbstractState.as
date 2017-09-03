@@ -119,6 +119,14 @@ import flash.utils.getQualifiedClassName;
 		
 	}	
 	
+	
+	
+	public function returnPreviousState():void
+	{
+	entity.getStateComponent().returnPreviousState();
+		
+	}
+	
    }
 	
 }

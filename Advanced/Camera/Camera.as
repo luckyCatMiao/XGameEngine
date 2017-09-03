@@ -174,7 +174,7 @@ package XGameEngine.Advanced.Camera
 		
 			
 			var data:BitmapData=new BitmapData(r.width,r.height);
-			
+			data.lock();
 			var m:Matrix=new Matrix();
 			m.translate(-r.x,-r.y);
 			data.draw(showObj,m);
@@ -186,7 +186,7 @@ package XGameEngine.Advanced.Camera
 			b.x=playRect.x;
 			b.y=playRect.y;
 
-
+			data.unlock()
 		}
 		
 		/**

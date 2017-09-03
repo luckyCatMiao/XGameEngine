@@ -44,7 +44,7 @@
 			transform.volume = volume;
 			c.soundTransform = transform;
 			
-			
+		
 			return c;
 		}
 		
@@ -64,7 +64,7 @@
 			
 			
 			map.put(name,c);
-			
+	
 		}
 		
 		/**

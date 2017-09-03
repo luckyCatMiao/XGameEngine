@@ -142,6 +142,16 @@
 				}
 			}
 	
+				//如果小于0.5则不移动
+				if(Math.abs(moveX)<1)
+				{
+					moveX=0;
+				}
+				if(Math.abs(moveY)<1)
+				{
+					moveY=0;
+				}
+			
 			
 				//使用计算出来的移动值进行移动
 			
