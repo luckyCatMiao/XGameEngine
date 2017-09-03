@@ -2,15 +2,18 @@
 {
 	
 	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.Structure.Map;
 	
 	import fl.motion.MotionBase;
 	import fl.transitions.Tween;
+	import fl.transitions.TweenEvent;
 	
 	import flash.display.DisplayObject;
 
 	public class TweenManager extends BaseManager
 	{
 		static private var _instance:TweenManager;
+		private var map:Map=new Map();
 		
 		
 		static public function getInstance():TweenManager
@@ -57,10 +60,11 @@
 		 * @param fieldChange 需要变化的值(在当前值的基础上)
 		 * @param lastTime 变化时间 帧数
 		 * @param delay 播放延时
+		 * @param times 播放次数
 		 * 
 		 */		
 		
-		public function playTween(obj:Object, fieldName:String, fun:Function, fieldChange:Number, lastTime:int,delay:Number=0):Tween
+		public function playTween(obj:Object, fieldName:String, fun:Function, fieldChange:Number, lastTime:int,delay:Number=0,playTimes:int=1,reverse:Boolean=false):Tween
 		{
 			
 			
@@ -70,6 +74,11 @@
 			var tween:Tween=new Tween(obj,fieldName,fun,nowValue,targetValue,lastTime,false);
 			tween.stop();
 			
+			var tset:TweenSet=new TweenSet();
+			tset.playTimes=playTimes;
+			tset.reverse=reverse;
+			this.map.put(tween,tset);
+			
 			getFunComponent().addDelayRecall(startPlayTween,delay,[tween]);
 			
 			return tween;
@@ -78,8 +87,44 @@
 		
 		private function startPlayTween(arr:Array):void
 		{
+			var t:Tween=(arr[0] as Tween);
+			t.resume();
+			t.addEventListener(TweenEvent.MOTION_FINISH,tweenAchieve);
+
+		}
+		
+		protected function tweenAchieve(event:TweenEvent):void
+		{
+			var t:Tween=event.target as Tween;
+			var tset:TweenSet=map.get(t);
 			
-			(arr[0] as Tween).resume();
+			tset.playTimes-=1;
+			if(tset.playTimes>0)
+			{
+				//如果下一次反转播放
+				if(tset.reverse==true)
+				{
+					t.yoyo()
+				}
+				else
+				{
+					//否则重置播放
+					t.rewind();
+					t.start();
+				}
+			
+				
+			}
+			else
+			{
+				//删除侦听器 并从map中移除
+				map.removeKey(t);
+				t.removeEventListener(TweenEvent.MOTION_FINISH,tweenAchieve);
+				
+			}
+		
+			
+			
 			
 		}
 		
@@ -106,4 +151,17 @@
 //			return motion;
 //		}
 	}
+}
+
+class TweenSet
+{
+	/**
+	 *播放次数 
+	 */	
+	public var playTimes:int;
+	/**
+	 *是否每次播放都反转 即一次正一次反 
+	 */	
+	public var reverse:Boolean;
+	
 }

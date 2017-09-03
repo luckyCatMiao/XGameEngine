@@ -101,7 +101,7 @@ package XGameEngine.BaseObject.BaseComponent
 		
 		
 		/**
-		 *播放一个motion动画 通常使用ide制作后使用脚本导出 
+		 *播放一个motion动画 通常使用ide制作后使用脚本导出  tween和motion不能同时播放 属性改变会对冲
 		 * @param motion
 		 * @return 
 		 * 
@@ -144,7 +144,7 @@ package XGameEngine.BaseObject.BaseComponent
 		
 		
 		/**
-		 * 播放一个简单的tween插值动画
+		 * 播放一个简单的tween插值动画 tween和motion不能同时播放 属性改变会对冲
 		 * @param fieldName 需要变化的属性名
 		 * @param fun 变化方法
 		 * @param fieldChange 需要变化的值(在当前值的基础上)
@@ -152,10 +152,10 @@ package XGameEngine.BaseObject.BaseComponent
 		 * @param delay 启动延时
 		 * 
 		 */		
-		public function playTween(fieldName:String, fun:Function, fieldChange:Number,lastTime:int,delay:int=0):Tween
+		public function playTween(fieldName:String, fun:Function, fieldChange:Number,lastTime:int,delay:int=0,times:int=1,reverse:Boolean=false):Tween
 		{
 			
-			return TweenManager.getInstance().playTween(host,fieldName, fun, fieldChange,lastTime,delay);
+			return TweenManager.getInstance().playTween(host,fieldName, fun, fieldChange,lastTime,delay,times,reverse);
 			
 		}
 	}
