@@ -2,9 +2,11 @@
 {
 	import XGameEngine.Advanced.Debug.*;
 	import XGameEngine.Advanced.Interface.LoopAble;
+	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.Manager.*;
 	import XGameEngine.Structure.*;
+	import XGameEngine.Structure.Math.Rect;
 	
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -55,19 +57,24 @@
 		/**
 		 *游戏面板 
 		 */		
-		public var gamePlane:BaseGameObject;		
+		public var gamePlane:BaseDisplayObject;	
+		/**
+		 *摄像机面板 
+		 */		
+		public var cameraPlane:BaseDisplayObject;
+		
 		/**
 		 *ui面板 层级高于游戏面板 
 		 */		
-		public var UIPlane:BaseGameObject;
+		public var UIPlane:BaseDisplayObject;
 		/**
 		 *ui面板2  备用
 		 */		
-		public var UIPlane2:BaseGameObject;
+		public var UIPlane2:BaseDisplayObject;
 		/**
 		 *debug面板 层级高于UI面板 
 		 */		
-		public var debugPlane:BaseGameObject;
+		public var debugPlane:BaseDisplayObject;
 		
 		
 		/**
@@ -111,17 +118,22 @@
 		 */		
 		private function initShowPlane():void
 		{
-			gamePlane=new BaseGameObject();
+			gamePlane=new BaseDisplayObject();
 			s.addChild(gamePlane);
 			
-			UIPlane=new BaseGameObject();
+			cameraPlane=new BaseDisplayObject();
+			s.addChild(cameraPlane);
+			
+			UIPlane=new BaseDisplayObject();
 			s.addChild(UIPlane);
 			
-			UIPlane2=new BaseGameObject();
+			UIPlane2=new BaseDisplayObject();
 			s.addChild(UIPlane2);
 			
-			debugPlane=new BaseGameObject();
+			debugPlane=new BaseDisplayObject();
 			s.addChild(debugPlane);
+			
+		
 			
 		}		
 		
@@ -233,6 +245,11 @@
 		}
 		
 		public function getStage():Stage 
+		{
+			return s;
+		}
+		
+		public function get stage():Stage 
 		{
 			return s;
 		}

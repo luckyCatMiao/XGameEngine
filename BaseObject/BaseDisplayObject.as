@@ -56,11 +56,11 @@ package XGameEngine.BaseObject
 		protected var transform_com:TransformComponent;
 		
 		protected var engine:GameEngine;
-		protected var gamePlane:BaseGameObject;			
-		protected var UIPlane:BaseGameObject;	
-		protected var UIPlane2:BaseGameObject;	
-		protected var debugPlane:BaseGameObject;
-	
+		protected var gamePlane:BaseDisplayObject;			
+		protected var UIPlane:BaseDisplayObject;	
+		protected var UIPlane2:BaseDisplayObject;	
+		protected var debugPlane:BaseDisplayObject;
+		protected var cameraPlane:BaseDisplayObject;
 		
 		
 	
@@ -83,7 +83,7 @@ package XGameEngine.BaseObject
 			UIPlane=engine.UIPlane;
 			UIPlane2=engine.UIPlane2;
 			debugPlane=engine.debugPlane;
-			
+			cameraPlane=engine.cameraPlane;
 			
 			
 		}

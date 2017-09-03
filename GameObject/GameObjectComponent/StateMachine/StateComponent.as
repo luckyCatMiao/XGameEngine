@@ -125,7 +125,7 @@
 					//添加到父级中
 					if (debug_stateTF.parent == null)
 					{
-						host.stage.addChild(debug_stateTF);
+						host.gameEngine.gamePlane.addChild(debug_stateTF);
 					}
 					
 					

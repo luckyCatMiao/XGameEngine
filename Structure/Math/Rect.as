@@ -1,5 +1,7 @@
 ﻿package XGameEngine.Structure.Math
 {
+	import XGameEngine.GameEngine;
+	
 	import flash.display.Stage;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -23,11 +25,13 @@
 		 * @return 
 		 * 
 		 */		
-		static public function getStageRect(s:Stage):Rect
+		static public function getStageRect():Rect
 		{
+			var s:Stage=GameEngine.getInstance().getStage();
+			
 			var r:Rect=new Rect(0,0,s.stageWidth,s.stageHeight);
 				
-				return r;
+			return r;
 		}
 		
 		
@@ -273,7 +277,7 @@
 	
 	
 	/**
-	 *朝rect中心收缩rect  
+	 *朝rect中心收缩rect  width 和height为原来的 (1/scale)倍
 	 * @param scale 比例
 	 * @return 
 	 * 
@@ -281,17 +285,59 @@
 	public function shrink(scale:Number):Rect
 	{
 	
-		var shrinkX:Number=width*scale;
-		x+=shrinkX/2;
-		width-=shrinkX;
 		
+		shrinkX(scale);
+		shrinkY(scale);
 		
-		var shrinkY:Number=height*scale;
-		y+=shrinkY/2;
-		height-=shrinkY;
+	
 		
 		
 		return this;
+	}
+	
+	
+	public function shrinkX(scale:Number)
+	{
+		//目标宽度
+		var targetWidth:Number=width*scale;
+		//和现在宽度的差值
+		var a:Number=width-targetWidth;
+		x+=a/2;
+		width=targetWidth;
+	}
+	
+	public function shrinkY(scale:Number)
+	{
+		//目标高度
+		var targetHeight:Number=height*scale;
+		//和现在高度的差值
+		var a:Number=height-targetHeight;
+		y+=a/2;
+		height=targetHeight;
+	}
+	
+	public function clone():Rect
+	{
+		// TODO Auto Generated method stub
+		return new Rect(x,y,width,height);
+	}
+	
+	/**
+	 *移动当前rect使得与传入rect的中心点相同 
+	 * @param rect
+	 * @return 
+	 * 
+	 */	
+	public function moveToSameCenter(rect:Rect):Rect
+	{
+		//计算出目标的中心点
+		var center:Vector2=Vector2.pointToV2(rect.getCenterPoint());
+		//中心点往左上角扩展1/2长宽的位置就是目标xy
+		var targetX:Number=center.x-width/2;
+		var targetY:Number=center.y-height/2;
+		
+		
+		return new Rect(targetX,targetY,width,height);
 	}
 	
 	
