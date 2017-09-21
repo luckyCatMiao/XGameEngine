@@ -2,6 +2,8 @@
 {
 	import XGameEngine.Structure.List;
 	
+	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.system.System;
 	
@@ -15,9 +17,13 @@
 		
 		private var delayFuns:List = new List();
 		
-		public function FunComponent()
+		
+		public function FunComponent(o:DisplayObject=null)
 		{
-			
+			if(o)
+			{
+				o.addEventListener(Event.ENTER_FRAME,loop);
+			}
 		}
 		
 		
@@ -65,7 +71,7 @@
 		}
 		
 		
-		public function loop():void 
+		public function loop(e:Event=null):void 
 		{
 			//给自动回调的累加延时
 			for each(var f:ReCallFun in delayFuns.Raw)

@@ -84,7 +84,7 @@ package XGameEngine.Manager
 		 * @return 
 		 * 
 		 */		
-		public function LoadDisPlayObjectByName(name:String,packBitmapdata:Boolean=false):DisplayObject
+		public function LoadDisPlayObjectByName(name:String,packBitmapdata:Boolean=false):*
 		{
 			var cls:Class=getClassByName(name);
 			
@@ -171,7 +171,12 @@ package XGameEngine.Manager
 			return value;
 		}
 		
-		
+		/**
+		 *load the animeclip by target name,this function exactly load a movieclip and pack it into animeclip 
+		 * @param name
+		 * @return 
+		 * 
+		 */		
 		public function LoadAnimeClipByName(name:String):AbstractAnimeClip
 		{
 			var cls:Class=getClassByName(name);

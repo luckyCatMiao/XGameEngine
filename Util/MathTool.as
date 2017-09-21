@@ -230,6 +230,20 @@
 			
 			
 		}
+		
+		/**
+		 *检测一个随机数是否落在指定范围内 例如(50,100) 检测一个50/100的几率是否会触发 如果是 则返回true 
+		 * @param value
+		 * @param maxValue
+		 * @return 
+		 * 
+		 */		
+		public static function randomCheck(value:Number, maxValue:Number):Boolean
+		{
+			
+			
+			return Math.random()*maxValue<value;
+		}
 	}
 	
 }

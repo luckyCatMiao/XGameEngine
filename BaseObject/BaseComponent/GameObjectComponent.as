@@ -220,6 +220,7 @@
 			 */
 			public function addToParentSamePosition(o:DisplayObject)
 			{
+				
 				host.parent.addChild(o);
 				
 				o.x = host.x;
@@ -228,12 +229,7 @@
 				
 			}
 			
-//			public  function quickLoadEffectParent(name:String):void
-//			{
-//				var effect:AutoDestroyObject = new AutoDestroyObject(host.getResourceManager().LoadAnimationByName(name));
-//				addToParentSamePosition(effect);
-//				
-//			}
+
 			
 			
 
