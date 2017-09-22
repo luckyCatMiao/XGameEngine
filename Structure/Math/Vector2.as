@@ -7,6 +7,8 @@
 	import flash.display.Stage;
 	import flash.geom.Point;
 	
+
+	
 	/**
 	 * ...
 	 * @author o
@@ -295,13 +297,21 @@
 		 * @return 
 		 * 
 		 */		
-		public function getVerticalNormalizeVector2():Vector2
+		public function getVerticalNormalizeVector2(direction:Number=0):Vector2
 		{
 			var r:Number;
+			
 			//计算过程是返回当前角度 随机加减90度 再转化为向量
-		
-			r=this.toRotation()+MathTool.randomZF()*90;	
-
+			if(direction==0)
+			{
+				r=this.toRotation()+MathTool.randomZF()*90;	
+			}
+			else
+			{
+				//固定角度
+				r=this.toRotation()+direction*90;
+			}
+			
 			
 			return Vector2.getRotationVector2(r);;
 		}

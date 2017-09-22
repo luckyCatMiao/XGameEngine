@@ -114,6 +114,7 @@ package XGameEngine.BaseObject
 		
 		
 		
+		
 		public function get globalX():Number
 		{
 			var point:Point=this.localToGlobal(Vector2.VEC2_ZERO.toPoint());
