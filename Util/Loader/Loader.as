@@ -52,7 +52,7 @@ package XGameEngine.Util.Loader
 		{
 			var task:Task=new Task();
 			task.path=path;
-			task.name=name;
+			task.name=name==null?createNameByPath(path):name;
 			task.type="text";
 			
 			list.add(task);
@@ -61,6 +61,14 @@ package XGameEngine.Util.Loader
 			return this;
 		}
 		
+		private function createNameByPath(path:String):String
+		{
+			var a:Array=path.split("\\");
+			var b:Array=(a[a.length-1] as String).split(".");
+			var result:String=b[0]
+	
+			return result;
+		}		
 		
 		/**
 		 * add a image task
@@ -73,7 +81,7 @@ package XGameEngine.Util.Loader
 		{
 			var task:Task=new Task();
 			task.path=path;
-			task.name=name;
+			task.name=name==null?createNameByPath(path):name;
 			task.type="image";
 			
 			list.add(task);

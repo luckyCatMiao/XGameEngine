@@ -4,6 +4,8 @@ package XGameEngine.Manager
 	import XGameEngine.GameObject.GameObjectComponent.Anime.AbstractAnimeClip;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeClip;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
+	import XGameEngine.Structure.List;
+	import XGameEngine.Structure.Map;
 	import XGameEngine.UI.Base.BaseUI;
 	
 	import flash.display.Bitmap;
@@ -20,6 +22,8 @@ package XGameEngine.Manager
 	{
 		
 		static private var _instance:ResourceManager;
+		private var textDatas:Map=new Map();
+		private var imageDatas:Map=new Map();
 		
 		
 		static public function getInstance():ResourceManager
@@ -194,15 +198,51 @@ package XGameEngine.Manager
 			return anim;
 		}
 		
+		/**
+		 *add text data to cache  
+		 * @param name
+		 * @param data
+		 * 
+		 */		
 		public function addTextData(name:String, data:*):void
 		{
-			// TODO Auto Generated method stub
+			this.textDatas.put(name,data);
 			
 		}
 		
+		/**
+		 *add image data to cache 
+		 * @param name
+		 * @param data
+		 * 
+		 */		
 		public function addImageData(name:String, data:*):void
 		{
-			// TODO Auto Generated method stub
+			this.imageDatas.put(name,data);
+			
+		}
+		
+		/**
+		 *get image data from cache(it's not same as loadBitmapByName which was load from libray directly) 
+		 * @param name
+		 * @return 
+		 * 
+		 */		
+		public function getImageData(name:String):Bitmap
+		{
+			return this.imageDatas.get(name) as Bitmap;
+			
+		}
+		
+		/**
+		 *get text data from cache 
+		 * @param name
+		 * @return 
+		 * 
+		 */		
+		public function getTextData(name:String):String
+		{
+			return this.textDatas.get(name) as String;
 			
 		}
 	}
