@@ -193,5 +193,17 @@ package XGameEngine.Manager
 			
 			return anim;
 		}
+		
+		public function addTextData(name:String, data:*):void
+		{
+			// TODO Auto Generated method stub
+			
+		}
+		
+		public function addImageData(name:String, data:*):void
+		{
+			// TODO Auto Generated method stub
+			
+		}
 	}
 }
