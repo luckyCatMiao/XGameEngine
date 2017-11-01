@@ -1,16 +1,9 @@
 ﻿package XGameEngine {
 import XGameEngine.BaseObject.BaseDisplayObject;
 import XGameEngine.Manager.*;
-import XGameEngine.Plugins.Debug.*;
-import XGameEngine.Plugins.Interface.LoopAble;
-import XGameEngine.Structure.*;
 
-import flash.display.Loader;
 import flash.display.Stage;
 import flash.events.Event;
-import flash.events.ProgressEvent;
-import flash.net.URLRequest;
-import flash.system.ApplicationDomain;
 
 /**
  * a class that control the overall gameengine
@@ -33,24 +26,12 @@ public class GameEngine {
      * stage
      */
     private var s:Stage;
-    private var list:List = new List();
     private var _debug:Boolean = false;
 
     /**
      * 游戏运行中能否改变debug状态 发行版游戏中一般设置为false
      */
     public var canChangeDebug:Boolean = false;
-
-
-    private var loadCompleteFun:Function;
-    private var loadProgressFun:Function;
-
-    /**
-     * loaded swf domain,use to get definition
-     */
-    private var _domains:List=new List();
-
-
     /**
      *游戏面板
      */
@@ -135,45 +116,17 @@ public class GameEngine {
      * @param loadProgressFun
      */
     public function loadResource(dataPath:String, loadCompleteFun:Function, loadProgressFun:Function):void {
-        var loader:Loader = new Loader();
-        loader.contentLoaderInfo.addEventListener(Event.COMPLETE, _loadComplete);
-        loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, _loadProgress);
-        var request:URLRequest = new URLRequest(dataPath);
-        loader.load(request);
-
-
-        this.loadCompleteFun = loadCompleteFun;
-        this.loadProgressFun = loadProgressFun;
+        getResourceManager().loadResource(dataPath,loadCompleteFun,loadProgressFun);
     }
 
-
-    protected function _loadProgress(event:ProgressEvent):void {
-        if (loadProgressFun != null) {
-            loadProgressFun(event);
-        }
-    }
-
-    protected function _loadComplete(event:Event):void {
-        var loadedSWF = event.target;
-        var domain:ApplicationDomain = loadedSWF.applicationDomain as ApplicationDomain;
-
-       this._domains.add(domain);
-
-        if (loadCompleteFun != null) {
-            loadCompleteFun(event);
-        }
-    }
 
 
     /**
      * 初始化管理器
      */
     private function InitManager() {
-        DebugManager.getInstance();
-        TimeManager.getInstance();
-        HitManager.getInstance();
 
-        //初始化输入管理器
+        //init input manager
         Input.Init(s);
 
     }
@@ -209,23 +162,13 @@ public class GameEngine {
     public function getTweenManager():TweenManager {
         return TweenManager.getInstance();
     }
+    public function getSystemManager():SystemManager {
+        return SystemManager.getInstance();
+    }
 
     private function mainLoop(e:Event) {
-        for (var i = 0; i < list.size; i++) {
-            (list.get(i) as LoopAble).loop();
-        }
-
 
         TweenManager.getInstance().loop();
-    }
-
-    public function addLoopAble(l:LoopAble) {
-        list.add(l);
-
-    }
-
-    public function getStage():Stage {
-        return s;
     }
 
     public function get stage():Stage {
@@ -243,9 +186,7 @@ public class GameEngine {
 
     }
 
-    public function get domains():List {
-        return _domains;
-    }
+
 }
 
 }

@@ -84,7 +84,7 @@ package XGameEngine.Plugins.Debug
 				tfTimer = getTimer(); 
 			}
 			var _loc_2:* = 1000 / (getTimer() - diagramTimer); 
-			var _loc_3:* = _loc_2 > GameEngine.getInstance().getStage().frameRate ? (1) : (_loc_2 / GameEngine.getInstance().getStage().frameRate);
+			var _loc_3:* = _loc_2 > GameEngine.getInstance().stage.frameRate ? (1) : (_loc_2 / GameEngine.getInstance().stage.frameRate);
 			diagramTimer = getTimer();
 			bitmapdata.scroll(1, 0);
 			bitmapdata.fillRect(new Rectangle(0, 0, 1, bitmapdata.height), 2852126720);
@@ -104,7 +104,7 @@ package XGameEngine.Plugins.Debug
 				
 				if(this.parent==null)
 				{
-					GameEngine.getInstance().getStage().addChild(this);
+					GameEngine.getInstance().stage.addChild(this);
 					this.x = stage.stageWidth;
 				}
 			}

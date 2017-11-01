@@ -18,7 +18,7 @@
 		protected var fun_common:FunComponent;
 		public function BaseManager()
 		{
-			stage = GameEngine.getInstance().getStage();
+			stage = GameEngine.getInstance().stage;
 			
 			com_common=new CommonlyComponent();
 			fun_common=new FunComponent();

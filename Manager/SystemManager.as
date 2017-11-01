@@ -7,7 +7,10 @@ import XGameEngine.Structure.List;
 import flash.system.ApplicationDomain;
 import flash.utils.getDefinitionByName;
 
-public class SystemManager extends  BaseManager{
+/**
+ * system manager,use to get system information
+ */
+public class SystemManager extends BaseManager{
 
 
     static private var _instance:SystemManager;
@@ -38,7 +41,7 @@ public class SystemManager extends  BaseManager{
         }
         catch(error:Error){}
 
-        var list:List=getEngine().domains;
+        var list:List=getEngine().getResourceManager().domains;
         for each(var domain:ApplicationDomain in list.Raw)
         {
             try

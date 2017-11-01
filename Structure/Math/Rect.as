@@ -27,7 +27,7 @@
 		 */		
 		static public function getStageRect():Rect
 		{
-			var s:Stage=GameEngine.getInstance().getStage();
+			var s:Stage=GameEngine.getInstance().stage;
 			
 			var r:Rect=new Rect(0,0,s.stageWidth,s.stageHeight);
 				

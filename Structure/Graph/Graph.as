@@ -266,7 +266,7 @@ package XGameEngine.Structure.Graph
 		public function cacluAllBestPath(progresslistener:Function,achieveListener:Function):void
 		{
 			
-			new GraphBestPathcalculate(GameEngine.getInstance().getStage(),this,progresslistener,achieveListener).start();
+			new GraphBestPathcalculate(GameEngine.getInstance().stage,this,progresslistener,achieveListener).start();
 		}
 		
 		/**

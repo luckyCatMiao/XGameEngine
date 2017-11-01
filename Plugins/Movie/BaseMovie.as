@@ -31,7 +31,7 @@ package XGameEngine.Plugins.Movie
 		public function play():void
 		{
 			//按顺序执行指令
-			GameEngine.getInstance().getStage().addEventListener(Event.ENTER_FRAME,loop);
+			GameEngine.getInstance().stage.addEventListener(Event.ENTER_FRAME,loop);
 			
 			
 			beforeMovieStart();
@@ -77,7 +77,7 @@ package XGameEngine.Plugins.Movie
 		
 		private function over():void
 		{
-			GameEngine.getInstance().getStage().removeEventListener(Event.ENTER_FRAME,loop);
+			GameEngine.getInstance().stage.removeEventListener(Event.ENTER_FRAME,loop);
 			if(listener!=null)
 			{
 				listener();

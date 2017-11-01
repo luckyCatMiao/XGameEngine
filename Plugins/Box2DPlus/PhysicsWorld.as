@@ -65,7 +65,7 @@ package XGameEngine.Plugins.Box2DPlus
 			
 			if(framerate==-1)
 			{
-				framerate=engine.getStage().frameRate;
+				framerate=engine.stage.frameRate;
 			}
 			
 			this.workRate=framerate;
@@ -110,7 +110,7 @@ package XGameEngine.Plugins.Box2DPlus
 		{
 		
 			//如果实际workRate大于frameRate 运算速度就会有变快的感觉
-			world.Step(1/engine.getStage().frameRate*(workRate/engine.getStage().frameRate),10,10);
+			world.Step(1/engine.stage.frameRate*(workRate/engine.stage.frameRate),10,10);
 			
 			for each(var r:Rigidbody in list.Raw)
 			{

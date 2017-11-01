@@ -1,27 +1,23 @@
 ﻿package XGameEngine.Plugins.Debug
 {
-	import XGameEngine.*;
-	import XGameEngine.Plugins.Interface.*;
-	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.Manager.*;
-	import XGameEngine.Manager.BaseManager;
-	import XGameEngine.Structure.*;
-	import XGameEngine.UI.*;
-	import XGameEngine.UI.Draw.*;
-	import XGameEngine.UI.Special.XTextField;
-	import XGameEngine.Util.CollectionUtil;
-	
-	import flash.display.*;
-	import flash.events.*;
-	import flash.geom.*;
-	import flash.text.*;
-	import flash.utils.Timer;
-	
-	/**
+import XGameEngine.*;
+import XGameEngine.GameObject.BaseGameObject;
+import XGameEngine.Manager.*;
+import XGameEngine.Structure.*;
+import XGameEngine.UI.Draw.*;
+import XGameEngine.UI.Special.XTextField;
+import XGameEngine.Util.CollectionUtil;
+
+import flash.display.*;
+import flash.events.*;
+import flash.geom.*;
+import flash.text.*;
+
+/**
 	 * ...
 	 * a class provide a set of features to help you debug easy
 	 */
-	public class DebugManager extends BaseManager implements LoopAble
+	public class DebugManager extends BaseManager
 	{
 		
 		static private var _instance:DebugManager;
@@ -72,22 +68,11 @@
 			stage.addChild(debugShapePlane);
 			stage.addChild(debugValuePlane);
 			
-			//添加到游戏引擎的主循环中
-			GameEngine.getInstance().addLoopAble(this);
-			
+
+
 		}
 		
-		/**
-		 * called by the GameEngine instance
-		 */
-		public function loop()
-		{
-			
-			//计算fps
-			
-			
-		}
-		
+
 		
 		
 		/**
@@ -124,7 +109,7 @@
 				return ;
 			}
 			
-			var s:Stage = GameEngine.getInstance().getStage();
+			var s:Stage = GameEngine.getInstance().stage;
 			
 			
 			debugValuePlane.getGameObjectComponent().removeAllChilds();
@@ -217,7 +202,7 @@
 				return;
 			}
 			
-			var s:Stage = GameEngine.getInstance().getStage();
+			var s:Stage = GameEngine.getInstance().stage;
 			
 			
 			//查找该名称的shape是否已经存在
@@ -276,6 +261,7 @@
 }
 
 import flash.display.Shape;
+
 class DataBean
 {
 	public var listener:Function;
