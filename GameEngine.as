@@ -25,7 +25,7 @@ public class GameEngine {
     /**
      * stage
      */
-    private var s:Stage;
+    private var _stage:Stage;
     private var _debug:Boolean = false;
 
     /**
@@ -57,17 +57,17 @@ public class GameEngine {
     /**
      * this should be called when game inited,generally from the entry class
      * 初始化游戏引擎
-     * @param s 舞台
+     * @param stage 舞台
      * @param dataPath 资源文件路径
      * @param loadCompleteFun 加载资源完成的监听
      * @param loadProgressFun 加载资源中的监听
      * @return
      *
      */
-    public function Init(s:Stage, dataPath:String = null, loadCompleteFun:Function = null, loadProgressFun:Function = null) {
+    public function Init(stage:Stage, dataPath:String = null, loadCompleteFun:Function = null, loadProgressFun:Function = null) {
 
-        this.s = s;
-        s.addEventListener(Event.ENTER_FRAME, mainLoop);
+        this._stage = stage;
+        stage.addEventListener(Event.ENTER_FRAME, mainLoop);
 
         //init pane
         initShowPlane();
@@ -91,19 +91,19 @@ public class GameEngine {
      */
     private function initShowPlane():void {
         gamePlane = new BaseDisplayObject();
-        s.addChild(gamePlane);
+        _stage.addChild(gamePlane);
 
         cameraPlane = new BaseDisplayObject();
-        s.addChild(cameraPlane);
+        _stage.addChild(cameraPlane);
 
         UIPlane = new BaseDisplayObject();
-        s.addChild(UIPlane);
+        _stage.addChild(UIPlane);
 
         UIPlane2 = new BaseDisplayObject();
-        s.addChild(UIPlane2);
+        _stage.addChild(UIPlane2);
 
         debugPlane = new BaseDisplayObject();
-        s.addChild(debugPlane);
+        _stage.addChild(debugPlane);
 
 
     }
@@ -127,7 +127,7 @@ public class GameEngine {
     private function InitManager() {
 
         //init input manager
-        Input.Init(s);
+        Input.Init(_stage);
 
     }
 
@@ -162,17 +162,17 @@ public class GameEngine {
     public function getTweenManager():TweenManager {
         return TweenManager.getInstance();
     }
+
     public function getSystemManager():SystemManager {
         return SystemManager.getInstance();
     }
 
     private function mainLoop(e:Event) {
-
         TweenManager.getInstance().loop();
     }
 
     public function get stage():Stage {
-        return s;
+        return _stage;
     }
 
     public function get debug():Boolean {
@@ -186,6 +186,15 @@ public class GameEngine {
 
     }
 
+    public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
+    {
+        stage.addEventListener(type,listener,useCapture,priority,useWeakReference);
+    }
+
+    public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void
+    {
+        stage.removeEventListener(type,listener,useCapture);
+    }
 
 }
 
