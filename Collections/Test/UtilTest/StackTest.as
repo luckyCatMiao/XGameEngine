@@ -1,4 +1,4 @@
-package XGameEngine.Test.UtilTest
+package XGameEngine.Collections.Test.UtilTest
 {
 	import XGameEngine.Collections.Stack;
 

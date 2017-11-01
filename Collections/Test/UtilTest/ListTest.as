@@ -1,7 +1,7 @@
-package XGameEngine.Test.UtilTest
+package XGameEngine.Collections.Test.UtilTest
 {
 	import XGameEngine.Collections.List;
-	import XGameEngine.Test.TestBean.Student;
+	import XGameEngine.Collections.Test.TestBean.Student;
 
 	public class ListTest
 	{

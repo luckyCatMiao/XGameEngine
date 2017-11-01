@@ -1,7 +1,7 @@
-package XGameEngine.Test
+package XGameEngine.Collections.Test
 {
-	import XGameEngine.Test.UtilTest.ListTest;
-	import XGameEngine.Test.UtilTest.StackTest;
+	import XGameEngine.Collections.Test.UtilTest.ListTest;
+	import XGameEngine.Collections.Test.UtilTest.StackTest;
 
 	public class AllTest
 	{

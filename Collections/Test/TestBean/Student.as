@@ -1,4 +1,4 @@
-package XGameEngine.Test.TestBean
+package XGameEngine.Collections.Test.TestBean
 {
 	public class Student
 	{
