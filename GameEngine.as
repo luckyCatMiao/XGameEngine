@@ -35,23 +35,29 @@ public class GameEngine {
     /**
      *游戏面板
      */
-    public var gamePlane:BaseDisplayObject;
+    private var _gamePlane:BaseDisplayObject;
     /**
      *摄像机面板
      */
-    public var cameraPlane:BaseDisplayObject;
+    private var _cameraPlane:BaseDisplayObject;
     /**
      *ui面板 层级高于游戏面板
      */
-    public var UIPlane:BaseDisplayObject;
+    private var _UIPlane:BaseDisplayObject;
     /**
      *ui面板2  备用
      */
-    public var UIPlane2:BaseDisplayObject;
+    private var _UIPlane2:BaseDisplayObject;
     /**
      *debug面板 层级高于UI面板
      */
-    public var debugPlane:BaseDisplayObject;
+    private var _debugPlane:BaseDisplayObject;
+
+
+    /**
+     * has inited?
+     */
+    private var isInit:Boolean=false;
 
 
     /**
@@ -76,6 +82,8 @@ public class GameEngine {
         InitManager();
 
 
+        isInit=true;
+
         //如果有资源文件则开始加载资源
         if (dataPath != null) {
             loadResource(dataPath, loadCompleteFun, loadProgressFun);
@@ -90,20 +98,20 @@ public class GameEngine {
      *
      */
     private function initShowPlane():void {
-        gamePlane = new BaseDisplayObject();
-        _stage.addChild(gamePlane);
+        _gamePlane = new BaseDisplayObject();
+        _stage.addChild(_gamePlane);
 
-        cameraPlane = new BaseDisplayObject();
-        _stage.addChild(cameraPlane);
+        _cameraPlane = new BaseDisplayObject();
+        _stage.addChild(_cameraPlane);
 
-        UIPlane = new BaseDisplayObject();
-        _stage.addChild(UIPlane);
+        _UIPlane = new BaseDisplayObject();
+        _stage.addChild(_UIPlane);
 
-        UIPlane2 = new BaseDisplayObject();
-        _stage.addChild(UIPlane2);
+        _UIPlane2 = new BaseDisplayObject();
+        _stage.addChild(_UIPlane2);
 
-        debugPlane = new BaseDisplayObject();
-        _stage.addChild(debugPlane);
+        _debugPlane = new BaseDisplayObject();
+        _stage.addChild(_debugPlane);
 
 
     }
@@ -172,6 +180,9 @@ public class GameEngine {
     }
 
     public function get stage():Stage {
+        if (isInit==false){
+            throw new Error("do not init engine");
+        }
         return _stage;
     }
 
@@ -186,16 +197,49 @@ public class GameEngine {
 
     }
 
+    /**
+     * add event to stage
+     * @param type
+     * @param listener
+     * @param useCapture
+     * @param priority
+     * @param useWeakReference
+     */
     public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
     {
         stage.addEventListener(type,listener,useCapture,priority,useWeakReference);
     }
 
+    /**
+     * remove event from stage
+     * @param type
+     * @param listener
+     * @param useCapture
+     */
     public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void
     {
         stage.removeEventListener(type,listener,useCapture);
     }
 
+    public function get gamePlane():BaseDisplayObject {
+        return _gamePlane;
+    }
+
+    public function get cameraPlane():BaseDisplayObject {
+        return _cameraPlane;
+    }
+
+    public function get UIPlane():BaseDisplayObject {
+        return _UIPlane;
+    }
+
+    public function get UIPlane2():BaseDisplayObject {
+        return _UIPlane2;
+    }
+
+    public function get debugPlane():BaseDisplayObject {
+        return _debugPlane;
+    }
 }
 
 }
