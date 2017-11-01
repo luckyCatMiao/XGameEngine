@@ -1,6 +1,6 @@
 package XGameEngine.Collections.Graph
 {
-	import XGameEngine.Constant.Error.ParamaterError;
+	import XGameEngine.Util.Error.ParamaterError;
 	import XGameEngine.GameEngine;
 	import XGameEngine.Collections.Graph.GraphNode;
 	import XGameEngine.Collections.Graph.Search.ASTARSearch;

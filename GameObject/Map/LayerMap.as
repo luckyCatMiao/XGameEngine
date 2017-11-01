@@ -3,7 +3,7 @@
 	import Script.GameObject.GameMap;
 	import Script.GameObject.Player;
 	
-	import XGameEngine.Plugins.Debug.DebugManager;
+	import XGameEngine.Manager.Debug.DebugManager;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.Collections.List;
 	import XGameEngine.Collections.Map;

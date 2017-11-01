@@ -1,9 +1,9 @@
 package XGameEngine.UI.Base
 {
-	import XGameEngine.BaseObject.BaseDisplayObject;
-	import XGameEngine.BaseObject.BaseComponent.CommonlyComponent;
-	import XGameEngine.BaseObject.BaseComponent.FunComponent;
-	import XGameEngine.BaseObject.BaseComponent.GameObjectComponent;
+	import XGameEngine.GameObject.BaseDisplayObject;
+	import XGameEngine.GameObject.BaseComponent.CommonlyComponent;
+	import XGameEngine.GameObject.BaseComponent.FunComponent;
+	import XGameEngine.GameObject.BaseComponent.GameObjectComponent;
 	import XGameEngine.Math.Rect;
 	import XGameEngine.UI.Draw.Color;
 	

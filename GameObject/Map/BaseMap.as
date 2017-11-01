@@ -3,9 +3,9 @@
 	import Script.GameObject.GameMap;
 	
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.BaseObject.BaseComponent.FunComponent;
-	import XGameEngine.BaseObject.BaseComponent.GameObjectComponent;
-	import XGameEngine.BaseObject.BaseComponent.TransformComponent;
+	import XGameEngine.GameObject.BaseComponent.FunComponent;
+	import XGameEngine.GameObject.BaseComponent.GameObjectComponent;
+	import XGameEngine.GameObject.BaseComponent.TransformComponent;
 	import XGameEngine.Math.Vector2;
 	
 	import flash.display.Sprite;

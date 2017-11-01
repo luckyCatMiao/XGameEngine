@@ -1,6 +1,6 @@
 package XGameEngine.Math.Function
 {
-	import XGameEngine.Constant.Error.ParamaterError;
+	import XGameEngine.Util.Error.ParamaterError;
 	import XGameEngine.Collections.List;
 	import XGameEngine.Math.Vector2;
 

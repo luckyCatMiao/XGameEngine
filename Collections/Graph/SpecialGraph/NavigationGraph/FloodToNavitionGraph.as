@@ -1,6 +1,6 @@
 package XGameEngine.Collections.Graph.SpecialGraph.NavigationGraph
 {
-	import XGameEngine.Manager.HitManager;
+	import XGameEngine.Manager.Hit.HitManager;
 	import XGameEngine.Collections.List;
 	import XGameEngine.Math.Line;
 	import XGameEngine.Math.Vector2;

@@ -1,7 +1,8 @@
 ﻿package XGameEngine.GameObject 
 {
-import XGameEngine.BaseObject.BaseDisplayObject;
-import XGameEngine.Constant.LayerName;
+import XGameEngine.GameObject.BaseDisplayObject;
+import XGameEngine.Manager.GameObject.GameObjectManager;
+import XGameEngine.Manager.Layer.LayerName;
 import XGameEngine.GameEngine;
 import XGameEngine.GameObject.GameObjectComponent.*;
 import XGameEngine.GameObject.GameObjectComponent.Anime.AnimeComponent;
@@ -11,6 +12,7 @@ import XGameEngine.GameObject.GameObjectComponent.StateMachine.AbstractState;
 import XGameEngine.GameObject.GameObjectComponent.StateMachine.StateComponent;
 import XGameEngine.Manager.*;
 import XGameEngine.Manager.Hit.Collision;
+import XGameEngine.Manager.Layer.LayerManager;
 
 import flash.events.Event;
 import flash.geom.Point;

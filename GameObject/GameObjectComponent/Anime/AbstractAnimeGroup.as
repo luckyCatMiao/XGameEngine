@@ -1,7 +1,7 @@
 package XGameEngine.GameObject.GameObjectComponent.Anime
 {
-	import XGameEngine.BaseObject.BaseDisplayObject;
-	import XGameEngine.Constant.Error.AbstractMethodError;
+	import XGameEngine.GameObject.BaseDisplayObject;
+	import XGameEngine.Util.Error.AbstractMethodError;
 	
 	import flash.display.Sprite;
 

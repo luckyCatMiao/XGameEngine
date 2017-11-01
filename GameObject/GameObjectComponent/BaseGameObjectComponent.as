@@ -1,7 +1,7 @@
 package XGameEngine.GameObject.GameObjectComponent
 {
-	import XGameEngine.BaseObject.BaseComponent.BaseComponent;
-	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.GameObject.BaseComponent.BaseComponent;
+	import XGameEngine.GameObject.BaseDisplayObject;
 	import XGameEngine.GameObject.BaseGameObject;
 
 	public class BaseGameObjectComponent extends BaseComponent

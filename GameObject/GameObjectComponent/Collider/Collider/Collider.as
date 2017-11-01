@@ -1,7 +1,7 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent.Collider.Collider
 {
-	import XGameEngine.BaseObject.BaseComponent.CommonlyComponent;
-	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.GameObject.BaseComponent.CommonlyComponent;
+	import XGameEngine.GameObject.BaseDisplayObject;
 	import XGameEngine.GameEngine;
 	import XGameEngine.Collections.List;
 	

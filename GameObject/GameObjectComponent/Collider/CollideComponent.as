@@ -1,6 +1,6 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent.Collider
 {
-	import XGameEngine.BaseObject.BaseComponent.BaseComponent;
+	import XGameEngine.GameObject.BaseComponent.BaseComponent;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.BaseGameObjectComponent;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.CircleCollider;
@@ -8,7 +8,7 @@
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.MeshCollider;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
 	import XGameEngine.Manager.Hit.Collision;
-	import XGameEngine.Manager.HitManager;
+	import XGameEngine.Manager.Hit.HitManager;
 	import XGameEngine.Collections.List;
 	import XGameEngine.Math.Line;
 	import XGameEngine.Math.Rect;

@@ -1,6 +1,6 @@
 package XGameEngine.Math.Function
 {
-	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.GameObject.BaseDisplayObject;
 	import XGameEngine.Math.Line;
 	import XGameEngine.Math.Number2;
 	import XGameEngine.Math.Vector2;

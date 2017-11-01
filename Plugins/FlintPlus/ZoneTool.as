@@ -1,6 +1,6 @@
 package XGameEngine.Plugins.FlintPlus
 {
-	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.GameObject.BaseDisplayObject;
 	import XGameEngine.GameEngine;
 	
 	import flash.display.Shape;

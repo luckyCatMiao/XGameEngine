@@ -1,6 +1,6 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent.StateMachine
 {
-	import XGameEngine.BaseObject.BaseComponent.BaseComponent;
+	import XGameEngine.GameObject.BaseComponent.BaseComponent;
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.BaseGameObjectComponent;

@@ -3,7 +3,7 @@ package XGameEngine.Plugins.Box2DPlus.Rigidbody.Shape
 	import Box2D.Collision.Shapes.b2Shape;
 	
 	import XGameEngine.Plugins.Box2DPlus.PhysicsWorld;
-	import XGameEngine.Constant.Error.AbstractMethodError;
+	import XGameEngine.Util.Error.AbstractMethodError;
 
 	public class AbstractShape
 	{

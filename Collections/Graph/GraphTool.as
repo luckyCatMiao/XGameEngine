@@ -1,9 +1,9 @@
 package XGameEngine.Collections.Graph
 {
-	import XGameEngine.BaseObject.BaseComponent.Render.LineStyle;
-	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.GameObject.BaseComponent.Render.LineStyle;
+	import XGameEngine.GameObject.BaseDisplayObject;
 	import XGameEngine.GameEngine;
-	import XGameEngine.Manager.HitManager;
+	import XGameEngine.Manager.Hit.HitManager;
 	import XGameEngine.Collections.Graph.SpecialGraph.NavigationGraph.FloodToNavitionGraph;
 	import XGameEngine.Collections.Graph.SpecialGraph.NavigationGraph.NavigationGraph;
 	import XGameEngine.Collections.Graph.SpecialGraph.NavigationGraph.PositionValue;

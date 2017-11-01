@@ -11,7 +11,7 @@ package XGameEngine.Plugins.Box2DPlus.Rigidbody
 	import XGameEngine.Plugins.Box2DPlus.Collision.Collision;
 	import XGameEngine.Plugins.Box2DPlus.PhysicsWorld;
 	import XGameEngine.Plugins.Box2DPlus.Util.CastTool;
-	import XGameEngine.Constant.Error.UnSupportMethodError;
+	import XGameEngine.Util.Error.UnSupportMethodError;
 	import XGameEngine.Collections.List;
 	import XGameEngine.Math.Rect;
 	import XGameEngine.Math.Vector2;

@@ -1,6 +1,10 @@
 ﻿package XGameEngine {
-import XGameEngine.BaseObject.BaseDisplayObject;
+import XGameEngine.GameObject.BaseDisplayObject;
 import XGameEngine.Manager.*;
+import XGameEngine.Manager.GameObject.GameObjectManager;
+import XGameEngine.Manager.Hit.HitManager;
+import XGameEngine.Manager.Input.Input;
+import XGameEngine.Manager.Layer.LayerManager;
 
 import flash.display.Stage;
 import flash.events.Event;

@@ -1,7 +1,7 @@
 package XGameEngine.Collections.Graph.SpecialGraph.NavigationGraph
 {
-	import XGameEngine.BaseObject.BaseComponent.Render.LineStyle;
-	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.GameObject.BaseComponent.Render.LineStyle;
+	import XGameEngine.GameObject.BaseDisplayObject;
 	import XGameEngine.Collections.List;
 	import XGameEngine.Math.Vector2;
 	import XGameEngine.UI.Draw.Color;

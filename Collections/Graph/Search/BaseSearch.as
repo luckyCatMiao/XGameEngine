@@ -1,6 +1,6 @@
 package XGameEngine.Collections.Graph.Search
 {
-	import XGameEngine.Constant.Error.AbstractMethodError;
+	import XGameEngine.Util.Error.AbstractMethodError;
 	import XGameEngine.Collections.Graph.Graph;
 	import XGameEngine.Collections.Graph.GraphNode;
 	import XGameEngine.Collections.Graph.Path;

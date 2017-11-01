@@ -4,7 +4,7 @@ package XGameEngine.Plugins.Box2DPlus.Rigidbody.Shape
 	import Box2D.Collision.Shapes.b2Shape;
 	import Box2D.Common.Math.b2Vec2;
 	
-	import XGameEngine.Constant.Error.UnSupportMethodError;
+	import XGameEngine.Util.Error.UnSupportMethodError;
 	import XGameEngine.Collections.List;
 	import XGameEngine.Math.Vector2;
 	

@@ -1,7 +1,7 @@
 package XGameEngine.GameObject.GameObjectComponent.Anime
 {
-	import XGameEngine.Constant.AnimeLabel;
-	import XGameEngine.Constant.Error.UnSupportMethodError;
+	import XGameEngine.GameObject.GameObjectComponent.Anime.AnimeLabel;
+	import XGameEngine.Util.Error.UnSupportMethodError;
 	import XGameEngine.Util.GameUtil;
 	
 	import flash.display.Bitmap;

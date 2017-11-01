@@ -1,8 +1,8 @@
 ﻿package XGameEngine.Manager
 {
 	import XGameEngine.*;
-	import XGameEngine.BaseObject.BaseComponent.CommonlyComponent;
-	import XGameEngine.BaseObject.BaseComponent.FunComponent;
+	import XGameEngine.GameObject.BaseComponent.CommonlyComponent;
+	import XGameEngine.GameObject.BaseComponent.FunComponent;
 	
 	import flash.display.Stage;
 	

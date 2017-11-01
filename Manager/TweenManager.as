@@ -1,7 +1,7 @@
 ﻿﻿package XGameEngine.Manager
 {
 	
-	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.GameObject.BaseDisplayObject;
 	import XGameEngine.Collections.Map;
 	
 	import fl.motion.MotionBase;

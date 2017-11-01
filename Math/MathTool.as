@@ -1,6 +1,6 @@
 ﻿package XGameEngine.Math
 {
-	import XGameEngine.Constant.Error.ParamaterError;
+	import XGameEngine.Util.Error.ParamaterError;
 	import XGameEngine.Math.Vector2;
 	
 	import flash.geom.Point;

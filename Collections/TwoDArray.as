@@ -1,6 +1,6 @@
 package XGameEngine.Collections
 {
-	import XGameEngine.Constant.Error.ParamaterError;
+	import XGameEngine.Util.Error.ParamaterError;
 
 	/**
 	 *二维数组 

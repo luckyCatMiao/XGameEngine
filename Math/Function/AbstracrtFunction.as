@@ -1,8 +1,8 @@
 package XGameEngine.Math.Function
 {
-	import XGameEngine.BaseObject.BaseComponent.Render.LineStyle;
-	import XGameEngine.BaseObject.BaseDisplayObject;
-	import XGameEngine.Constant.Error.AbstractMethodError;
+	import XGameEngine.GameObject.BaseComponent.Render.LineStyle;
+	import XGameEngine.GameObject.BaseDisplayObject;
+	import XGameEngine.Util.Error.AbstractMethodError;
 	import XGameEngine.Math.Number2;
 	import XGameEngine.Math.Vector2;
 	import XGameEngine.UI.Draw.Color;

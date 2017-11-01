@@ -2,7 +2,7 @@ package XGameEngine.GameObject.GameObjectComponent.StateMachine
 {
 
 
-import XGameEngine.Constant.Error.AbstractMethodError;
+import XGameEngine.Util.Error.AbstractMethodError;
 import XGameEngine.GameObject.BaseGameObject;
 import XGameEngine.Collections.List;
 
