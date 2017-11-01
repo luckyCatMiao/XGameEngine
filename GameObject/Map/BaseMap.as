@@ -6,8 +6,7 @@
 	import XGameEngine.BaseObject.BaseComponent.FunComponent;
 	import XGameEngine.BaseObject.BaseComponent.GameObjectComponent;
 	import XGameEngine.BaseObject.BaseComponent.TransformComponent;
-	import XGameEngine.Structure.Math.Spring;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Math.Vector2;
 	
 	import flash.display.Sprite;
 	import flash.geom.Point;

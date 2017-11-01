@@ -3,7 +3,7 @@
 import XGameEngine.*;
 import XGameEngine.GameObject.BaseGameObject;
 import XGameEngine.Manager.*;
-import XGameEngine.Structure.*;
+import XGameEngine.Collections.*;
 import XGameEngine.UI.Draw.*;
 import XGameEngine.UI.Special.XTextField;
 import XGameEngine.Util.CollectionUtil;

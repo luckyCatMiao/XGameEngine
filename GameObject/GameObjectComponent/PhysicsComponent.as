@@ -1,11 +1,10 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent
 {
-	import XGameEngine.GameObject.*;
-	import XGameEngine.Structure.*;
-	import XGameEngine.Structure.Math.*;
-	import XGameEngine.BaseObject.BaseComponent.BaseComponent;
+import XGameEngine.Collections.*;
+import XGameEngine.GameObject.*;
+import XGameEngine.Math.Vector2;
 
-	/**
+/**
 	 * 物理组件 可以施加力和速度之类的
 	 * @author o
 	 */
@@ -299,10 +298,12 @@
 	
 }
 
+import XGameEngine.Math.Vector2;
+
 class NVBean
 {
 	public var name:String;
-	public var v2:XGameEngine.Structure.Math.Vector2;
+	public var v2:Vector2;
 	
 	public function toString():String 
 	{

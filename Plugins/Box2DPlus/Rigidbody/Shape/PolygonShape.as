@@ -5,8 +5,8 @@ package XGameEngine.Plugins.Box2DPlus.Rigidbody.Shape
 	import Box2D.Common.Math.b2Vec2;
 	
 	import XGameEngine.Constant.Error.UnSupportMethodError;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Math.Vector2;
 	
 	import flash.geom.Point;
 

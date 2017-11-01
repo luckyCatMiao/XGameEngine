@@ -1,6 +1,6 @@
 ﻿package XGameEngine.BaseObject.BaseComponent
 {
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;

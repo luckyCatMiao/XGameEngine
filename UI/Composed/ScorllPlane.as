@@ -1,6 +1,6 @@
 package XGameEngine.UI.Composed
 {
-	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.Math.Rect;
 	import XGameEngine.UI.Base.BaseUI;
 	import XGameEngine.UI.Config.UIConfig;
 	

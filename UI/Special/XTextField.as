@@ -2,7 +2,7 @@
 {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import XGameEngine.Structure.Map;
+	import XGameEngine.Collections.Map;
 	
 	/**
 	 * ...

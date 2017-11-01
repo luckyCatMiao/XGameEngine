@@ -16,9 +16,9 @@
 			for each(var element:int in a)
 			{
 				v[i++] = element;
-				
+
 			}
-			
+
 			return v;
 		}
 	}

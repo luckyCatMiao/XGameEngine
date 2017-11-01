@@ -5,10 +5,10 @@
 	
 	import XGameEngine.Plugins.Debug.DebugManager;
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Map;
-	import XGameEngine.Structure.Math.Rect;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Collections.Map;
+	import XGameEngine.Math.Rect;
+	import XGameEngine.Math.Vector2;
 	
 	import flash.display.DisplayObject;
 	import flash.geom.Point;

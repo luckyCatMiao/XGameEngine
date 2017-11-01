@@ -4,7 +4,7 @@ package XGameEngine.Plugins.Movie.Command
 	
 	import XGameEngine.Plugins.Movie.BaseMovie;
 	import XGameEngine.BaseObject.BaseDisplayObject;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Math.Vector2;
 	
 	import flash.display.DisplayObject;
 

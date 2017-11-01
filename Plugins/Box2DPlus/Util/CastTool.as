@@ -3,8 +3,8 @@ package XGameEngine.Plugins.Box2DPlus.Util
 	import Box2D.Collision.b2AABB;
 	import Box2D.Common.Math.b2Vec2;
 	
-	import XGameEngine.Structure.Math.Rect;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Math.Rect;
+	import XGameEngine.Math.Vector2;
 
 	public class CastTool
 	{

@@ -1,14 +1,9 @@
 ﻿package XGameEngine.Manager
 {
-	import XGameEngine.GameObject.*;
-	import XGameEngine.Structure.*;
-	import XGameEngine.Structure.Math.*;
-	
-	import fl.transitions.Fade;
-	
-	import flash.display.Stage;
+import XGameEngine.Collections.*;
+import XGameEngine.GameObject.*;
 
-	/**
+/**
 	 * 游戏对象管理器
 	 * @author o
 	 */

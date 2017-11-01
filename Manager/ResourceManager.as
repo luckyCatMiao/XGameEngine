@@ -1,8 +1,8 @@
 package XGameEngine.Manager {
 import XGameEngine.GameObject.GameObjectComponent.Anime.AbstractAnimeClip;
 import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeClip;
-import XGameEngine.Structure.List;
-import XGameEngine.Structure.Map;
+import XGameEngine.Collections.List;
+import XGameEngine.Collections.Map;
 import XGameEngine.UI.Base.BaseUI;
 
 import flash.display.Bitmap;

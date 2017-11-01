@@ -1,6 +1,6 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent.Collider.Collider
 {
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 	
 	import flash.geom.Point;
 	

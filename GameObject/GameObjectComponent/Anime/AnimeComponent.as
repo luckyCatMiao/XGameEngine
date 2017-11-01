@@ -2,7 +2,7 @@
 {
 	import XGameEngine.GameObject.*;
 	import XGameEngine.GameObject.GameObjectComponent.*;
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 	import XGameEngine.Util.*;
 	
 	import flash.display.DisplayObject;

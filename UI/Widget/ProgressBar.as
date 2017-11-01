@@ -1,10 +1,10 @@
 package XGameEngine.UI.Widget
 {
-	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.Math.Rect;
 	import XGameEngine.UI.Base.BaseUI;
 	import XGameEngine.UI.Config.UIConfig;
 	import XGameEngine.UI.Draw.Color;
-	import XGameEngine.Util.MathTool;
+	import XGameEngine.Math.MathTool;
 	
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;

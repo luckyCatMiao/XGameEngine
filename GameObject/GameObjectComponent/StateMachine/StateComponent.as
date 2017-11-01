@@ -4,7 +4,7 @@
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.BaseGameObjectComponent;
-	import XGameEngine.Structure.Stack;
+	import XGameEngine.Collections.Stack;
 	import XGameEngine.UI.*;
 	import XGameEngine.UI.Draw.*;
 	import XGameEngine.UI.Special.XDebugText;

@@ -11,8 +11,8 @@ package XGameEngine.Plugins.Box2DPlus.Collision
 	import XGameEngine.Plugins.Box2DPlus.PhysicsWorld;
 	import XGameEngine.Plugins.Box2DPlus.Rigidbody.Rigidbody;
 	import XGameEngine.Plugins.Box2DPlus.Util.CastTool;
-	import XGameEngine.Structure.Math.Vector2;
-	import XGameEngine.Structure.Vector2List;
+	import XGameEngine.Math.Vector2;
+	import XGameEngine.Collections.Vector2List;
 	
 	public class CollisionListener extends b2ContactListener
 	{

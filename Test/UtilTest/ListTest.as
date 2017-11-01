@@ -1,6 +1,6 @@
 package XGameEngine.Test.UtilTest
 {
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 	import XGameEngine.Test.TestBean.Student;
 
 	public class ListTest

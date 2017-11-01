@@ -1,7 +1,7 @@
 ﻿package XGameEngine.GameObject 
 {
 import XGameEngine.BaseObject.BaseDisplayObject;
-import XGameEngine.Constant.LayerNameV;
+import XGameEngine.Constant.LayerName;
 import XGameEngine.GameEngine;
 import XGameEngine.GameObject.GameObjectComponent.*;
 import XGameEngine.GameObject.GameObjectComponent.Anime.AnimeComponent;
@@ -69,7 +69,7 @@ import flash.geom.Point;
 			//添加默认标签
 			tag = TagManager.TAG_DEFAULT;
 			//添加到默认层中
-			layerName = LayerNameV.DEFAULT;	
+			layerName = LayerName.DEFAULT;
 			
 		}
 		

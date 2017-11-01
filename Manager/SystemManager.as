@@ -2,7 +2,7 @@
  * Created by Administrator on 11/1/2017.
  */
 package XGameEngine.Manager {
-import XGameEngine.Structure.List;
+import XGameEngine.Collections.List;
 
 import flash.system.ApplicationDomain;
 import flash.utils.getDefinitionByName;

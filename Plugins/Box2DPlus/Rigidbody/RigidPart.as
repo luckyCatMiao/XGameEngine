@@ -8,8 +8,8 @@ package XGameEngine.Plugins.Box2DPlus.Rigidbody
 	import XGameEngine.Plugins.Box2DPlus.PhysicsWorld;
 	import XGameEngine.Plugins.Box2DPlus.Rigidbody.Shape.AbstractShape;
 	import XGameEngine.Plugins.Box2DPlus.Util.CastTool;
-	import XGameEngine.Structure.Math.Rect;
-	import XGameEngine.Util.MathTool;
+	import XGameEngine.Math.Rect;
+	import XGameEngine.Math.MathTool;
 
 	/**
 	 *一个Rigidbody由多个 RigidPart 组成

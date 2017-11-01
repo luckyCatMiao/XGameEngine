@@ -2,8 +2,8 @@
 {
 	import XGameEngine.Util.*;
 	import flash.display.Stage;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Map;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Collections.Map;
 	
 	/**
 	 * 标签管理器

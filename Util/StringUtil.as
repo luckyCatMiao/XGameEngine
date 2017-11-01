@@ -1,6 +1,6 @@
 ﻿package XGameEngine.Util
 {
-	import XGameEngine.Structure.Map;
+	import XGameEngine.Collections.Map;
 	
 	/**
 	 * ...

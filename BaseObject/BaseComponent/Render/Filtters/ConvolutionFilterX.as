@@ -1,6 +1,6 @@
 package XGameEngine.BaseObject.BaseComponent.Render.Filtters
 {
-	import XGameEngine.Structure.TwoDArray;
+	import XGameEngine.Collections.TwoDArray;
 	
 	import flash.filters.ConvolutionFilter;
 

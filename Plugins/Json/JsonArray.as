@@ -1,6 +1,6 @@
 package XGameEngine.Plugins.Json
 {
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 
 	public class JsonArray
 	{

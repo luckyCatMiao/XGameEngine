@@ -1,6 +1,6 @@
 ﻿package XGameEngine.Manager
 {
-	import XGameEngine.Structure.Map;
+	import XGameEngine.Collections.Map;
 	import XGameEngine.Util.GameUtil;
 	
 	import flash.media.Sound;

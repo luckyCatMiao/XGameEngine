@@ -1,7 +1,7 @@
 package XGameEngine.BaseObject.BaseComponent.Render.Filtters
 {
 	import XGameEngine.Constant.Error.ParamaterError;
-	import XGameEngine.Structure.TwoDArray;
+	import XGameEngine.Collections.TwoDArray;
 	import XGameEngine.UI.Draw.Color;
 	
 	import flash.filters.ColorMatrixFilter;

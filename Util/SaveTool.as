@@ -1,10 +1,8 @@
 package XGameEngine.Util
 {
-	import fl.transitions.Fade;
-	
-	import flash.net.SharedObject;
+import flash.net.SharedObject;
 
-	public class SaveTool
+public class SaveTool
 	{
 		
 		/**
@@ -31,7 +29,7 @@ package XGameEngine.Util
 		 * @return 
 		 * 
 		 */			
-		static public  function getValue(key:Object,defaultValue:Object=null,ArchiveName="default"):Object
+		static public function getValue(key:Object,defaultValue:Object=null,ArchiveName="default"):Object
 		{
 			
 			var archive:SharedObject = SharedObject.getLocal(ArchiveName);

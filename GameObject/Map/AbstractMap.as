@@ -1,7 +1,7 @@
 package XGameEngine.GameObject.Map
 {
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Math.Vector2;
 
 	
 	/**

@@ -3,7 +3,7 @@ package XGameEngine.Plugins.Camera
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.Manager.TweenManager;
-	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.Math.Rect;
 	
 	import fl.motion.easing.Circular;
 	import fl.motion.easing.Linear;

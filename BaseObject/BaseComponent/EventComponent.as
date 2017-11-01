@@ -1,7 +1,7 @@
 package XGameEngine.BaseObject.BaseComponent
 {
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.Structure.Map;
+	import XGameEngine.Collections.Map;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

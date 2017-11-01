@@ -19,8 +19,8 @@ package XGameEngine.BaseObject
 	import XGameEngine.Manager.*;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.TagManager;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Math.Vector2;
 	import XGameEngine.Util.*;
 	
 	import fl.motion.Animator3D;

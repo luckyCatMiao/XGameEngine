@@ -3,11 +3,11 @@
 import XGameEngine.GameObject.BaseGameObject;
 import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.CircleCollider;
 import XGameEngine.Manager.Hit.Collision;
-import XGameEngine.Structure.List;
-import XGameEngine.Structure.Map;
-import XGameEngine.Structure.Math.Function.LinearFunction;
-import XGameEngine.Structure.Math.Line;
-import XGameEngine.Structure.Math.Vector2;
+import XGameEngine.Collections.List;
+import XGameEngine.Collections.Map;
+import XGameEngine.Math.Function.LinearFunction;
+import XGameEngine.Math.Line;
+import XGameEngine.Math.Vector2;
 
 import flash.display.DisplayObject;
 import flash.events.Event;
@@ -1021,10 +1021,10 @@ import flash.geom.Point;
 
 import XGameEngine.GameObject.BaseGameObject;
 import XGameEngine.Manager.HitManager;
-import XGameEngine.Structure.List;
-import XGameEngine.Structure.Map;
-import XGameEngine.Structure.Math.Number2;
-import XGameEngine.Structure.Math.Vector2;
+import XGameEngine.Collections.List;
+import XGameEngine.Collections.Map;
+import XGameEngine.Math.Number2;
+import XGameEngine.Math.Vector2;
 
 import flash.geom.Point;
 

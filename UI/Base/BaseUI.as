@@ -4,7 +4,7 @@ package XGameEngine.UI.Base
 	import XGameEngine.BaseObject.BaseComponent.CommonlyComponent;
 	import XGameEngine.BaseObject.BaseComponent.FunComponent;
 	import XGameEngine.BaseObject.BaseComponent.GameObjectComponent;
-	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.Math.Rect;
 	import XGameEngine.UI.Draw.Color;
 	
 	import flash.display.Bitmap;

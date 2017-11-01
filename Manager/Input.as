@@ -2,17 +2,19 @@
 package XGameEngine.Manager
 {
 	import XGameEngine.Constant.Error.ParamaterError;
-	import XGameEngine.Structure.Map;
+	import XGameEngine.Collections.Map;
 	
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.utils.Dictionary;
-	
 
-	
-	final public class Input
+
+/**
+ * 因为这个类太常用了，所以不写成manager形式了，否则访问很麻烦
+ */
+final public class Input
 	{
 		
 		//represent the key state

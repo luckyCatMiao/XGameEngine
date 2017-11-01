@@ -1,7 +1,7 @@
 ﻿package XGameEngine.Manager.Hit
 {
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 	
 	import flash.geom.Point;
 	

@@ -3,7 +3,7 @@
 	import XGameEngine.BaseObject.BaseComponent.CommonlyComponent;
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameEngine;
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 	
 	import flash.display.Shape;
 	import flash.display.Sprite;

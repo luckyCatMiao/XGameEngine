@@ -1,11 +1,16 @@
-﻿package XGameEngine.Manager
+﻿﻿package XGameEngine.Manager
 {
+	
+	import XGameEngine.BaseObject.BaseDisplayObject;
+	import XGameEngine.Collections.Map;
+	
+	import fl.motion.MotionBase;
+	import fl.transitions.Tween;
+	import fl.transitions.TweenEvent;
+	
+	import flash.display.DisplayObject;
 
-import XGameEngine.Structure.Map;
-
-import flash.display.DisplayObject;
-
-public class TweenManager extends BaseManager
+	public class TweenManager extends BaseManager
 	{
 		static private var _instance:TweenManager;
 		private var map:Map=new Map();

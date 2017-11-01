@@ -1,6 +1,6 @@
 package XGameEngine.UI.Widget.Button
 {
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 
 	/**
 	 *按钮组 几个单选按钮想起到效果必须分在同一个组中 

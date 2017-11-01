@@ -12,10 +12,10 @@ package XGameEngine.Plugins.Box2DPlus.Rigidbody
 	import XGameEngine.Plugins.Box2DPlus.PhysicsWorld;
 	import XGameEngine.Plugins.Box2DPlus.Util.CastTool;
 	import XGameEngine.Constant.Error.UnSupportMethodError;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Math.Rect;
-	import XGameEngine.Structure.Math.Vector2;
-	import XGameEngine.Util.MathTool;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Math.Rect;
+	import XGameEngine.Math.Vector2;
+	import XGameEngine.Math.MathTool;
 	
 	import flash.events.EventDispatcher;
 

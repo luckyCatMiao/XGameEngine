@@ -1,7 +1,7 @@
 package XGameEngine.UI.AdapterView
 {
-	import XGameEngine.Structure.Map;
-	import XGameEngine.Structure.Math.Rect;
+	import XGameEngine.Collections.Map;
+	import XGameEngine.Math.Rect;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;

@@ -5,12 +5,12 @@
 	import XGameEngine.GameEngine;
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
-	import XGameEngine.Structure.Math.Rect;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Math.Rect;
+	import XGameEngine.Math.Vector2;
 	import XGameEngine.UI.Draw.Color;
 	import XGameEngine.UI.Special.XDebugText;
 	import XGameEngine.UI.Special.XTextField;
-	import XGameEngine.Util.MathTool;
+	import XGameEngine.Math.MathTool;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Shape;

@@ -1,9 +1,9 @@
 ﻿package XGameEngine.Manager
 {
-	import XGameEngine.Constant.LayerNameV;
+	import XGameEngine.Constant.LayerName;
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Map;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Collections.Map;
 	
 	import flash.display.Stage;
 
@@ -38,7 +38,7 @@
 		{
 			
 			//注册一个默认层
-			registerLayer(LayerNameV.DEFAULT);
+			registerLayer(LayerName.DEFAULT);
 		}
 		
 		
@@ -126,7 +126,7 @@
 class Layer 
 {
 	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 
 	
 	private var _name:String;

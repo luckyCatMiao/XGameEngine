@@ -2,7 +2,7 @@ package XGameEngine.Plugins.Movie.Command
 {
 	import XGameEngine.Plugins.Movie.BaseMovie;
 	import XGameEngine.BaseObject.BaseDisplayObject;
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 
 	/**
 	 *影片指令 由演员和实际行为组成 

@@ -9,12 +9,12 @@
 	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
 	import XGameEngine.Manager.Hit.Collision;
 	import XGameEngine.Manager.HitManager;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Math.Line;
-	import XGameEngine.Structure.Math.Rect;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Math.Line;
+	import XGameEngine.Math.Rect;
+	import XGameEngine.Math.Vector2;
 	import XGameEngine.UI.Draw.Color;
-	import XGameEngine.Util.MathTool;
+	import XGameEngine.Math.MathTool;
 	
 	import fl.transitions.Fade;
 	

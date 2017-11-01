@@ -1,6 +1,6 @@
 package XGameEngine.Test.UtilTest
 {
-	import XGameEngine.Structure.Stack;
+	import XGameEngine.Collections.Stack;
 
 	public class StackTest
 	{

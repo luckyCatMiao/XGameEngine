@@ -3,9 +3,9 @@ package XGameEngine.Plugins.Box2DPlus.Collision
 	import Box2D.Common.Math.b2Vec2;
 	
 	import XGameEngine.Plugins.Box2DPlus.Rigidbody.Rigidbody;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Math.Vector2;
-	import XGameEngine.Structure.Vector2List;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Math.Vector2;
+	import XGameEngine.Collections.Vector2List;
 
 	/**
 	 *对box2D的碰撞信息进行重新包装 

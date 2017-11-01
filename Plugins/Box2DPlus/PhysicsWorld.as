@@ -12,9 +12,9 @@ package XGameEngine.Plugins.Box2DPlus
 	import XGameEngine.Plugins.Box2DPlus.Util.CastTool;
 	import XGameEngine.Plugins.Interface.LoopAble;
 	import XGameEngine.GameEngine;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Map;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Collections.Map;
+	import XGameEngine.Math.Vector2;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;

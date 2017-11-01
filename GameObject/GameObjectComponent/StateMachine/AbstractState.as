@@ -4,7 +4,7 @@ package XGameEngine.GameObject.GameObjectComponent.StateMachine
 
 import XGameEngine.Constant.Error.AbstractMethodError;
 import XGameEngine.GameObject.BaseGameObject;
-import XGameEngine.Structure.List;
+import XGameEngine.Collections.List;
 
 import flash.events.Event;
 import flash.utils.getQualifiedClassName;

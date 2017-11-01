@@ -3,8 +3,8 @@ package XGameEngine.BaseObject.BaseComponent.Render
 	import XGameEngine.BaseObject.BaseComponent.BaseComponent;
 	import XGameEngine.BaseObject.BaseComponent.Render.Filtters.AbstractFiltter;
 	import XGameEngine.BaseObject.BaseDisplayObject;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Math.Vector2;
 	import XGameEngine.UI.Draw.Color;
 	
 	import flash.display.BlendMode;

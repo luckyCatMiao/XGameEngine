@@ -2,8 +2,8 @@
 {
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
-	import XGameEngine.Structure.Math.Rect;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Math.Rect;
+	import XGameEngine.Math.Vector2;
 	import XGameEngine.UI.Draw.Color;
 	
 	import flash.display.Bitmap;

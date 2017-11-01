@@ -6,8 +6,8 @@
 	import XGameEngine.GameObject.BaseGameObject;
 	import XGameEngine.GameObject.GameObjectComponent.Anime.MovieClipAnimeGroup;
 	import XGameEngine.Manager.ResourceManager;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Math.Vector2;
+	import XGameEngine.Collections.List;
+	import XGameEngine.Math.Vector2;
 	import XGameEngine.Util.GameUtil;
 	
 	import flash.display.DisplayObject;

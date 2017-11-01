@@ -1,6 +1,6 @@
 package XGameEngine.GameObject.GameObjectComponent.Anime
 {
-	import XGameEngine.Constant.AnimeNameV;
+	import XGameEngine.Constant.AnimeLabel;
 	import XGameEngine.Constant.Error.UnSupportMethodError;
 	import XGameEngine.Util.GameUtil;
 	
@@ -158,22 +158,22 @@ package XGameEngine.GameObject.GameObjectComponent.Anime
 				isAnimePlay=true;
 				//设置初始位置
 				
-				if(labelName==AnimeNameV.MOVE_DOWN)
+				if(labelName==AnimeLabel.MOVE_DOWN)
 				{
 					b.y=0;
 					b.x=0;
 				}
-				else if(labelName==AnimeNameV.MOVE_LEFT)
+				else if(labelName==AnimeLabel.MOVE_LEFT)
 				{
 					b.y=-partHeight*1;
 					b.x=0;
 				}
-				else if(labelName==AnimeNameV.MOVE_RIGHT)
+				else if(labelName==AnimeLabel.MOVE_RIGHT)
 				{
 					b.y=-partHeight*3;
 					b.x=0;
 				}
-				else if(labelName==AnimeNameV.MOVE_UP)
+				else if(labelName==AnimeLabel.MOVE_UP)
 				{
 					b.y=-partHeight*2;
 					b.x=0;

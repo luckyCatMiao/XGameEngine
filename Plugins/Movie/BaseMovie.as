@@ -2,7 +2,7 @@ package XGameEngine.Plugins.Movie
 {
 	import XGameEngine.Plugins.Movie.Command.BaseCommond;
 	import XGameEngine.GameEngine;
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 	
 	import flash.events.Event;
 	

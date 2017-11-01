@@ -1,7 +1,7 @@
 ﻿package XGameEngine.GameObject.GameObjectComponent.Collider.Collider
 {
 	import XGameEngine.GameEngine;
-	import XGameEngine.Structure.List;
+	import XGameEngine.Collections.List;
 	import XGameEngine.UI.Draw.Color;
 	
 	import flash.display.Shape;
