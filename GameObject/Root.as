@@ -7,7 +7,7 @@ package XGameEngine.GameObject
 	import flash.events.ProgressEvent;
 
 	/**
-	 *文档类的基类 
+	 *helper class to init engine
 	 * @author Administrator
 	 * 
 	 */	

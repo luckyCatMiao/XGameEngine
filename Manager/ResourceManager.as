@@ -13,7 +13,8 @@ package XGameEngine.Manager
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.media.Sound;
-	import flash.utils.getDefinitionByName;
+import flash.system.ApplicationDomain;
+import flash.utils.getDefinitionByName;
 
 	/**
 	 * 管理外部资源的类
@@ -22,21 +23,19 @@ package XGameEngine.Manager
 	{
 		
 		static private var _instance:ResourceManager;
+        static public function getInstance():ResourceManager
+        {
+            if (_instance == null)
+            {
+                _instance = new ResourceManager();
+            }
+            return _instance;
+        }
+
+
 		private var textDatas:Map=new Map();
 		private var imageDatas:Map=new Map();
-		
-		
-		static public function getInstance():ResourceManager
-		{
-			if (_instance == null)
-			{
-				_instance = new ResourceManager();
-			}
-			return _instance;
-		}
-		
-		
-		
+
 		/**
 		 *加载声音文件 
 		 * @param name
@@ -56,29 +55,16 @@ package XGameEngine.Manager
 			
 			return value;
 		}
-		
+
+        /**
+		 * get the class with target name
+         * @param name
+         * @return
+         */
 		public function getClassByName(name:String):Class
 		{
-			//优先从本swf里取 这样方便测试 可以先把要多次测试的剪辑先放在主swf里面调整 调整差不多后再放到资源swf里
-			var cls1:Class
-			try
-			{
-				cls1=flash.utils.getDefinitionByName(name) as Class;
-				return cls1;
-			} 
-			catch(error:Error) 
-			{
-				
-			}
-			
-			
-			
-			cls1=GameEngine.getInstance().dataDomain.getDefinition(name) as Class;
-			return cls1;
+			return SystemManager.getInstance().getClassByName(name);
 		}
-		
-		
-		
 		
 		
 		/**
@@ -127,7 +113,6 @@ package XGameEngine.Manager
 			{
 				throw new Error("load UI "+name+" failed");
 			}
-			
 			return value;
 		}
 		
@@ -147,9 +132,6 @@ package XGameEngine.Manager
 			{
 				throw new Error("load BitmapData "+name+" failed");
 			}
-			
-			
-			
 			return new Bitmap(value);
 		}
 		
@@ -163,15 +145,11 @@ package XGameEngine.Manager
 		public function LoadBitmapDataByName(name:String): BitmapData
 		{
 			var cls:Class=getClassByName(name);
-			
 			var value:BitmapData=new cls() as BitmapData;
 			if(value==null)
 			{
 				throw new Error("load BitmapData "+name+" failed");
 			}
-			
-			
-			
 			return value;
 		}
 		
@@ -184,17 +162,12 @@ package XGameEngine.Manager
 		public function LoadAnimeClipByName(name:String):AbstractAnimeClip
 		{
 			var cls:Class=getClassByName(name);
-			
 			var value:MovieClip=new cls() as MovieClip;
-			
 			if(value==null)
 			{
-				throw new Error("load Animation "+name+" failed");
+				throw new Error("load MovieClip "+name+" failed");
 			}
-			
 			var anim:MovieClipAnimeClip=new MovieClipAnimeClip(value);
-			
-			
 			return anim;
 		}
 		

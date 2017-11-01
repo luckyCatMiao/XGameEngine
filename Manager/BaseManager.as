@@ -42,6 +42,11 @@
 				throw new Error(msg + " can't null!");
 			}
 		}
+
+		protected  function getEngine():GameEngine
+		{
+			return GameEngine.getInstance();
+		}
 	}
 	
 }

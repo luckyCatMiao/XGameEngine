@@ -1,30 +1,21 @@
 ﻿package XGameEngine.GameObject 
 {
-	import XGameEngine.BaseObject.BaseDisplayObject;
-	import XGameEngine.Constant.LayerNameV;
-	import XGameEngine.GameEngine;
-	import XGameEngine.GameObject.GameObjectComponent.*;
-	import XGameEngine.GameObject.GameObjectComponent.Anime.AnimeComponent;
-	import XGameEngine.GameObject.GameObjectComponent.Collider.CollideComponent;
-	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
-	import XGameEngine.GameObject.GameObjectComponent.StateMachine.AbstractState;
-	import XGameEngine.GameObject.GameObjectComponent.StateMachine.StateComponent;
-	import XGameEngine.Manager.*;
-	import XGameEngine.Manager.Hit.Collision;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Math.Vector2;
-	import XGameEngine.Util.*;
-	
-	import fl.transitions.Fade;
-	
-	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	
-	/**
+import XGameEngine.BaseObject.BaseDisplayObject;
+import XGameEngine.Constant.LayerNameV;
+import XGameEngine.GameEngine;
+import XGameEngine.GameObject.GameObjectComponent.*;
+import XGameEngine.GameObject.GameObjectComponent.Anime.AnimeComponent;
+import XGameEngine.GameObject.GameObjectComponent.Collider.CollideComponent;
+import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.RectCollider;
+import XGameEngine.GameObject.GameObjectComponent.StateMachine.AbstractState;
+import XGameEngine.GameObject.GameObjectComponent.StateMachine.StateComponent;
+import XGameEngine.Manager.*;
+import XGameEngine.Manager.Hit.Collision;
+
+import flash.events.Event;
+import flash.geom.Point;
+
+/**
 	 * ...
 	 * the fundamental gameobject,provide a sets of useful features.
 	 */
@@ -151,7 +142,7 @@
 		
 		
 		//重新设置名字的时候先进行检查 防止重复
-		public function set xname(value:String):void 
+		public function set xname(value:String):void
 		{
 			if (GameEngine.getInstance().getGameObjectManager().findGameObjectByName(value) != null)
 			{
@@ -160,7 +151,7 @@
 			this._xname = value;
 		}
 		
-		public function get xname()
+		public function get xname():String
 		{
 			return _xname;
 		}

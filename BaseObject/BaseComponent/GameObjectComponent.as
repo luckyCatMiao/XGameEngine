@@ -1,6 +1,6 @@
 ﻿package XGameEngine.BaseObject.BaseComponent
 {
-	import XGameEngine.Advanced.Camera.Camera;
+	import XGameEngine.Plugins.Camera.Camera;
 	import XGameEngine.BaseObject.BaseDisplayObject;
 	import XGameEngine.GameObject.AutoDestroyObject;
 	import XGameEngine.GameObject.BaseGameObject;

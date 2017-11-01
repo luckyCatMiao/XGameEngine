@@ -1,28 +1,19 @@
 ﻿package XGameEngine.Manager
 {
-	import XGameEngine.GameObject.BaseGameObject;
-	import XGameEngine.GameObject.GameObjectComponent.Collider.CollideComponent;
-	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.CircleCollider;
-	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.Collider;
-	import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.MeshCollider;
-	import XGameEngine.Manager.Hit.Collision;
-	import XGameEngine.Manager.LayerManager;
-	import XGameEngine.Structure.List;
-	import XGameEngine.Structure.Map;
-	import XGameEngine.Structure.Math.Function.LinearFunction;
-	import XGameEngine.Structure.Math.Line;
-	import XGameEngine.Structure.Math.Rect;
-	import XGameEngine.Structure.Math.Vector2;
-	
-	import fl.transitions.Fade;
-	
-	import flash.display.DisplayObject;
-	import flash.display.Stage;
-	import flash.events.Event;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
+import XGameEngine.GameObject.BaseGameObject;
+import XGameEngine.GameObject.GameObjectComponent.Collider.Collider.CircleCollider;
+import XGameEngine.Manager.Hit.Collision;
+import XGameEngine.Structure.List;
+import XGameEngine.Structure.Map;
+import XGameEngine.Structure.Math.Function.LinearFunction;
+import XGameEngine.Structure.Math.Line;
+import XGameEngine.Structure.Math.Vector2;
 
-	/**
+import flash.display.DisplayObject;
+import flash.events.Event;
+import flash.geom.Point;
+
+/**
 	 * 碰撞管理器
 	 * @author o
 	 */
@@ -1022,10 +1013,12 @@
 			
 			return result;
 		}
-	}
+	}
+
 
 	
 }
+
 import XGameEngine.GameObject.BaseGameObject;
 import XGameEngine.Manager.HitManager;
 import XGameEngine.Structure.List;
